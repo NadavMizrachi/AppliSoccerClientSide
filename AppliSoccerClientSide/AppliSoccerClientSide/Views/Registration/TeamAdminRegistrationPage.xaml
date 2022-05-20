@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppliSoccerClientSide.Views.Registration.TeamAdminRegistrationPage"
+             Shell.FlyoutBehavior="Disabled"
+             BackgroundColor="Black"
+             Title="Enter Admin Details">
+    <ContentPage.Content>
+        <StackLayout  
+                      VerticalOptions="Center"
+                      Padding="40,0,40,0">
+            <Label x:Name="TeamNameLabel"
+                   FontSize="Title"
+                   HorizontalTextAlignment="Center"
+                   Margin="0, 50, 0,50"/>
+
+            <StackLayout Padding="40,0,40,0" VerticalOptions="Center">
+                <Entry x:Name="UsernameEntry" Placeholder="Admin Username"></Entry>
+                <Entry x:Name="PasswordEntry" Placeholder="Admin Password" IsPassword="True"></Entry>
+                <Entry x:Name="PasswordEntryValidation" Placeholder="Type Password Again" IsPassword="True"></Entry>
+                <Grid Margin="0, 20 ,0 ,40">
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="6*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <CheckBox x:Name="AgreeCheckBox" IsChecked="False"/>
+                    <Label Grid.Column="1" HorizontalTextAlignment="Start">Agree to conditions</Label>
+                </Grid>
+                
+                <Button VerticalOptions="Center" Text="Register Team" Clicked="RegisterButton_Clicked"/>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

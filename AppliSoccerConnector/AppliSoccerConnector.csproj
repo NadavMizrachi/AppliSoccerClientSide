@@ -5,7 +5,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Ref\AppliSoccerObjects.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Ref\AppliSoccerObjects.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="RestSharp" Version="106.13.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="AppliSoccerObjects">
+      <HintPath>Ref\AppliSoccerObjects.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,5 @@
-﻿using AppliSoccerClientSide.Views;
+﻿using AppliSoccerClientSide.Services;
+using AppliSoccerClientSide.Views;
 using System;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -9,15 +10,18 @@ namespace AppliSoccerClientSide.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LoginPage : ContentPage
     {
+        private ViewsPermissionManager _permissionManager;
         public LoginPage()
         {
             InitializeComponent();
+            _permissionManager = ViewsPermissionManager.CreateManager((Shell.Current as AppShell));
         }
 
         private async void LoginButton_Clicked(object sender, System.EventArgs e)
         {
             if (IsValidUser())
             {
+                _permissionManager.OnUserLogin();
                 await Shell.Current.GoToAsync($"//{nameof(SchedulePage)}");
             }
         }

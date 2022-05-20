@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="AppliSoccerClientSide.Views.CountryRegistrationPage"
+             x:Class="AppliSoccerClientSide.Views.Registration.TeamRegistrationPage"
              Shell.FlyoutBehavior="Disabled"
              BackgroundColor="Black"
-             Title="Choose Country">
+             Title="Choose Team">
     <ContentPage.Content>
-        <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
-            <Picker x:Name="CountryPicker"></Picker>
+        <StackLayout VerticalOptions="Center" Padding="40,0,40,0">
+            <Picker x:Name="TeamPicker"></Picker>
             <Button Text="Continue" Clicked="ContinueButton_Clicked"></Button>
         </StackLayout>
     </ContentPage.Content>
