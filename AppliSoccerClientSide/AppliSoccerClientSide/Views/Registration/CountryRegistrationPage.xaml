@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppliSoccerClientSide.Views.CountryRegistrationPage"
              Shell.FlyoutBehavior="Disabled"
-             BackgroundColor="Black"
              Title="Choose Country">
     <ContentPage.Content>
         <StackLayout HorizontalOptions="Center" VerticalOptions="Center">

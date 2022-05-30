@@ -4,6 +4,7 @@ using AppliSoccerObjects.ResponseObjects;
 using RestSharp;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -73,6 +74,49 @@ namespace AppliSoccerConnector
                 throw new Exception(errorInfo);
             }
             return response.Data;
+        }
+
+        public async Task<List<TeamMember>> PullTeamMembers(string teamId)
+        {
+            var request = new RestRequest(TeamMembersConfig.GetTeamMembersPath, TeamMembersConfig.GetCountriesMethod);
+            request.AddQueryParameter(TeamMembersConfig.TeamIdParamName, teamId);
+            var response = await _client.ExecuteAsync<List<TeamMember>>(request);
+
+            if (!response.IsSuccessful)
+            {
+                string errorInfo = "Did not received successfull response for PullTemMembers request. More details: " + response.ErrorMessage +
+                    " Inner exception details: " + response.ErrorException.InnerException;
+                Console.WriteLine(errorInfo);
+                throw new Exception(errorInfo);
+            }
+            return response.Data;
+        }
+
+        public Task<bool> UpdateTeamMember(TeamMember teamMember)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<bool> CreateUser(User newUser)
+        {
+            var request = new RestRequest(RegistrationConfigs.RegisterUserPath, RegistrationConfigs.RegisterUserMethod);
+            request.AddHeader("Accept", "application/json");
+            request.AddJsonBody(newUser);
+            var response = await _client.ExecuteAsync<bool>(request);
+            if(!response.IsSuccessful)
+            {
+                Debug.WriteLine("The request of CreateUser was not success");
+                string errorInfo = "Did not received successfull response for CreateUser request. More details: " + response.ErrorMessage +
+                    " Inner exception details: " + response.ErrorException.InnerException;
+                Console.WriteLine(errorInfo);
+                throw new Exception(errorInfo);
+            }
+            bool isCreationSucceed = response.Data;
+            if (!isCreationSucceed)
+            {
+                Debug.WriteLine("Got response for CreateUser, but the creation failed");
+            }
+            return isCreationSucceed;
         }
     }
 }

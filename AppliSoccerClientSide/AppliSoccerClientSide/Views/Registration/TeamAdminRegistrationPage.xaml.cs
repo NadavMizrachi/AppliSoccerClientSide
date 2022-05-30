@@ -36,8 +36,7 @@ namespace AppliSoccerClientSide.Views.Registration
             try
             {
                 TeamMember registeredUser = await Register();
-                var objAsJson = JsonConvert.SerializeObject(registeredUser);
-                Application.Current.Properties[AppPropertiesConsts.TeamMemberKey] = objAsJson;
+                ApplicationGlobalData.Insert(registeredUser);
                 _permissionManager.OnAdminLogin();
                 // Go to admin page
                 await Shell.Current.GoToAsync($"//{nameof(PlayersPage)}");

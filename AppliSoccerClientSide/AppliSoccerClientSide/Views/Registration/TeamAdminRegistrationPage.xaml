@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppliSoccerClientSide.Views.Registration.TeamAdminRegistrationPage"
              Shell.FlyoutBehavior="Disabled"
-             BackgroundColor="Black"
              Title="Enter Admin Details">
     <ContentPage.Content>
         <StackLayout  

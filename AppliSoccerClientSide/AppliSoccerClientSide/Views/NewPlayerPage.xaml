@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ec="clr-namespace:AppliSoccerClientSide.Extensions"
+             xmlns:models="clr-namespace:AppliSoccerClientSide.Models"
+             x:Class="AppliSoccerClientSide.Views.NewPlayerPage"
+             Title="Add New Player">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ec:IntEnumConverter x:Key="IntEnum" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout Padding="50,20,50,0">
+
+                <!--Username-->
+                <Entry Text="{Binding NewUser.Username, Mode=TwoWay}"
+                       Placeholder="Username" />
+
+                <!--Password-->
+                <Entry Text="{Binding NewUser.Password, Mode=TwoWay}"
+                       Placeholder="Password"/>
+
+                <!--FirstName-->
+                <Entry Text="{Binding NewUser.TeamMember.FirstName, Mode=TwoWay}"
+                       Placeholder="First Name"/>
+
+                <!--LastName-->
+                <Entry Text="{Binding NewUser.TeamMember.LastName, Mode=TwoWay}" 
+                       Placeholder="Last Name"/>
+
+                <!--Phone-->
+                <Entry x:Name="PhoneNumberEntry"
+                       Keyboard="Telephone"
+                       MaxLength="10"
+                       Placeholder="Phone Number"
+                       Text="{Binding NewUser.TeamMember.PhoneNumber, Mode=TwoWay}" />
+
+
+                <!--Birth Date-->
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Birth Date"
+                           FontSize="Small"
+                           TextColor="Gray"
+                           VerticalOptions="Center"/>
+                    <DatePicker x:Name="BirthdatePicker"
+                                Date="{Binding NewUser.TeamMember.BirthDate, Mode=TwoWay}" />
+                </StackLayout>
+
+                <!--Player Number -->
+                <Entry x:Name="NumberEntry"
+                       Keyboard="Numeric"
+                       MaxLength="3"
+                       Text="{Binding NewUser.TeamMember.AdditionalInfo.Number, Mode=TwoWay}" />
+
+                <!--Player Role-->
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Choose Player Role"
+                           FontSize="Small"
+                           TextColor="Gray"
+                           VerticalOptions="Center" />
+                    <Picker x:Name="RolePicker"
+                            MinimumWidthRequest="90"
+                            ItemsSource="{x:Static models:Enums.RoleNames}"
+                            SelectedIndex="{Binding NewUser.TeamMember.AdditionalInfo.Role, Mode=TwoWay, Converter={StaticResource IntEnum}}" />
+                </StackLayout>
+
+
+                <!--Description-->
+                <Editor x:Name="DescriptionEditor"
+                        TextColor="Black"
+                        Placeholder="Type Player Description"
+                        PlaceholderColor="{StaticResource SystemGray}"
+                        Text="{Binding NewUser.TeamMember.Description}" />
+
+                <Button Text="Create Player"
+                        Clicked="Button_Clicked"/>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

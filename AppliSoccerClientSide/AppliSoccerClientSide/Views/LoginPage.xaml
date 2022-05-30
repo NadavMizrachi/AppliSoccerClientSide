@@ -6,8 +6,7 @@
              mc:Ignorable="d"
              x:Class="AppliSoccerClientSide.Views.LoginPage"
              Shell.NavBarIsVisible="False"
-             Shell.FlyoutBehavior="Disabled"
-             BackgroundColor="Black">
+             Shell.FlyoutBehavior="Disabled">
     <ContentPage.Content>
         <StackLayout Padding="40,0,40,0" VerticalOptions="Center">
             <Entry x:Name="UsernameEntry" Placeholder="Username"></Entry>

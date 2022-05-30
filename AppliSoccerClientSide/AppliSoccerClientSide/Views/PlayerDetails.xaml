@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ec="clr-namespace:AppliSoccerClientSide.Extensions"
+             xmlns:models="clr-namespace:AppliSoccerClientSide.Models"
+             x:Class="AppliSoccerClientSide.Views.PlayerDetails">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ec:IntEnumConverter x:Key="IntEnum" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <!--If the user is admin, the code behind will create toolbars items of: remove and edit.-->
+
+    <ContentPage.Content>
+        <StackLayout Padding="20,0,20,0">
+
+            <!--First Name-->
+            <StackLayout Orientation="Horizontal">
+                <Label Text="First Name"
+                       TextColor="Gray" />
+                <Entry x:Name="FirstNameEntry"
+                       FontSize="Title"
+                       IsReadOnly="True"
+                       Text="{Binding PlayerToShow.FirstName}" />
+            </StackLayout>
+
+
+            <!--Last Name-->
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Last Name"
+                       TextColor="Gray" />
+                <Entry x:Name="LastNameEntry"
+                       FontSize="Title"
+                       IsReadOnly="True"
+                       Text="{Binding PlayerToShow.LastName}" />
+            </StackLayout>
+
+
+            <!--Phone-->
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Phone Number"
+                       TextColor="Gray" />
+                <Entry x:Name="PhoneNumberEntry"
+                       Keyboard="Telephone"
+                       IsReadOnly="True"
+                       MaxLength="10"
+                       Text="{Binding PlayerToShow.PhoneNumber, Mode=TwoWay}" />
+            </StackLayout>
+
+
+            <!--Birth Date-->
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Birth Date"
+                       TextColor="Gray" />
+                <DatePicker x:Name="BirthdatePicker"
+                            IsVisible="False"
+                            Date="{Binding PlayerToShow.BirthDate}" />
+                <Label x:Name="BirthdateLabel"
+                       VerticalOptions="Center"
+                       Text="{Binding PlayerToShow.BirthDate, StringFormat='{0:MM/dd/yyyy}'}"
+                       FontSize="Medium" />
+            </StackLayout>
+
+            <!--Player Number -->
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Number"
+                       FontSize="Caption"
+                       TextColor="Gray" />
+                <Entry x:Name="NumberEntry"
+                       IsReadOnly="True"
+                       Keyboard="Numeric"
+                       MaxLength="3"
+                       Text="{Binding PlayerToShow.AdditionalInfo.Number, Mode=TwoWay}" />
+            </StackLayout>
+
+            <!--Player Role-->
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Role"
+                       TextColor="Gray"
+                       VerticalOptions="Center" />
+                <Picker x:Name="RolePicker"
+                        IsVisible="False"
+                        VerticalOptions="Center"
+                        MinimumWidthRequest="90"
+                        ItemsSource="{x:Static models:Enums.RoleNames}"
+                        SelectedIndex="{Binding PlayerToShow.AdditionalInfo.Role, Converter={StaticResource IntEnum}}" />
+                <Label x:Name="RoleLabel"
+                       IsVisible="True"
+                       FontSize="Medium"
+                       VerticalOptions="Center"
+                       Text="{Binding PlayerToShow.AdditionalInfo.Role}" />
+                <Button x:Name="ChangeRoleButton"
+                        Text="Change Role"
+                        IsVisible="{Binding IsCoach}"
+                        Clicked="ChangeRoleButton_Clicked" />
+            </StackLayout>
+
+            <!--Description-->
+            <StackLayout Padding="0,20,0,0">
+                <Label Text="Description:"
+                       TextColor="Gray" />
+                <Editor x:Name="DescriptionEditor"
+                        AutoSize="TextChanges"
+                        TextColor="Black"
+                        IsReadOnly="True"
+                        Text="{Binding PlayerToShow.Description, Mode=TwoWay}" />
+            </StackLayout>
+            <!--Save Button (For Admin/Coach only)-->
+            <StackLayout Padding="30"
+                         Orientation="Horizontal"
+                         HorizontalOptions="Center">
+                <Button x:Name="SaveButton"
+                        Text="Save"
+                        Padding="20"
+                        Clicked="SaveButton_Clicked"
+                        IsVisible="False" />
+            </StackLayout>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

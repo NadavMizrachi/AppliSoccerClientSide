@@ -19,15 +19,15 @@ namespace AppliSoccerClientSide.Services
 
         public bool IsValid()
         {
-            return IsValidUsername() && IsValidPassword();    
+            return IsValidUsername() && IsValidPassword();
         }
 
-        private bool IsValidUsername()
+        public bool IsValidUsername()
         {
             return _username != null && _username.Length >= 6;
         }
 
-        private bool IsValidPassword()
+        public bool IsValidPassword()
         {
             return _password != null && _password.Length >= 6;
         }
