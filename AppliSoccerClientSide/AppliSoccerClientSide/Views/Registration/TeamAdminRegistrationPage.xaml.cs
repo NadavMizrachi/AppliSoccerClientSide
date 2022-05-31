@@ -37,7 +37,7 @@ namespace AppliSoccerClientSide.Views.Registration
             {
                 TeamMember registeredUser = await Register();
                 ApplicationGlobalData.Insert(registeredUser);
-                _permissionManager.OnAdminLogin();
+                _permissionManager.UpdateUserPermissions(registeredUser);
                 // Go to admin page
                 await Shell.Current.GoToAsync($"//{nameof(PlayersPage)}");
             }

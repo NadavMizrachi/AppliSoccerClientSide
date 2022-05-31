@@ -1,5 +1,6 @@
 ﻿using AppliSoccerClientSide.Services;
 using AppliSoccerClientSide.Views;
+using AppliSoccerObjects.Modeling;
 using System;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -11,6 +12,7 @@ namespace AppliSoccerClientSide.Views
     public partial class LoginPage : ContentPage
     {
         private ViewsPermissionManager _permissionManager;
+        private TeamMember _loggedTeamMember;
         public LoginPage()
         {
             InitializeComponent();
@@ -19,20 +21,27 @@ namespace AppliSoccerClientSide.Views
 
         private async void LoginButton_Clicked(object sender, System.EventArgs e)
         {
-            if (IsValidUser())
+            if (await IsValidUser())
             {
-                _permissionManager.OnUserLogin();
-                await Shell.Current.GoToAsync($"//{nameof(SchedulePage)}");
+                ApplicationGlobalData.Insert(_loggedTeamMember);
+                _permissionManager.UpdateUserPermissions(_loggedTeamMember);
+                await Shell.Current.GoToAsync($"//{nameof(PlayersPage)}");
+                //await Shell.Current.GoToAsync($"//{nameof(SchedulePage)}");
+            }
+            else
+            {
+                await DisplayAlert("Login error", "User is not valid!", "cancel");
             }
         }
 
-        private bool IsValidUser()
+        private async Task<bool> IsValidUser()
         {
-            if(UsernameEntry.Text == null || PasswordEntry.Text == null)
+            if (UsernameEntry.Text == null || PasswordEntry.Text == null)
             {
                 return false;
             }
-            return UsernameEntry.Text.Equals("nadav") && PasswordEntry.Text.Equals("nadav");
+            _loggedTeamMember = await AppliSoccerServerService.AppServer.Login(UsernameEntry.Text, PasswordEntry.Text);
+            return _loggedTeamMember != null;
         }
 
         private async void RegisterButton_Clicked(object sender, EventArgs e)

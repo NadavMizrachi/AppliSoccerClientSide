@@ -89,6 +89,16 @@ namespace AppliSoccerConnector
                 Console.WriteLine(errorInfo);
                 throw new Exception(errorInfo);
             }
+
+            foreach (var member in response.Data)
+            {
+                if (member.AdditionalInfo != null)
+                {
+                    Debug.WriteLine("Member name:" + member.FirstName + "Additional Info: " + member.AdditionalInfo.ToString());
+                }
+            }
+
+            List<TeamMember> result = Deserialize
             return response.Data;
         }
 
@@ -117,6 +127,29 @@ namespace AppliSoccerConnector
                 Debug.WriteLine("Got response for CreateUser, but the creation failed");
             }
             return isCreationSucceed;
+        }
+
+        public async Task<TeamMember> Login(string username, string password)
+        {
+            var request = new RestRequest(LoginConfig.LoginPath, LoginConfig.LoginMethod);
+            request.AddQueryParameter(LoginConfig.UsernameParamName, username);
+            request.AddQueryParameter(LoginConfig.PasswordParamName, password);
+            var response = await _client.ExecuteAsync<TeamMember>(request);
+            
+            if (!response.IsSuccessful)
+            {
+                Debug.WriteLine("The request of Login was not success");
+                string errorInfo = "Did not received successfull response for Login request. More details: " + response.ErrorMessage +
+                    " Inner exception details: " + response.ErrorException.InnerException;
+                Console.WriteLine(errorInfo);
+                throw new Exception(errorInfo);
+            }
+            TeamMember teamMember = response.Data;
+            if (teamMember == null)
+            {
+                Debug.WriteLine("Login faild");
+            }
+            return teamMember;
         }
     }
 }

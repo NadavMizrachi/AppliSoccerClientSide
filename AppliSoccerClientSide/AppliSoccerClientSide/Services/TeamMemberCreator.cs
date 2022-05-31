@@ -76,6 +76,7 @@ namespace AppliSoccerClientSide.Services
         {
             return new TeamMember()
             {
+                MemberType = MemberType.Player,
                 AdditionalInfo = new PlayerAdditionalInfo()
             };
         }
@@ -84,6 +85,7 @@ namespace AppliSoccerClientSide.Services
         {
             return new TeamMember()
             {
+                MemberType = MemberType.Staff,
                 AdditionalInfo = new StaffAdditionalInfo()
             };
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AppliSoccerObjects.Modeling;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -26,12 +27,25 @@ namespace AppliSoccerClientSide.Services
             return _viewsPermissionManager;
         }
 
-        internal void OnUserLogin()
+
+        public void  UpdateUserPermissions(TeamMember teamMember)
+        {
+            if(teamMember.MemberType == MemberType.Admin)
+            {
+                OnAdminLogin();
+            }
+            else
+            {
+                OnUnadminLogin();
+            }
+        }
+
+        private void OnUnadminLogin()
         {
             _appShell.IsSchedulePageAllowed = true;
         }
 
-        public void OnAdminLogin()
+        private void OnAdminLogin()
         {
             _appShell.IsSchedulePageAllowed = false;
         }
