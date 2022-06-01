@@ -20,6 +20,8 @@ namespace AppliSoccerClientSide.Views
         public TeamMember TeamMember { get; set; }
         public ObservableCollection<TeamMember> Players { get; set; }
 
+        private bool _wasAppeared = false;
+
         public PlayersPage()
         {
             InitializeComponent();
@@ -30,8 +32,9 @@ namespace AppliSoccerClientSide.Views
                 AddAdminToolBarItems();
             }
             Players = new ObservableCollection<TeamMember>();
-            PullPlayersFromServer();
         }
+
+
 
         private void AddAdminToolBarItems()
         {
@@ -42,54 +45,26 @@ namespace AppliSoccerClientSide.Views
             ToolbarItems.Add(addToolBarItem);
         }
 
-        //protected override async void OnAppearing()
-        //{
-        //    base.OnAppearing();
-        //    try
-        //    {
-        //        await
-        //    }catch(Exception ex)
-        //    {
-        //        Debug.WriteLine("There was exception during pulling players for server. Exception details: " + ex.Message);
-        //    }
-        //}
-
-        private void PullPlayersFromServer()
+        
+        protected override async void OnAppearing()
         {
-            //var teamMembers = await AppliSoccerServerService.AppServer.PullTeamMembers(TeamMember.TeamId);
-            //var players = teamMembers.Select(teamMember => teamMember.MemberType == MemberType.Player);
-            //// Set to UI list
-            Task.Run(() =>
-              {
-                  List<TeamMember> members = new List<TeamMember>();
-                  members.Add(new TeamMember() { 
-                      FirstName = "Itay",
-                      LastName = "Shechter",
-                      BirthDate = DateTime.Now, 
-                      Description = "Very good player",
-                      ID = "ssd",
-                      PhoneNumber = "0525958889",
-                      AdditionalInfo = new PlayerAdditionalInfo()
-                      {
-                          Number = 9,
-                          Role = Role.Attacker
-                      }
-                  });
-                  members.Add(new TeamMember() { FirstName = "Dor", LastName = "Micha" });
-                  members.Add(new TeamMember() { FirstName = "Miguel", LastName = "Vitor" });
-                  members.Add(new TeamMember() { FirstName = "Miguel", LastName = "Vitor" });
-                  members.Add(new TeamMember() { FirstName = "Miguel", LastName = "Vitor" });
-                  members.Add(new TeamMember() { FirstName = "Miguel", LastName = "Vitor" });
-                  members.Add(new TeamMember() { FirstName = "Miguel", LastName = "Vitor" });
-                  members.Add(new TeamMember() { FirstName = "Miguel", LastName = "Vitor" });
-                  members.Add(new TeamMember() { FirstName = "Miguel", LastName = "Vitor" });
-                  members.Add(new TeamMember() { FirstName = "Miguel", LastName = "Vitor" });
-                  members.Add(new TeamMember() { FirstName = "Miguel", LastName = "Vitor" });
-                  members.Add(new TeamMember() { FirstName = "Miguel", LastName = "Vitor" });
-                  members.ForEach(member => Players.Add(member));
-                  PlayersListView.ItemsSource = Players;
-              }).Wait();
-            
+            base.OnAppearing();
+            if (!_wasAppeared)
+            {
+                await PullPlayersFromServer();
+                _wasAppeared = true;
+            }
+        }
+
+        private async Task PullPlayersFromServer()
+        {
+            IsBusy = true;
+            var teamMembers = await AppliSoccerServerService.AppServer.PullTeamMembers(TeamMember.TeamId);
+            var playersFromServer = teamMembers.Where(teamMember => teamMember.MemberType == MemberType.Player).ToList();
+            playersFromServer.ForEach(member => Players.Add(member));
+            PlayersListView.ItemsSource = Players;
+            PlayersListView.ItemsSource = playersFromServer;
+            IsBusy = false;
         }
    
         private async void PlayersListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -111,6 +86,11 @@ namespace AppliSoccerClientSide.Views
         private async void AddItem_Clicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new NewPlayerPage());
+        }
+
+        private async void PlayersListView_Refreshing(object sender, EventArgs e)
+        {
+            await PullPlayersFromServer();
         }
     }
 }

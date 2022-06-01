@@ -7,6 +7,9 @@
         <ListView  x:Name="PlayersListView"
                    BackgroundColor="Transparent"
                    HasUnevenRows="True"
+                   IsPullToRefreshEnabled="True"
+                   Refreshing="PlayersListView_Refreshing"
+                   IsRefreshing="{Binding IsBusy, Mode=OneWay}"
                    ItemSelected="PlayersListView_ItemSelected"
                    ItemTapped="PlayersListView_ItemTapped">
             <ListView.ItemTemplate>

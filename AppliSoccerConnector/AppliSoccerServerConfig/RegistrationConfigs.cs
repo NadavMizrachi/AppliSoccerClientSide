@@ -34,7 +34,5 @@ namespace AppliSoccerConnector.AppliSoccerServerConfig
         // User is parameter for BODY ! 
         #endregion
 
-
-
     }
 }

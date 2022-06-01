@@ -1,6 +1,7 @@
 ﻿using AppliSoccerConnector.AppliSoccerServerConfig;
 using AppliSoccerObjects.Modeling;
 using AppliSoccerObjects.ResponseObjects;
+using Newtonsoft.Json;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -94,13 +95,28 @@ namespace AppliSoccerConnector
             {
                 if (member.AdditionalInfo != null)
                 {
-                    Debug.WriteLine("Member name:" + member.FirstName + "Additional Info: " + member.AdditionalInfo.ToString());
+                    object additionalInfo = DeserializeAdditionalInfo(member);
+                    member.AdditionalInfo = additionalInfo;
                 }
             }
-
-            List<TeamMember> result = Deserialize
             return response.Data;
         }
+
+        private object DeserializeAdditionalInfo(TeamMember member)
+        {
+            string additionalInfoAsJson = JsonConvert.SerializeObject(member.AdditionalInfo).ToString();
+            Debug.WriteLine("Additional Info of " + member.FirstName + " " + member.LastName + " " + additionalInfoAsJson);
+            if(member.MemberType == MemberType.Player)
+            {
+                return JsonConvert.DeserializeObject<PlayerAdditionalInfo>(additionalInfoAsJson);
+            }
+            else if(member.MemberType == MemberType.Staff)
+            {
+                return JsonConvert.DeserializeObject<PlayerAdditionalInfo>(additionalInfoAsJson);
+            }
+            return null;
+        }
+
 
         public Task<bool> UpdateTeamMember(TeamMember teamMember)
         {
