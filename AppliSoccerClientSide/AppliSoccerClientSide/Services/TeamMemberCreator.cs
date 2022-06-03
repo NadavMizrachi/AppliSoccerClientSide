@@ -1,6 +1,7 @@
 ﻿using AppliSoccerObjects.Modeling;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace AppliSoccerClientSide.Services
@@ -24,7 +25,7 @@ namespace AppliSoccerClientSide.Services
             };
         }
 
-        internal static void PreparePlayerTeamMemberForRegistration(TeamMember AdminMemberDetails, User newUser)
+        internal static void PrepareTeamMemberForRegistration(TeamMember AdminMemberDetails, User newUser)
         {
             newUser.TeamMember.TeamId = AdminMemberDetails.TeamId;
             newUser.TeamMember.TeamName = AdminMemberDetails.TeamName;
@@ -33,27 +34,41 @@ namespace AppliSoccerClientSide.Services
 
         public static Object CopyAdditionalInfo(TeamMember memberToCopy)
         {
+            if(memberToCopy.AdditionalInfo == null)
+            {
+                return null;
+            }
 
             switch (memberToCopy.MemberType)
             {
                 case MemberType.Player:
                     {
-                        if (memberToCopy.AdditionalInfo == null)
-                        {
-                            memberToCopy.AdditionalInfo = new PlayerAdditionalInfo();
-                        }
-                        return (PlayerAdditionalInfo)memberToCopy.AdditionalInfo;
+                        return CopyPlayerAdditionalInfo((PlayerAdditionalInfo)memberToCopy.AdditionalInfo);
                     }
                 case MemberType.Staff:
                     {
-                        if (memberToCopy.AdditionalInfo == null)
-                        {
-                            memberToCopy.AdditionalInfo = new StaffAdditionalInfo();
-                        }
-                        return (StaffAdditionalInfo)memberToCopy.AdditionalInfo;
+                        return CopyStaffAddiotionalInfo((StaffAdditionalInfo)memberToCopy.AdditionalInfo);
                     }
-                default: return (PlayerAdditionalInfo)memberToCopy.AdditionalInfo;
+                default: return null;
             }
+        }
+
+        private static PlayerAdditionalInfo  CopyPlayerAdditionalInfo(PlayerAdditionalInfo info)
+        {
+            return new PlayerAdditionalInfo()
+            {
+                Number = info.Number,
+                Role = info.Role
+            };
+        }
+
+        private static StaffAdditionalInfo CopyStaffAddiotionalInfo(StaffAdditionalInfo info)
+        {
+            return new StaffAdditionalInfo()
+            {
+                IsCoach = info.IsCoach,
+                ManagedRoles = info.ManagedRoles.ToList()
+            };
         }
 
         internal static TeamMember CreateEmptyTeamMember(MemberType memberType)

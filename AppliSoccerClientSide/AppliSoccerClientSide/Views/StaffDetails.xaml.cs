@@ -1,8 +1,9 @@
 ﻿using AppliSoccerClientSide.Services;
+using AppliSoccerClientSide.ViewModel;
 using AppliSoccerObjects.Modeling;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -14,24 +15,21 @@ using Xamarin.Forms.Xaml;
 namespace AppliSoccerClientSide.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class PlayerDetails : ContentPage
+
+    public partial class StaffDetails : ContentPage
     {
         public bool IsAdmin { get; set; }
         public bool IsCoach { get; set; }
         public TeamMember MyMember { get; set; }
-        public TeamMember PlayerToShow { get; set; }
-        public List<string> RoleNames
-        {
-            get
-            {
-                return Enum.GetNames(typeof(Role)).ToList();
-            }
-        }
-        public PlayerDetails(TeamMember playerToShow)
+        public TeamMember StaffToShow { get; set; }
+        public ObservableCollection<ManagedRoleView> ManagedRoles { get; set; }
+
+        public StaffDetails(TeamMember staffToShow)
         {
             InitializeComponent();
-            PlayerToShow = playerToShow;// TeamMemberCreator.CopyTeamMember(playerToShow);
-            Title = CreateTitle();
+            StaffToShow = staffToShow;
+            Title = CreateTitle(staffToShow);
+            UpdateManagedRoles(StaffToShow);
             MyMember = ApplicationGlobalData.GetMyTeamMember();
             IsCoach = ((StaffAdditionalInfo)MyMember.AdditionalInfo).IsCoach;
             IsAdmin = (MyMember.MemberType == MemberType.Admin);
@@ -40,9 +38,28 @@ namespace AppliSoccerClientSide.Views
                 AddAdminToolBarItems();
             }
             BindingContext = this;
-            
         }
 
+        private void UpdateManagedRoles(TeamMember staffToShow)
+        {
+            var staffAdditionalInfo = (StaffAdditionalInfo)staffToShow.AdditionalInfo;
+            ManagedRoles = new ObservableCollection<ManagedRoleView>();
+            bool isNoManagedRoles = (staffToShow.AdditionalInfo == null ||
+                                    staffAdditionalInfo.ManagedRoles == null ||
+                                    staffAdditionalInfo.ManagedRoles.Count == 0);
+            if (isNoManagedRoles)
+            {
+                return;
+            }
+            List<ManagedRoleView> managedRolesViews =
+               ManagedRoleView.CreateManagedRoleViews(staffAdditionalInfo.ManagedRoles);
+            managedRolesViews.ForEach(roleStr => ManagedRoles.Add(roleStr));
+        }
+
+        private string CreateTitle(TeamMember staffToShow)
+        {
+            return staffToShow.FirstName + " " + staffToShow.LastName;
+        }
         private void AddAdminToolBarItems()
         {
             var editToolBarItem = new ToolbarItem() { Text = "Edit" };
@@ -55,41 +72,27 @@ namespace AppliSoccerClientSide.Views
             ToolbarItems.Add(removeToolBarItem);
         }
 
-        private string CreateTitle()
-        {
-            if(PlayerToShow.AdditionalInfo != null)
-            {
-                int playerNumber = ((PlayerAdditionalInfo)PlayerToShow.AdditionalInfo).Number;
-                return "#" + playerNumber + " " + PlayerToShow.LastName;
-            }
-            else
-            {
-                return PlayerToShow.FirstName + " " + PlayerToShow.LastName;
-            }
-            
-        }
+
 
         private void EnableEditMode()
         {
             FirstNameEntry.IsReadOnly = false;
             LastNameEntry.IsReadOnly = false;
             PhoneNumberEntry.IsReadOnly = false;
-            
+
             BirthdatePicker.IsVisible = true;
             BirthdateLabel.IsVisible = false;
 
             DescriptionEditor.IsReadOnly = false;
-
+           
             EnableRoleEditting();
 
-            NumberEntry.IsReadOnly = false;
         }
-
         private async void RemoveButton_Clicked(object sender, EventArgs e)
         {
             bool yes = await DisplayAlert(
                 "Edit confiramtion",
-                $"Do you want to remove {PlayerToShow.FirstName} {PlayerToShow.LastName}?", "Yes", "No");
+                $"Do you want to remove {StaffToShow.FirstName} {StaffToShow.LastName}?", "Yes", "No");
             Debug.WriteLine("Answer: " + yes);
             if (!yes)
             {
@@ -98,7 +101,7 @@ namespace AppliSoccerClientSide.Views
 
             try
             {
-                bool isRemoved = await AppliSoccerServerService.AppServer.RemoveMember(PlayerToShow);
+                bool isRemoved = await AppliSoccerServerService.AppServer.RemoveMember(StaffToShow);
                 if (isRemoved)
                 {
                     await Navigation.PopAsync();
@@ -109,7 +112,7 @@ namespace AppliSoccerClientSide.Views
                     return;
                 }
             }
-            catch( Exception ex)
+            catch (Exception ex)
             {
                 await DisplayAlert("Error", "Error has occurred during trying remove member", "Cancel");
             }
@@ -134,8 +137,8 @@ namespace AppliSoccerClientSide.Views
             // Send the new object to server
             try
             {
-                TeamMember teamMemberNew = await AppliSoccerServerService.AppServer.UpdateTeamMember(PlayerToShow);
-                
+                TeamMember teamMemberNew = await AppliSoccerServerService.AppServer.UpdateTeamMember(StaffToShow);
+
                 if (teamMemberNew != null)
                 {
                     await Navigation.PopAsync();
@@ -144,7 +147,8 @@ namespace AppliSoccerClientSide.Views
                 {
                     await DisplayAlert("Error", "Cannot save changes", "Cancel");
                 }
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 await DisplayAlert("Error", "Cannot save changes", "Cancel");
             }
@@ -156,14 +160,12 @@ namespace AppliSoccerClientSide.Views
         {
             EnableRoleEditting();
             SaveButton.IsVisible = true;
-            
-            RolePicker.Focus();
+
         }
 
         private void EnableRoleEditting()
         {
-            RolePicker.IsVisible = true;
-            RoleLabel.IsVisible = false;
+            ManagedRoleView.MarkAllAsVisibleForEditing(ManagedRoles);
         }
     }
 }

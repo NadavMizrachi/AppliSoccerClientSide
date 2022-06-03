@@ -9,7 +9,7 @@ namespace AppliSoccerClientSide.Services
 {
     public class TeamMemberValidator
     {
-        private TeamMember _teamMember;
+        protected TeamMember _teamMember;
         public TeamMemberValidator(TeamMember teamMember)
         {
             _teamMember = teamMember;
@@ -49,9 +49,14 @@ namespace AppliSoccerClientSide.Services
             return Regex.IsMatch(str, @"^[a-zA-Z]+$");
         }
 
-        private bool IsValidBirthDate()
+        public bool IsValidBirthDate()
         {
             return _teamMember.BirthDate != null;
+        }
+
+        public virtual bool IsValidAdditionalInfo()
+        {
+            return _teamMember.AdditionalInfo != null;
         }
 
     }

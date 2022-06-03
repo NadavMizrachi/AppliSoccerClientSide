@@ -15,10 +15,10 @@ namespace AppliSoccerClientSide.Services
             };
         }
 
-        public static void PreparePlayerUserForRegistration(TeamMember AdminMemberDetails, User newUser)
+        public static void PrepareUserForRegistration(TeamMember AdminMemberDetails, User newUser)
         {
             newUser.IsAdmin = false;
-            TeamMemberCreator.PreparePlayerTeamMemberForRegistration(AdminMemberDetails, newUser);
+            TeamMemberCreator.PrepareTeamMemberForRegistration(AdminMemberDetails, newUser);
         }
     }
 }

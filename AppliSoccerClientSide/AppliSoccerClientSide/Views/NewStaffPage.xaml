@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ec="clr-namespace:AppliSoccerClientSide.Extensions"
+             xmlns:models="clr-namespace:AppliSoccerClientSide.Models"
+             x:Class="AppliSoccerClientSide.Views.NewStaffPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ec:IntEnumConverter x:Key="IntEnum" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <ContentPage.Content>
+        <StackLayout Padding="20,0,20,0">
+
+            <!--Username-->
+            <Entry Text="{Binding NewUser.Username, Mode=TwoWay}"
+                   Placeholder="Username" />
+
+            <!--Password-->
+            <Entry Text="{Binding NewUser.Password, Mode=TwoWay}"
+                   Placeholder="Password" />
+
+            <!--FirstName-->
+            <Entry Text="{Binding NewUser.TeamMember.FirstName, Mode=TwoWay}"
+                   Placeholder="First Name" />
+
+            <!--LastName-->
+            <Entry Text="{Binding NewUser.TeamMember.LastName, Mode=TwoWay}"
+                   Placeholder="Last Name" />
+
+
+            <!--Is Coach-->
+            <StackLayout Orientation="Horizontal">
+                <CheckBox x:Name="IsCoachCheckBox"
+                          IsChecked="{Binding IsCoach, Mode=OneWayToSource}"/>
+                <Label Text="Is Coach" />
+            </StackLayout>
+            <!--Staff Managed Roles -->
+            <StackLayout Orientation="Vertical"
+                         IsVisible="{Binding ShowManagedRolePicker}">
+                <Label Text="Choose Managerd Roles"
+                       FontSize="Small"
+                       TextColor="Gray"
+                       VerticalOptions="Center" />
+                <ListView x:Name="MyListView"
+                          ItemTapped="MyListView_ItemTapped"
+                          ItemsSource="{x:Static models:Enums.RoleNames}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Orientation="Horizontal">
+                                    <CheckBox CheckedChanged="CheckBox_CheckedChanged"/>
+                                    <Label Text="{Binding .}" />
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+            
+            <!--Phone-->
+            <Entry x:Name="PhoneNumberEntry"
+                   Keyboard="Telephone"
+                   MaxLength="10"
+                   Placeholder="Phone Number"
+                   Text="{Binding NewUser.TeamMember.PhoneNumber, Mode=TwoWay}" />
+
+
+            <!--Birth Date-->
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Birth Date"
+                       FontSize="Small"
+                       TextColor="Gray"
+                       VerticalOptions="Center" />
+                <DatePicker x:Name="BirthdatePicker"
+                            Date="{Binding NewUser.TeamMember.BirthDate, Mode=TwoWay}" />
+            </StackLayout>
+
+            
+
+            <!--Description-->
+            <Editor x:Name="DescriptionEditor"
+                    TextColor="Black"
+                    Placeholder="Type Staff Member Description"
+                    PlaceholderColor="{StaticResource SystemGray}"
+                    Text="{Binding NewUser.TeamMember.Description}" />
+
+            
+            <!--Create Staff Button-->
+            <Button Text="Create Staff"
+                    Clicked="CreateButton_Clicked" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

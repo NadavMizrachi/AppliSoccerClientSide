@@ -3,10 +3,34 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppliSoccerClientSide.Views.StaffMembersPage">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <ListView  x:Name="StaffMembersListView"
+                   BackgroundColor="Transparent"
+                   HasUnevenRows="True"
+                   IsPullToRefreshEnabled="True"
+                   Refreshing="StaffMembersListView_Refreshing"
+                   IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+                   ItemTapped="StaffMembersListView_ItemTapped">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid Padding="10">
+                            <Frame>
+                                <StackLayout>
+                                    <StackLayout Orientation="Horizontal"
+                                                 VerticalOptions="Center">
+                                        <Label VerticalOptions="Center"
+                                               FontSize="Medium"
+                                               Text="{Binding FirstName}" />
+                                        <Label VerticalOptions="Center"
+                                               FontSize="Medium"
+                                               Text="{Binding LastName}" />
+                                    </StackLayout>
+                                </StackLayout>
+                            </Frame>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </ContentPage.Content>
 </ContentPage>

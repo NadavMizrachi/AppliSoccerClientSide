@@ -15,5 +15,7 @@ namespace AppliSoccerClientSide.Models
                 return Enum.GetNames(typeof(Role)).ToList();
             }
         }
+
+       
     }
 }

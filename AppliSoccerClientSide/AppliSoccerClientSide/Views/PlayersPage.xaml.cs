@@ -18,23 +18,49 @@ namespace AppliSoccerClientSide.Views
     public partial class PlayersPage : ContentPage
     {
         public TeamMember TeamMember { get; set; }
-        public ObservableCollection<TeamMember> Players { get; set; }
+        public ObservableCollection<TeamMember> PlayerMembers { get; set; }
 
         private bool _wasAppeared = false;
 
         public PlayersPage()
         {
             InitializeComponent();
-            TeamMember = ApplicationGlobalData.GetMyTeamMember();
             BindingContext = this;
-            if(TeamMember.MemberType == MemberType.Admin)
+            PlayerMembers = new ObservableCollection<TeamMember>();
+            TeamMember = ApplicationGlobalData.GetMyTeamMember();
+            if (TeamMember.MemberType == MemberType.Admin)
             {
                 AddAdminToolBarItems();
             }
-            Players = new ObservableCollection<TeamMember>();
+            //PullPlayersFromServer().Wait();
         }
 
 
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            if (!_wasAppeared)
+            {
+                await PullPlayersFromServer();
+                _wasAppeared = true;
+            }
+            
+        }
+
+        //protected override async void OnDisappearing()
+        //{
+        //    base.OnDisappearing();
+        //    CleanPage();
+        //}
+
+        //private void CleanPage()
+        //{
+        //    TeamMember = null;
+        //    if(ToolbarItems.Count == 1)
+        //    {
+        //        ToolbarItems.RemoveAt(0);
+        //    }
+        //}
 
         private void AddAdminToolBarItems()
         {
@@ -44,48 +70,41 @@ namespace AppliSoccerClientSide.Views
 
             ToolbarItems.Add(addToolBarItem);
         }
-
-        
-        protected override async void OnAppearing()
+        private async void AddItem_Clicked(object sender, EventArgs e)
         {
-            base.OnAppearing();
-            if (!_wasAppeared)
-            {
-                await PullPlayersFromServer();
-                _wasAppeared = true;
-            }
+            await Navigation.PushAsync(new NewPlayerPage());
         }
+
+
 
         private async Task PullPlayersFromServer()
         {
             IsBusy = true;
             var teamMembers = await AppliSoccerServerService.AppServer.PullTeamMembers(TeamMember.TeamId);
             var playersFromServer = teamMembers.Where(teamMember => teamMember.MemberType == MemberType.Player).ToList();
-            playersFromServer.ForEach(member => Players.Add(member));
-            PlayersListView.ItemsSource = Players;
+            playersFromServer.ForEach(member => PlayerMembers.Add(member));
+            PlayersListView.ItemsSource = PlayerMembers;
             PlayersListView.ItemsSource = playersFromServer;
             IsBusy = false;
         }
    
-        private async void PlayersListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
-        {
-            //((ListView)sender).SelectedItem = null;
-        }
-
-        
+   
 
         // TODO: Prevent trigger openning player edit page when tapping fast on the same player
         private async void PlayersListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
+            ((ListView)sender).IsEnabled = false;
+            
+            // don't do anything if we just de-selected the row.
+            if (e.Item == null) return;
+            // Deselect the item.
+            //if (sender is ListView lv) lv.SelectedItem = null;
+
+
             var chosenPlayer = ((ListView)sender).SelectedItem as TeamMember;
             var copiedObject = TeamMemberCreator.CopyTeamMember(chosenPlayer);
             await Navigation.PushAsync(new PlayerDetails(copiedObject));
-        }
-
-
-        private async void AddItem_Clicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new NewPlayerPage());
+            ((ListView)sender).IsEnabled = true;
         }
 
         private async void PlayersListView_Refreshing(object sender, EventArgs e)

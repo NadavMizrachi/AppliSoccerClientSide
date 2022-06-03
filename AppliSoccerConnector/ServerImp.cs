@@ -1,4 +1,5 @@
 ﻿using AppliSoccerConnector.AppliSoccerServerConfig;
+using AppliSoccerConnector.HttpUtils;
 using AppliSoccerObjects.Modeling;
 using AppliSoccerObjects.ResponseObjects;
 using Newtonsoft.Json;
@@ -9,17 +10,21 @@ using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Reflection;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
+using AppliSoccerConnector.JsonUtils;
 
 namespace AppliSoccerConnector
 {
     public class ServerImp : IAppServer
     {
         private RestClient _client;
-        
+        private ResponseStatusHandler _responseStatusHandler;
         public ServerImp()
         {
             _client = CreateClient();
+            _responseStatusHandler = new ResponseStatusHandler();
         }
         private RestClient CreateClient()
         {
@@ -33,13 +38,10 @@ namespace AppliSoccerConnector
         {
             var request = new RestRequest(RegistrationConfigs.GetCountriesPath, RegistrationConfigs.GetCountriesMethod);
             var response = await _client.ExecuteAsync<List<string>>(request);
-            if (!response.IsSuccessful)
-            {
-                string errorInfo = "Did not received successfull response for GET_COUNTRIES request. More details: " + response.ErrorMessage +
-                    " Inner exception details: " + response.ErrorException.InnerException;
-                Console.WriteLine(errorInfo);
-                throw new Exception(errorInfo);
-            }
+
+            var functionName = GetCurrentMethod();
+            _responseStatusHandler.ThrowExceptionIfNotSucces(response, functionName);
+
             return response.Data;
         }
 
@@ -49,13 +51,9 @@ namespace AppliSoccerConnector
             request.AddParameter(RegistrationConfigs.CountryParamName, country);
             var response = await _client.ExecuteAsync<IEnumerable<TeamDetails>>(request);
 
-            if (!response.IsSuccessful)
-            {
-                string errorInfo = "Did not received successfull response for GET_TEAMS request. More details: " + response.ErrorMessage +
-                    " Inner exception details: " + response.ErrorException.InnerException;
-                Console.WriteLine(errorInfo);
-                throw new Exception(errorInfo);
-            }
+            var functionName = GetCurrentMethod();
+            _responseStatusHandler.ThrowExceptionIfNotSucces(response, functionName);
+
             return response.Data;
         }
 
@@ -67,60 +65,44 @@ namespace AppliSoccerConnector
             request.AddQueryParameter(RegistrationConfigs.PasswordParamName, adminPassword);
             var response = await _client.ExecuteAsync<TeamMember>(request);
 
-            if (!response.IsSuccessful)
-            {
-                string errorInfo = "Did not received successfull response for REGISTER_TEAM request. More details: " + response.ErrorMessage +
-                    " Inner exception details: " + response.ErrorException.InnerException;
-                Console.WriteLine(errorInfo);
-                throw new Exception(errorInfo);
-            }
+            var functionName = GetCurrentMethod();
+            _responseStatusHandler.ThrowExceptionIfNotSucces(response, functionName);
+
             return response.Data;
         }
 
         public async Task<List<TeamMember>> PullTeamMembers(string teamId)
         {
-            var request = new RestRequest(TeamMembersConfig.GetTeamMembersPath, TeamMembersConfig.GetCountriesMethod);
+            var request = new RestRequest(TeamMembersConfig.GetTeamMembersPath, TeamMembersConfig.GetTeamMembersMethod);
             request.AddQueryParameter(TeamMembersConfig.TeamIdParamName, teamId);
             var response = await _client.ExecuteAsync<List<TeamMember>>(request);
 
-            if (!response.IsSuccessful)
-            {
-                string errorInfo = "Did not received successfull response for PullTemMembers request. More details: " + response.ErrorMessage +
-                    " Inner exception details: " + response.ErrorException.InnerException;
-                Console.WriteLine(errorInfo);
-                throw new Exception(errorInfo);
-            }
+            var functionName = GetCurrentMethod();
+            _responseStatusHandler.ThrowExceptionIfNotSucces(response, functionName);
 
             foreach (var member in response.Data)
             {
                 if (member.AdditionalInfo != null)
                 {
-                    object additionalInfo = DeserializeAdditionalInfo(member);
+                    object additionalInfo = TeamMemberDeserialization.DeserializeAdditionalInfo(member);
                     member.AdditionalInfo = additionalInfo;
                 }
             }
             return response.Data;
         }
 
-        private object DeserializeAdditionalInfo(TeamMember member)
-        {
-            string additionalInfoAsJson = JsonConvert.SerializeObject(member.AdditionalInfo).ToString();
-            Debug.WriteLine("Additional Info of " + member.FirstName + " " + member.LastName + " " + additionalInfoAsJson);
-            if(member.MemberType == MemberType.Player)
-            {
-                return JsonConvert.DeserializeObject<PlayerAdditionalInfo>(additionalInfoAsJson);
-            }
-            else if(member.MemberType == MemberType.Staff)
-            {
-                return JsonConvert.DeserializeObject<PlayerAdditionalInfo>(additionalInfoAsJson);
-            }
-            return null;
-        }
 
-
-        public Task<bool> UpdateTeamMember(TeamMember teamMember)
+        public async Task<TeamMember> UpdateTeamMember(TeamMember teamMemberNewDetails)
         {
-            throw new NotImplementedException();
+            var request = new RestRequest(TeamMembersConfig.UpdateTeamMemberPath, TeamMembersConfig.UpdateTeamMemberMethod);
+            request.AddHeader("Accept", "application/json");
+            request.AddJsonBody(teamMemberNewDetails);
+            var response = await _client.ExecuteAsync<TeamMember>(request);
+
+            var functionName = GetCurrentMethod();
+            _responseStatusHandler.ThrowExceptionIfNotSucces(response, functionName);
+
+            return response.Data;
         }
 
         public async Task<bool> CreateUser(User newUser)
@@ -129,14 +111,10 @@ namespace AppliSoccerConnector
             request.AddHeader("Accept", "application/json");
             request.AddJsonBody(newUser);
             var response = await _client.ExecuteAsync<bool>(request);
-            if(!response.IsSuccessful)
-            {
-                Debug.WriteLine("The request of CreateUser was not success");
-                string errorInfo = "Did not received successfull response for CreateUser request. More details: " + response.ErrorMessage +
-                    " Inner exception details: " + response.ErrorException.InnerException;
-                Console.WriteLine(errorInfo);
-                throw new Exception(errorInfo);
-            }
+
+            var functionName = GetCurrentMethod();
+            _responseStatusHandler.ThrowExceptionIfNotSucces(response, functionName);
+
             bool isCreationSucceed = response.Data;
             if (!isCreationSucceed)
             {
@@ -151,21 +129,38 @@ namespace AppliSoccerConnector
             request.AddQueryParameter(LoginConfig.UsernameParamName, username);
             request.AddQueryParameter(LoginConfig.PasswordParamName, password);
             var response = await _client.ExecuteAsync<TeamMember>(request);
-            
-            if (!response.IsSuccessful)
-            {
-                Debug.WriteLine("The request of Login was not success");
-                string errorInfo = "Did not received successfull response for Login request. More details: " + response.ErrorMessage +
-                    " Inner exception details: " + response.ErrorException.InnerException;
-                Console.WriteLine(errorInfo);
-                throw new Exception(errorInfo);
-            }
+
+            var functionName = GetCurrentMethod();
+            _responseStatusHandler.ThrowExceptionIfNotSucces(response, functionName);
+
             TeamMember teamMember = response.Data;
             if (teamMember == null)
             {
                 Debug.WriteLine("Login faild");
             }
             return teamMember;
+        }
+
+        public async Task<bool> RemoveMember(TeamMember memberToRemove)
+        {
+            var request = new RestRequest(TeamMembersConfig.RemoveTeamMemberPath, TeamMembersConfig.RemoveTeamMemberMethod);
+            request.AddHeader("Accept", "application/json");
+            request.AddJsonBody(memberToRemove);
+            var response = await _client.ExecuteAsync<bool>(request);
+
+            var functionName = GetCurrentMethod();
+            _responseStatusHandler.ThrowExceptionIfNotSucces(response, functionName);
+
+            return response.Data;
+        }
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        public string GetCurrentMethod()
+        {
+            var st = new StackTrace();
+            var sf = st.GetFrame(1);
+
+            return sf.GetMethod().Name;
         }
     }
 }

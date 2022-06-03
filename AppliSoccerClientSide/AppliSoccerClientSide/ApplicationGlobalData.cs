@@ -1,4 +1,5 @@
-﻿using AppliSoccerObjects.Modeling;
+﻿using AppliSoccerConnector.JsonUtils;
+using AppliSoccerObjects.Modeling;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace AppliSoccerClientSide
         private readonly static IDictionary<string, object> _appProperties 
             = Application.Current.Properties;
 
+        // TODO - deserialize once and then cache the object
         public static void Insert(TeamMember teamMember)
         {
             var objAsJson = JsonConvert.SerializeObject(teamMember);
@@ -27,7 +29,10 @@ namespace AppliSoccerClientSide
             }
             string teamMemberAsJson = _appProperties[AppPropertiesConsts.TeamMemberKey].ToString();
             Debug.WriteLine("Team member as json : " + teamMemberAsJson);
-            return JsonConvert.DeserializeObject<TeamMember>(teamMemberAsJson);
+            TeamMember teamMember = JsonConvert.DeserializeObject<TeamMember>(teamMemberAsJson);
+            object additionalInfo = TeamMemberDeserialization.DeserializeAdditionalInfo(teamMember);
+            teamMember.AdditionalInfo = additionalInfo;
+            return teamMember;
         }
     }
 }

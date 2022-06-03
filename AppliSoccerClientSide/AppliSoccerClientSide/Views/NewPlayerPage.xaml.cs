@@ -30,49 +30,50 @@ namespace AppliSoccerClientSide.Views
             RolePicker.SelectedIndex = (int)Role.GoalKeeper;
         }
 
-        private async Task<bool> ValidateNewPlayerAsync()
-        {
-            RegistrationDetailsValidator validator =
-                new RegistrationDetailsValidator(NewUser.Username, NewUser.Password, null);
-            if (!validator.IsValidUsername())
-            {
-                await DisplayAlert("Details Error", "Username is not valid!", "cancel");
-                return false;
-            }
-            if (!validator.IsValidPassword())
-            {
-                await DisplayAlert("Details Error", "Password is not valid!", "cancel");
-                return false;
-            }
+        //private async Task<bool> ValidateNewPlayerAsync()
+        //{
+        //    RegistrationDetailsValidator validator =
+        //        new RegistrationDetailsValidator(NewUser.Username, NewUser.Password, null);
+        //    if (!validator.IsValidUsername())
+        //    {
+        //        await DisplayAlert("Details Error", "Username is not valid!", "cancel");
+        //        return false;
+        //    }
+        //    if (!validator.IsValidPassword())
+        //    {
+        //        await DisplayAlert("Details Error", "Password is not valid!", "cancel");
+        //        return false;
+        //    }
 
-            TeamMemberValidator teamMemberValidator =
-                new TeamMemberValidator(NewUser.TeamMember);
+        //    TeamMemberValidator teamMemberValidator =
+        //        new TeamMemberValidator(NewUser.TeamMember);
 
-            if (!teamMemberValidator.isValidFirstName())
-            {
-                await DisplayAlert("Details Error", "First Name is not valid!", "cancel");
-                return false;
-            }
+        //    if (!teamMemberValidator.isValidFirstName())
+        //    {
+        //        await DisplayAlert("Details Error", "First Name is not valid!", "cancel");
+        //        return false;
+        //    }
 
-            if (!teamMemberValidator.isValidLastName())
-            {
-                await DisplayAlert("Details Error", "Last Name is not valid!", "cancel");
-                return false;
-            }
+        //    if (!teamMemberValidator.isValidLastName())
+        //    {
+        //        await DisplayAlert("Details Error", "Last Name is not valid!", "cancel");
+        //        return false;
+        //    }
 
-            if (!teamMemberValidator.isValidPhoneNumber())
-            {
-                await DisplayAlert("Details Error", "Phone number is not valid!", "cancel");
-                return false;
-            }
+        //    if (!teamMemberValidator.isValidPhoneNumber())
+        //    {
+        //        await DisplayAlert("Details Error", "Phone number is not valid!", "cancel");
+        //        return false;
+        //    }
 
-            return true;
-        }
+        //    return true;
+        //}
 
         private async void Button_Clicked(object sender, EventArgs e)
         {
 
-            bool isValidPlayer = await ValidateNewPlayerAsync();
+            bool isValidPlayer =
+                await UITeamMemberValidator.ValidateNewUser(NewUser, this);
             if (!isValidPlayer)
             {
                 return;
@@ -80,7 +81,7 @@ namespace AppliSoccerClientSide.Views
 
             try
             {
-                UserCreator.PreparePlayerUserForRegistration(MyTeamMember, NewUser);
+                UserCreator.PrepareUserForRegistration(MyTeamMember, NewUser);
                 bool isCreationSucceed = await AppliSoccerServerService.AppServer.CreateUser(NewUser);
                 if (isCreationSucceed)
                 {

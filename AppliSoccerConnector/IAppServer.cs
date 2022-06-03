@@ -13,7 +13,8 @@ namespace AppliSoccerConnector
         Task<IEnumerable<TeamDetails>> GetAvailableTeamNames(string country);
         Task<TeamMember> RegisterTeam(string teamId, string adminUsername, string adminPassword);
         Task<List<TeamMember>> PullTeamMembers(string teamId);
-        Task<bool> UpdateTeamMember(TeamMember teamMember);
+        Task<TeamMember> UpdateTeamMember(TeamMember teamMember);
         Task<bool> CreateUser(User newUser);
+        Task<bool> RemoveMember(TeamMember playerToShow);
     }
 }

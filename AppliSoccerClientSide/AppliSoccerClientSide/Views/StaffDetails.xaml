@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ec="clr-namespace:AppliSoccerClientSide.Extensions"
+             x:Class="AppliSoccerClientSide.Views.StaffDetails">
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ec:IntEnumConverter x:Key="IntEnum" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <!--If the user is admin, the code behind will create toolbars items of: remove and edit.-->
+
+    <ContentPage.Content>
+        <StackLayout Padding="20,0,20,0">
+
+            <StackLayout Orientation="Horizontal"
+                         IsVisible="{Binding StaffToShow.AdditionalInfo.IsCoach}">
+                <Label Text="Coach"
+                       FontSize="Large" />
+            </StackLayout>
+            
+            <!--First Name-->
+            <StackLayout Orientation="Horizontal">
+                <Label Text="First Name"
+                       TextColor="Gray" />
+                <Entry x:Name="FirstNameEntry"
+                       FontSize="Title"
+                       IsReadOnly="True"
+                       Text="{Binding StaffToShow.FirstName}" />
+            </StackLayout>
+
+
+            <!--Last Name-->
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Last Name"
+                       TextColor="Gray" />
+                <Entry x:Name="LastNameEntry"
+                       FontSize="Title"
+                       IsReadOnly="True"
+                       Text="{Binding StaffToShow.LastName}" />
+            </StackLayout>
+
+
+            <!--Phone-->
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Phone Number"
+                       TextColor="Gray" />
+                <Entry x:Name="PhoneNumberEntry"
+                       Keyboard="Telephone"
+                       IsReadOnly="True"
+                       MaxLength="10"
+                       Text="{Binding StaffToShow.PhoneNumber, Mode=TwoWay}" />
+            </StackLayout>
+
+
+            <!--Birth Date-->
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Birth Date"
+                       TextColor="Gray" />
+                <DatePicker x:Name="BirthdatePicker"
+                            IsVisible="False"
+                            Date="{Binding StaffToShow.BirthDate}" />
+                <Label x:Name="BirthdateLabel"
+                       VerticalOptions="Center"
+                       Text="{Binding StaffToShow.BirthDate, StringFormat='{0:MM/dd/yyyy}'}"
+                       FontSize="Medium" />
+            </StackLayout>
+
+            <!--Staff Responsible Roles-->
+            <StackLayout Orientation="Vertical">
+                <Label Text="Responsible Roles"
+                       TextColor="Gray"
+                       VerticalOptions="Center" />
+                <ListView x:Name="MyListView"
+                          ItemsSource="{Binding ManagedRoles}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Orientation="Horizontal"
+                                             IsVisible="{Binding IsVisible}">
+                                    <CheckBox  IsChecked="{Binding IsManaged, Mode=TwoWay}"
+                                               IsVisible="{Binding IsCheckBoxVisible}"/>
+                                    <Label Text="{Binding RoleName}" />
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <Button x:Name="ChangeRoleButton"
+                        Text="Change Role"
+                        IsVisible="{Binding IsCoach}"
+                        Clicked="ChangeRoleButton_Clicked" />
+            </StackLayout>
+
+            <!--Description-->
+            <StackLayout Padding="0,20,0,0">
+                <Label Text="Description:"
+                       TextColor="Gray" />
+                <Editor x:Name="DescriptionEditor"
+                        AutoSize="TextChanges"
+                        TextColor="Black"
+                        IsReadOnly="True"
+                        Text="{Binding StaffToShow.Description, Mode=TwoWay}" />
+            </StackLayout>
+            
+            <!--Save Button (For Admin/Coach only)-->
+            <StackLayout Padding="30"
+                         Orientation="Horizontal"
+                         HorizontalOptions="Center">
+                <Button x:Name="SaveButton"
+                        Text="Save"
+                        Padding="20"
+                        Clicked="SaveButton_Clicked"
+                        IsVisible="False" />
+            </StackLayout>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

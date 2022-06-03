@@ -40,7 +40,16 @@ namespace AppliSoccerClientSide.Views
             {
                 return false;
             }
-            _loggedTeamMember = await AppliSoccerServerService.AppServer.Login(UsernameEntry.Text, PasswordEntry.Text);
+            try
+            {
+                IsBusy = true;
+                _loggedTeamMember = await AppliSoccerServerService.AppServer.Login(UsernameEntry.Text, PasswordEntry.Text);
+                IsBusy = false;
+            }catch( Exception ex)
+            {
+                await DisplayAlert("Error", "Cannot login to server!", "cancel");
+            }
+            
             return _loggedTeamMember != null;
         }
 
