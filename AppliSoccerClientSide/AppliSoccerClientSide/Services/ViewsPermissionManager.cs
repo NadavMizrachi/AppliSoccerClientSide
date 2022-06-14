@@ -11,43 +11,65 @@ namespace AppliSoccerClientSide.Services
     /// </summary>  
     class ViewsPermissionManager
     {
-        private AppShell _appShell;
+
+        public bool IsPermissionedForNewOrderButton { get; private set; }
+
         private static ViewsPermissionManager _viewsPermissionManager;
-        private ViewsPermissionManager(AppShell appShell)
+        private ViewsPermissionManager()
         {
-            _appShell = appShell;
         }
 
-        public static ViewsPermissionManager CreateManager(AppShell appShell)
+        public static ViewsPermissionManager CreateManager()
         {
             if(_viewsPermissionManager == null)
             {
-                _viewsPermissionManager = new ViewsPermissionManager(appShell);
+                _viewsPermissionManager = new ViewsPermissionManager();
             }
             return _viewsPermissionManager;
         }
 
 
-        public void  UpdateUserPermissions(TeamMember teamMember)
+        public void  UpdateUserPermissions(TeamMember teamMember, AppShell appShell)
         {
-            if(teamMember.MemberType == MemberType.Admin)
+            if(MemberTypeRecognizer.IsAdminMember(teamMember))
             {
-                OnAdminLogin();
+                OnAdminLogin(appShell);
             }
             else
             {
-                OnUnadminLogin();
+                OnUnadminLogin(appShell, teamMember);
             }
         }
 
-        private void OnUnadminLogin()
+        private void OnUnadminLogin(AppShell appShell, TeamMember teamMember)
         {
-            _appShell.IsSchedulePageAllowed = true;
+            appShell.IsSchedulePageAllowed = true;
+            appShell.IsOrdersPageAllowed = true;
+
+            if (MemberTypeRecognizer.IsStaff(teamMember))
+            {
+                OnStaffLogin();
+            }
+            else if(MemberTypeRecognizer.IsCoachMember(teamMember))
+            {
+                OnCoachLogin();
+            }
         }
 
-        private void OnAdminLogin()
+        private void OnStaffLogin()
         {
-            _appShell.IsSchedulePageAllowed = false;
+            IsPermissionedForNewOrderButton = true;
+        }
+
+        private void OnCoachLogin()
+        {   
+            OnStaffLogin();
+        }
+
+        private void OnAdminLogin(AppShell appShell)
+        {
+            appShell.IsSchedulePageAllowed = false;
+            appShell.IsOrdersPageAllowed = false;
         }
 
     }

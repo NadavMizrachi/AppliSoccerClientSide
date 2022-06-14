@@ -17,15 +17,15 @@ namespace AppliSoccerClientSide.Views
     {
         private bool _wasAppeared = false;
 
-        public TeamMember TeamMember { get; }
+        public TeamMember MyMember { get; }
         public ObservableCollection<TeamMember> StaffMembers { get; set; }
         public StaffMembersPage()
         {
             InitializeComponent();
             BindingContext = this;
             StaffMembers = new ObservableCollection<TeamMember>();
-            TeamMember = ApplicationGlobalData.GetMyTeamMember();
-            if (TeamMember.MemberType == MemberType.Admin)
+            MyMember = ApplicationGlobalData.GetMyTeamMember();
+            if (MyMember.MemberType == MemberType.Admin)
             {
                 AddAdminToolBarItems();
             }
@@ -37,7 +37,7 @@ namespace AppliSoccerClientSide.Views
             if (!_wasAppeared)
             {
                 await PullStaffFromServer();
-                _wasAppeared = false;
+                _wasAppeared = true;
             }
             
         }
@@ -59,7 +59,7 @@ namespace AppliSoccerClientSide.Views
         private async Task PullStaffFromServer()
         {
             IsBusy = true;
-            var teamMembers = await AppliSoccerServerService.AppServer.PullTeamMembers(TeamMember.TeamId);
+            var teamMembers = await AppliSoccerServerService.AppServer.PullTeamMembers(MyMember.TeamId);
             var staffMembersFromServer = teamMembers.Where(teamMember => teamMember.MemberType == MemberType.Staff).ToList();
             staffMembersFromServer.ForEach(member => StaffMembers.Add(member));
             if(staffMembersFromServer != null || staffMembersFromServer.Count > 0)

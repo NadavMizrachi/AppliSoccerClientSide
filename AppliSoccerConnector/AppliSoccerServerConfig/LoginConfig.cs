@@ -9,9 +9,9 @@ namespace AppliSoccerConnector.AppliSoccerServerConfig
     {
         private static string _baseResource = "login";
 
-        public static string LoginPath = _baseResource + "/Login";
-        public static Method LoginMethod = Method.GET;
-        public static string UsernameParamName = "username";
-        public static string PasswordParamName = "password";
+        public static readonly string LoginPath = _baseResource + "/Login";
+        public static readonly Method LoginMethod = Method.GET;
+        public static readonly string UsernameParamName = "username";
+        public static readonly string PasswordParamName = "password";
     }
 }

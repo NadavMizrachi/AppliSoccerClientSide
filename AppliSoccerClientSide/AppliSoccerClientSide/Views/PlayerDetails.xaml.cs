@@ -33,9 +33,8 @@ namespace AppliSoccerClientSide.Views
             PlayerToShow = playerToShow;// TeamMemberCreator.CopyTeamMember(playerToShow);
             Title = CreateTitle();
             MyMember = ApplicationGlobalData.GetMyTeamMember();
-            IsCoach = ((StaffAdditionalInfo)MyMember.AdditionalInfo).IsCoach;
-            IsAdmin = (MyMember.MemberType == MemberType.Admin);
-            if (IsAdmin)
+            IsCoach = MemberTypeRecognizer.IsCoachMember(MyMember);
+            if (MemberTypeRecognizer.IsAdminMember(MyMember))
             {
                 AddAdminToolBarItems();
             }

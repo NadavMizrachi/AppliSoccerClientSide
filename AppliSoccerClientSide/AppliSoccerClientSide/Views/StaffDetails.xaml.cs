@@ -31,9 +31,8 @@ namespace AppliSoccerClientSide.Views
             Title = CreateTitle(staffToShow);
             UpdateManagedRoles(StaffToShow);
             MyMember = ApplicationGlobalData.GetMyTeamMember();
-            IsCoach = ((StaffAdditionalInfo)MyMember.AdditionalInfo).IsCoach;
-            IsAdmin = (MyMember.MemberType == MemberType.Admin);
-            if (IsAdmin)
+            IsCoach = MemberTypeRecognizer.IsCoachMember(MyMember);
+            if (MemberTypeRecognizer.IsAdminMember(MyMember))
             {
                 AddAdminToolBarItems();
             }
@@ -163,9 +162,56 @@ namespace AppliSoccerClientSide.Views
 
         }
 
+        // TODO - Collapse unvisible roles (right now, if role is unvisible it still takes place)
         private void EnableRoleEditting()
         {
             ManagedRoleView.MarkAllAsVisibleForEditing(ManagedRoles);
+        }
+
+        private void CheckBox_CheckedChanged(object sender, CheckedChangedEventArgs e)
+        {
+            CheckBox checkBox = (CheckBox)sender;
+            Role roleOfCheckBox;
+            try
+            {
+                roleOfCheckBox = GetRoleOfCheckBox(checkBox);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Encoutered exception during trying to fetch Role enm from check boxes");
+                Debug.WriteLine("Exception message: " + ex.Message);
+                return;
+            }
+            var additionalInfo = (StaffToShow.AdditionalInfo as StaffAdditionalInfo);
+            if (checkBox.IsChecked && !additionalInfo.ManagedRoles.Contains(roleOfCheckBox))
+            {
+               additionalInfo.ManagedRoles.Add(roleOfCheckBox);
+            }
+            else if(!checkBox.IsChecked && additionalInfo.ManagedRoles.Contains(roleOfCheckBox))
+            {
+                additionalInfo.ManagedRoles.Remove(roleOfCheckBox);
+            }
+        }
+
+        private Role GetRoleOfCheckBox(CheckBox checkBox)
+        {
+            // Get "brother" label text, and by this string, infer the enum value
+            Layout parent = checkBox.Parent as Layout;
+            String enumStringValue = null;
+            foreach (var child in parent.Children)
+            {
+                if (child.GetType() == typeof(Label))
+                {
+                    enumStringValue = (child as Label).Text;
+                }
+            }
+            return (Role)Enum.Parse(typeof(Role), enumStringValue);
+
+        }
+
+        private void MyListView_ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            if (sender is ListView lv) lv.SelectedItem = null;
         }
     }
 }

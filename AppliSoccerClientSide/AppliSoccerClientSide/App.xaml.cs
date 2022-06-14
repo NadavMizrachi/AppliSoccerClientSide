@@ -10,6 +10,7 @@ namespace AppliSoccerClientSide
     public partial class App : Application
     {
 
+        // TODO - Create reusable xaml controls/contents
         public App()
         {
             InitializeComponent();

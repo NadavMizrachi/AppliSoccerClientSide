@@ -16,7 +16,7 @@ namespace AppliSoccerClientSide.Views
         public LoginPage()
         {
             InitializeComponent();
-            _permissionManager = ViewsPermissionManager.CreateManager((Shell.Current as AppShell));
+            _permissionManager = ViewsPermissionManager.CreateManager();
         }
 
         private async void LoginButton_Clicked(object sender, System.EventArgs e)
@@ -24,7 +24,7 @@ namespace AppliSoccerClientSide.Views
             if (await IsValidUser())
             {
                 ApplicationGlobalData.Insert(_loggedTeamMember);
-                _permissionManager.UpdateUserPermissions(_loggedTeamMember);
+                _permissionManager.UpdateUserPermissions(_loggedTeamMember, (Shell.Current as AppShell));
                 await Shell.Current.GoToAsync($"//{nameof(PlayersPage)}");
                 //await Shell.Current.GoToAsync($"//{nameof(SchedulePage)}");
             }

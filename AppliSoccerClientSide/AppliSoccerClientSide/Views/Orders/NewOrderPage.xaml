@@ -1,0 +1,205 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppliSoccerClientSide.Views.Orders.NewOrderPage"
+             xmlns:xct="clr-namespace:Xamarin.CommunityToolkit.UI.Views;assembly=Xamarin.CommunityToolkit"
+             Title="New Order">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="ListView">
+                <Setter Property="RowHeight" Value="40" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ContentView>
+            <ScrollView>
+                <StackLayout>
+
+                    <!--Title-->
+                    <Entry Placeholder="Order Title"
+                           Text="{Binding Order.Title, Mode=OneWayToSource}"
+                           FontSize="Title"
+                           WidthRequest="500"
+                           Margin="10" />
+
+
+                    <!--Order Content-->
+                    <StackLayout Padding="10,5,10,5"
+                                    HeightRequest="150">
+                        <ScrollView VerticalScrollBarVisibility="Always"
+                                    BackgroundColor="Black">
+                            <Editor Text="{Binding Order.Content}"
+                                    BackgroundColor="{StaticResource SystemGray6}"
+                                    FontAttributes="Italic"
+                                    IsSpellCheckEnabled="True"
+                                    FontSize="Small"
+                                    Placeholder="Type your order content"
+                                    TextColor="Black"
+                                    HeightRequest="150"
+                                    AutoSize="TextChanges"
+                                    PlaceholderColor="{StaticResource SystemGray}"/>
+                        </ScrollView>
+                    </StackLayout>
+                    
+
+                    <!--Select receivers-->
+
+                    <xct:Expander>
+                        <xct:Expander.Header>
+                            <StackLayout Orientation="Horizontal"
+                                         Margin="5">
+                                <Label Text="{x:StaticResource ExpandIcon}"
+                                       FontSize="Small"
+                                       FontFamily="FA-S">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label"
+                                                     Binding="{Binding Source={RelativeSource AncestorType={x:Type xct:Expander}}, Path=IsExpanded}"
+                                                     Value="True">
+                                            <Setter Property="Text"
+                                                    Value="{x:StaticResource CollapseIcon}" />
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                                <Label Text="Send To"
+                                       FontAttributes="Bold"
+                                       FontSize="Large" />
+                            </StackLayout>
+                        </xct:Expander.Header>
+
+                        <xct:Expander.Content>
+                            <StackLayout>
+                                <!--Staff-->
+                                <xct:Expander x:Name="staffExpander"
+                                              Margin="15,5,0,0">
+                                    <xct:Expander.Header>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="{x:StaticResource ExpandIcon}"
+                                                   FontSize="Small"
+                                                   FontFamily="FA-S">
+                                                <Label.Triggers>
+                                                    <DataTrigger TargetType="Label"
+                                                                 Binding="{Binding Source={RelativeSource AncestorType={x:Type xct:Expander}}, Path=IsExpanded}"
+                                                                 Value="True">
+                                                        <Setter Property="Text"
+                                                                Value="{x:StaticResource CollapseIcon}" />
+                                                    </DataTrigger>
+                                                </Label.Triggers>
+                                            </Label>
+                                            <Label Text="Staff"
+                                                   FontAttributes="Bold"
+                                                   FontSize="Medium" />
+                                        </StackLayout>
+                                    </xct:Expander.Header>
+                                    <StackLayout Margin="10,0,0,0">
+                                        <ListView x:Name="staffReceiversListView"
+                                                  ItemsSource="{Binding StaffReceiversViewModel}"
+                                                  ItemTapped="ListView_ItemTapped">
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <ViewCell>
+                                                        <StackLayout Orientation="Horizontal">
+                                                            <CheckBox IsChecked="{Binding IsShouldReceive}"/>
+                                                            <Label Text="{Binding Fullname}"
+                                                                   TextColor="Black" />
+                                                        </StackLayout>
+                                                    </ViewCell>
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                        </ListView>
+                                    </StackLayout>
+                                </xct:Expander>
+
+                                <!--Player Roles-->
+                                <xct:Expander x:Name="playerRolesExpander"
+                                              Margin="15,5,0,0">
+                                    <xct:Expander.Header>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="{x:StaticResource ExpandIcon}"
+                                                   FontSize="Small"
+                                                   FontFamily="FA-S">
+                                                <Label.Triggers>
+                                                    <DataTrigger TargetType="Label"
+                                                                 Binding="{Binding Source={RelativeSource AncestorType={x:Type xct:Expander}}, Path=IsExpanded}"
+                                                                 Value="True">
+                                                        <Setter Property="Text"
+                                                                Value="{x:StaticResource CollapseIcon}" />
+                                                    </DataTrigger>
+                                                </Label.Triggers>
+                                            </Label>
+                                            <Label Text="Player Roles"
+                                                   FontAttributes="Bold"
+                                                   FontSize="Medium" />
+                                        </StackLayout>
+                                    </xct:Expander.Header>
+                                    <StackLayout Margin="10,0,0,0">
+                                        <ListView x:Name="playerRolesListView"
+                                                  ItemsSource="{Binding ReceiverRolesViewModel}"
+                                                  ItemTapped="ListView_ItemTapped">
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <ViewCell>
+                                                        <StackLayout Orientation="Horizontal">
+                                                            <CheckBox IsChecked="{Binding IsShouldReceive}"/>
+                                                            <Label Text="{Binding RoleName}" />
+                                                        </StackLayout>
+                                                    </ViewCell>
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                        </ListView>
+                                    </StackLayout>
+                                </xct:Expander>
+
+                                <!--Individual Players-->
+                                <xct:Expander x:Name="individualPlayersEpander"
+                                              Margin="15,5,0,0">
+                                    <xct:Expander.Header>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="{x:StaticResource ExpandIcon}"
+                                                   FontSize="Small"
+                                                   FontFamily="FA-S">
+                                                <Label.Triggers>
+                                                    <DataTrigger TargetType="Label"
+                                                                 Binding="{Binding Source={RelativeSource AncestorType={x:Type xct:Expander}}, Path=IsExpanded}"
+                                                                 Value="True">
+                                                        <Setter Property="Text"
+                                                                Value="{x:StaticResource CollapseIcon}" />
+                                                    </DataTrigger>
+                                                </Label.Triggers>
+                                            </Label>
+                                            <Label Text="Individual Players"
+                                                   FontAttributes="Bold"
+                                                   FontSize="Medium" />
+                                        </StackLayout>
+                                    </xct:Expander.Header>
+                                    <StackLayout Margin="10,0,0,0">
+                                        <ListView x:Name="playerReceiversListView"
+                                                  ItemsSource="{Binding PlayersReceiversViewModel}"
+                                                  ItemTapped="ListView_ItemTapped">
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <ViewCell>
+                                                        <StackLayout Orientation="Horizontal">
+                                                            <CheckBox IsChecked="{Binding IsShouldReceive}"/>
+                                                            <Label Text="{Binding Fullname}"
+                                                                   TextColor="Black" />
+                                                        </StackLayout>
+                                                    </ViewCell>
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                        </ListView>
+                                    </StackLayout>
+                                </xct:Expander>
+                            </StackLayout>
+                        </xct:Expander.Content>
+                    </xct:Expander>
+
+                    <!--Send Order-->
+                    <Button Text="Send Order"
+                            Margin="0,5,0,20" 
+                            Clicked="Button_Clicked"/>
+                </StackLayout>
+            </ScrollView>
+        </ContentView>
+    </ContentPage.Content>
+</ContentPage>

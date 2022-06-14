@@ -1,4 +1,5 @@
 ﻿using AppliSoccerClientSide.Services;
+using AppliSoccerClientSide.Views.ViewsUtil;
 using AppliSoccerObjects.Modeling;
 using System;
 using System.Collections.Generic;

@@ -7,18 +7,18 @@ namespace AppliSoccerConnector.AppliSoccerServerConfig
 {
     class TeamMembersConfig
     {
-        private static string _baseResource = "teammembers";
+        private static readonly string _baseResource = "teammembers";
 
-        public static string GetTeamMembersPath = _baseResource + "/GetMembers";
-        public static Method GetTeamMembersMethod = Method.GET;
-        public static string TeamIdParamName = "teamId";
-
-        public static string UpdateTeamMemberPath = _baseResource + "/UpdateTeamMember";
-        public static Method UpdateTeamMemberMethod = Method.POST;
-        // Team member details inserted as json parameter
-
-        public static string RemoveTeamMemberPath = _baseResource + "/RemoveMember";
-        public static Method RemoveTeamMemberMethod = Method.DELETE;
+        public static readonly string GetTeamMembersPath = _baseResource + "/GetMembers";
+        public static readonly Method GetTeamMembersMethod = Method.GET;
+        public static readonly string TeamIdParamName = "teamId";
+                      
+        public static readonly string UpdateTeamMemberPath = _baseResource + "/UpdateTeamMember";
+        public static readonly Method UpdateTeamMemberMethod = Method.POST;
+        // Team memberreadonly  details inserted as json parameter
+                      
+        public static readonly string RemoveTeamMemberPath = _baseResource + "/RemoveMember";
+        public static readonly Method RemoveTeamMemberMethod = Method.DELETE;
         // Team member details inserted as json parameter
 
 

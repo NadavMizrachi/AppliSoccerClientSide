@@ -16,5 +16,6 @@ namespace AppliSoccerConnector
         Task<TeamMember> UpdateTeamMember(TeamMember teamMember);
         Task<bool> CreateUser(User newUser);
         Task<bool> RemoveMember(TeamMember playerToShow);
+        Task<bool> CreateOrder(Order order);
     }
 }

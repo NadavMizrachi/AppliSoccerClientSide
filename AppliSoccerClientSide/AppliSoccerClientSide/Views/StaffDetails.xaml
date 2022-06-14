@@ -74,14 +74,16 @@
                        TextColor="Gray"
                        VerticalOptions="Center" />
                 <ListView x:Name="MyListView"
-                          ItemsSource="{Binding ManagedRoles}">
+                          ItemsSource="{Binding ManagedRoles}"
+                          ItemTapped="MyListView_ItemTapped">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
                                 <StackLayout Orientation="Horizontal"
                                              IsVisible="{Binding IsVisible}">
                                     <CheckBox  IsChecked="{Binding IsManaged, Mode=TwoWay}"
-                                               IsVisible="{Binding IsCheckBoxVisible}"/>
+                                               IsVisible="{Binding IsCheckBoxVisible}"
+                                               CheckedChanged="CheckBox_CheckedChanged"/>
                                     <Label Text="{Binding RoleName}" />
                                 </StackLayout>
                             </ViewCell>

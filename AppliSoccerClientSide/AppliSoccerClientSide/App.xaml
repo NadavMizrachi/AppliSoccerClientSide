@@ -7,6 +7,11 @@
     -->
     <Application.Resources>
         <ResourceDictionary>
+            <!--Icons-->
+            <x:String x:Key="ExpandIcon">&#xf078;</x:String>
+            <x:String x:Key="CollapseIcon">&#xf077;</x:String>
+            
+            <!--Colors-->
             <Color x:Key="Primary">#8E8E93</Color>
             
             <Color x:Key="TextColor">#000000</Color>

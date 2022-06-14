@@ -6,6 +6,6 @@ namespace AppliSoccerConnector.AppliSoccerServerConfig
 {
     public class ServerConfig
     {
-        public static string URL = "https://192.168.1.107:5001/api/";
+        public static readonly string URL = "https://192.168.1.107:5001/api/";
     }
 }

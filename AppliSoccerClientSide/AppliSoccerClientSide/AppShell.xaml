@@ -97,13 +97,32 @@
         <ShellContent Route="SchedulePage" ContentTemplate="{DataTemplate local:SchedulePage}" />
     </FlyoutItem>
 
+    <FlyoutItem Title="Orders"
+                Icon="icon_about.png"
+                IsVisible="{Binding IsOrdersPageAllowedProperty}">
+        <Tab>
+            <ShellContent Route="SentOrdersPage"
+                          Title="Sent"
+                          ContentTemplate="{DataTemplate local:Orders.SentOrdersPage}" />
+            <ShellContent Route="ReceivedOrdersPage"
+                          Title="Received"
+                          ContentTemplate="{DataTemplate local:Orders.ReceivedOrdersPage}" />
+        </Tab>
+    </FlyoutItem>
+
+
     <FlyoutItem Title="Team Members" Icon="icon_about.png" Route="TeamMembers">
         <Tab Title="Players">
-            <ShellContent Route="PlayersPage" ContentTemplate="{DataTemplate local:PlayersPage}" />
+            <ShellContent Route="PlayersPage" 
+                          Title="Players"
+                          ContentTemplate="{DataTemplate local:PlayersPage}" />
+            <ShellContent  Route="StaffMembersPage"
+                           Title="Staff"
+                           ContentTemplate="{DataTemplate local:StaffMembersPage}" />
         </Tab>
-        <Tab Title="Staff">
-            <ShellContent  Route="StaffMembersPage" ContentTemplate="{DataTemplate local:StaffMembersPage}" />
-        </Tab>
+        <!--<Tab Title="Staff">
+           
+        </Tab>-->
     </FlyoutItem>
 
 

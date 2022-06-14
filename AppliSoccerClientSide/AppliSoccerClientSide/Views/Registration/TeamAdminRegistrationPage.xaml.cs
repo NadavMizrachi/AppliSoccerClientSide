@@ -24,7 +24,7 @@ namespace AppliSoccerClientSide.Views.Registration
             InitializeComponent();
             _teamDetails = teamDetails;
             TeamNameLabel.Text = teamDetails.Name;
-            _permissionManager = ViewsPermissionManager.CreateManager((Shell.Current as AppShell));
+            _permissionManager = ViewsPermissionManager.CreateManager();
         }
 
         private async void RegisterButton_Clicked(object sender, EventArgs e)
@@ -37,7 +37,7 @@ namespace AppliSoccerClientSide.Views.Registration
             {
                 TeamMember registeredUser = await Register();
                 ApplicationGlobalData.Insert(registeredUser);
-                _permissionManager.UpdateUserPermissions(registeredUser);
+                _permissionManager.UpdateUserPermissions(registeredUser, (Shell.Current as AppShell));
                 // Go to admin page
                 await Shell.Current.GoToAsync($"//{nameof(PlayersPage)}");
             }

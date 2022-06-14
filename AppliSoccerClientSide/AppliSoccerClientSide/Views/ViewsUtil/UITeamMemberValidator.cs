@@ -1,8 +1,9 @@
 ﻿using AppliSoccerObjects.Modeling;
 using Xamarin.Forms;
 using System.Threading.Tasks;
+using AppliSoccerClientSide.Services;
 
-namespace AppliSoccerClientSide.Services
+namespace AppliSoccerClientSide.Views.ViewsUtil
 {
     public class UITeamMemberValidator
     {

@@ -17,7 +17,7 @@ namespace AppliSoccerClientSide.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PlayersPage : ContentPage
     {
-        public TeamMember TeamMember { get; set; }
+        public TeamMember MyMember { get; set; }
         public ObservableCollection<TeamMember> PlayerMembers { get; set; }
 
         private bool _wasAppeared = false;
@@ -27,8 +27,8 @@ namespace AppliSoccerClientSide.Views
             InitializeComponent();
             BindingContext = this;
             PlayerMembers = new ObservableCollection<TeamMember>();
-            TeamMember = ApplicationGlobalData.GetMyTeamMember();
-            if (TeamMember.MemberType == MemberType.Admin)
+            MyMember = ApplicationGlobalData.GetMyTeamMember();
+            if (MyMember.MemberType == MemberType.Admin)
             {
                 AddAdminToolBarItems();
             }
@@ -46,21 +46,6 @@ namespace AppliSoccerClientSide.Views
             }
             
         }
-
-        //protected override async void OnDisappearing()
-        //{
-        //    base.OnDisappearing();
-        //    CleanPage();
-        //}
-
-        //private void CleanPage()
-        //{
-        //    TeamMember = null;
-        //    if(ToolbarItems.Count == 1)
-        //    {
-        //        ToolbarItems.RemoveAt(0);
-        //    }
-        //}
 
         private void AddAdminToolBarItems()
         {
@@ -80,15 +65,13 @@ namespace AppliSoccerClientSide.Views
         private async Task PullPlayersFromServer()
         {
             IsBusy = true;
-            var teamMembers = await AppliSoccerServerService.AppServer.PullTeamMembers(TeamMember.TeamId);
+            var teamMembers = await AppliSoccerServerService.AppServer.PullTeamMembers(MyMember.TeamId);
             var playersFromServer = teamMembers.Where(teamMember => teamMember.MemberType == MemberType.Player).ToList();
             playersFromServer.ForEach(member => PlayerMembers.Add(member));
             PlayersListView.ItemsSource = PlayerMembers;
             PlayersListView.ItemsSource = playersFromServer;
             IsBusy = false;
         }
-   
-   
 
         // TODO: Prevent trigger openning player edit page when tapping fast on the same player
         private async void PlayersListView_ItemTapped(object sender, ItemTappedEventArgs e)

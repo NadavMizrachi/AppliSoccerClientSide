@@ -102,5 +102,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </AndroidResource>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\drawable\down-arrow.png" />
+    <Content Include="Resources\drawable\up-arrow.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

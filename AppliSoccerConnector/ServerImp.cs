@@ -162,5 +162,18 @@ namespace AppliSoccerConnector
 
             return sf.GetMethod().Name;
         }
+
+        public async Task<bool> CreateOrder(Order order)
+        {
+            var request = new RestRequest(OrderConfig.CreateOrderPath, OrderConfig.CreateOrderMethod);
+            request.AddHeader("Accept", "application/json");
+            request.AddJsonBody(order);
+            var response = await _client.ExecuteAsync<bool>(request);
+
+            var functionName = GetCurrentMethod();
+            _responseStatusHandler.ThrowExceptionIfNotSucces(response, functionName);
+
+            return response.Data;
+        }
     }
 }
