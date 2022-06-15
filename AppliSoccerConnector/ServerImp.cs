@@ -134,6 +134,13 @@ namespace AppliSoccerConnector
             _responseStatusHandler.ThrowExceptionIfNotSucces(response, functionName);
 
             TeamMember teamMember = response.Data;
+
+            if (teamMember.AdditionalInfo != null)
+            {
+                object additionalInfo = TeamMemberDeserialization.DeserializeAdditionalInfo(teamMember);
+                teamMember.AdditionalInfo = additionalInfo;
+            }
+
             if (teamMember == null)
             {
                 Debug.WriteLine("Login faild");

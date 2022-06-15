@@ -46,24 +46,40 @@ namespace AppliSoccerClientSide.Services
             appShell.IsSchedulePageAllowed = true;
             appShell.IsOrdersPageAllowed = true;
 
-            if (MemberTypeRecognizer.IsStaff(teamMember))
+            if (MemberTypeRecognizer.IsCoachMember(teamMember))
             {
-                OnStaffLogin();
+                OnCoachLogin(appShell);
             }
-            else if(MemberTypeRecognizer.IsCoachMember(teamMember))
+            else if (MemberTypeRecognizer.IsStaff(teamMember))
             {
-                OnCoachLogin();
+                OnStaffLogin(appShell);
+            }
+            
+            else if (MemberTypeRecognizer.IsPlayer(teamMember))
+            {
+                OnPlayerLogin(appShell);
             }
         }
 
-        private void OnStaffLogin()
+        private void OnPlayerLogin(AppShell appShell)
         {
+            appShell.IsReceivedOrdersPageAllowed = true;
+            appShell.IsSentOrdersPageAllowed = false;
+            IsPermissionedForNewOrderButton = false;
+        }
+
+        private void OnStaffLogin(AppShell appShell)
+        {
+            appShell.IsSentOrdersPageAllowed = true;
+            appShell.IsReceivedOrdersPageAllowed = true;
             IsPermissionedForNewOrderButton = true;
         }
 
-        private void OnCoachLogin()
-        {   
-            OnStaffLogin();
+        private void OnCoachLogin(AppShell appShell)
+        {
+            appShell.IsSentOrdersPageAllowed = true;
+            appShell.IsReceivedOrdersPageAllowed = false;
+            IsPermissionedForNewOrderButton = true;
         }
 
         private void OnAdminLogin(AppShell appShell)

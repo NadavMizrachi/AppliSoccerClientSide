@@ -44,6 +44,27 @@ namespace AppliSoccerClientSide
         public static readonly BindableProperty IsOrdersPageAllowedProperty =
             BindableProperty.Create("IsOrdersPageAllowed", typeof(bool), typeof(AppShell), false);
 
+
+        public bool IsSentOrdersPageAllowed
+        {
+            get => (bool)GetValue(IsSentOrdersPageAllowedProperty);
+            set => SetValue(IsSentOrdersPageAllowedProperty, value);
+        }
+
+        public static readonly BindableProperty IsSentOrdersPageAllowedProperty =
+            BindableProperty.Create("IsSentOrdersPageAllowed", typeof(bool), typeof(AppShell), false);
+
+
+        public bool IsReceivedOrdersPageAllowed
+        {
+            get => (bool)GetValue(IsReceivedOrdersPageAllowedProperty);
+            set => SetValue(IsReceivedOrdersPageAllowedProperty, value);
+        }
+
+        public static readonly BindableProperty IsReceivedOrdersPageAllowedProperty =
+            BindableProperty.Create("IsReceivedOrdersPageAllowed", typeof(bool), typeof(AppShell), false);
+        
+
         private async void LogoutClicked(object sender, EventArgs e)
         {
             ApplicationGlobalData.Insert(null);

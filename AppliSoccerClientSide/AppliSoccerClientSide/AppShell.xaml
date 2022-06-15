@@ -99,13 +99,15 @@
 
     <FlyoutItem Title="Orders"
                 Icon="icon_about.png"
-                IsVisible="{Binding IsOrdersPageAllowedProperty}">
+                IsVisible="{Binding IsOrdersPageAllowed}">
         <Tab>
             <ShellContent Route="SentOrdersPage"
                           Title="Sent"
+                          IsVisible="{Binding IsSentOrdersPageAllowed}"
                           ContentTemplate="{DataTemplate local:Orders.SentOrdersPage}" />
             <ShellContent Route="ReceivedOrdersPage"
                           Title="Received"
+                          IsVisible="{Binding IsReceivedOrdersPageAllowed}"
                           ContentTemplate="{DataTemplate local:Orders.ReceivedOrdersPage}" />
         </Tab>
     </FlyoutItem>
