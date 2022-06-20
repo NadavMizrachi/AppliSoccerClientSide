@@ -190,7 +190,7 @@ namespace AppliSoccerClientSide.Views.Orders
             Order.MembersIdsAlreadyRead = new List<string>();
             Order.RolesReceivers = GetRolesReceiversList();
             Order.SenderId = MyMember.ID;
-            Order.SendingDate = DateTime.Now;
+            Order.SendingDate = TimeZoneInfo.ConvertTimeToUtc(DateTime.Now);
             Order.TeamId = MyMember.TeamId;
         }
         private List<string> GetReceiversIdList()

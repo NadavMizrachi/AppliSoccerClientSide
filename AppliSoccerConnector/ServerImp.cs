@@ -14,6 +14,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
 using AppliSoccerConnector.JsonUtils;
+using AppliSoccerConnector.Exceptions;
 
 namespace AppliSoccerConnector
 {
@@ -132,8 +133,9 @@ namespace AppliSoccerConnector
 
             var functionName = GetCurrentMethod();
             _responseStatusHandler.ThrowExceptionIfNotSucces(response, functionName);
-
             TeamMember teamMember = response.Data;
+            if (teamMember == null)
+                return null;
 
             if (teamMember.AdditionalInfo != null)
             {
@@ -175,7 +177,51 @@ namespace AppliSoccerConnector
             var request = new RestRequest(OrderConfig.CreateOrderPath, OrderConfig.CreateOrderMethod);
             request.AddHeader("Accept", "application/json");
             request.AddJsonBody(order);
+            Debug.WriteLine(JsonConvert.SerializeObject(order).ToString());
             var response = await _client.ExecuteAsync<bool>(request);
+
+            var functionName = GetCurrentMethod();
+            _responseStatusHandler.ThrowExceptionIfNotSucces(response, functionName);
+
+            return response.Data;
+        }
+
+        public async Task<List<OrderMetadata>> FetchOrdersMetadata(DateTime earliestOrderDate, int batchSize, String receiverId)
+        {
+
+            var request = new RestRequest(OrderConfig.FetchOrdersMetadataPath, OrderConfig.FetchOrdersMetadataMethod);
+            request.AddQueryParameter(OrderConfig.upperBoundDateParamName, DateStringFormatter.Format(TimeZoneInfo.ConvertTimeToUtc(earliestOrderDate)));
+            request.AddQueryParameter(OrderConfig.ordersQuantityParamName, batchSize.ToString());
+            request.AddQueryParameter(OrderConfig.receiverIdParamName, receiverId);
+            var response = await _client.ExecuteAsync<List<OrderMetadata>>(request);
+            Debug.WriteLine(" *** FetchOrdersMetadata *** Got response from server");
+            var functionName = GetCurrentMethod();
+            _responseStatusHandler.ThrowExceptionIfNotSucces(response, functionName);
+
+            return response.Data;
+        }
+
+        public async Task<List<OrderMetadata>> PullNewOrders(DateTime latestOrderDate, string receiverId)
+        {
+            var request = new RestRequest(OrderConfig.PullNewOrdersMetadataPath, OrderConfig.PullNewOrdersMetadataMethod);
+            request.AddQueryParameter(OrderConfig.lowerBoundDateParamName, DateStringFormatter.Format(TimeZoneInfo.ConvertTimeToUtc(latestOrderDate)));
+            request.AddQueryParameter(OrderConfig.ordersQuantityParamName, int.MaxValue.ToString());
+            request.AddQueryParameter(OrderConfig.receiverIdParamName, receiverId);
+            var response = await _client.ExecuteAsync<List<OrderMetadata>>(request);
+            Debug.WriteLine(" *** PullNewOrders *** Got response from server");
+            var functionName = GetCurrentMethod();
+            _responseStatusHandler.ThrowExceptionIfNotSucces(response, functionName);
+
+            return response.Data;
+        }
+
+        public async Task<OrderPayload> GetOrderPayload(string orderId, string askerId)
+        {
+            var request = new RestRequest(OrderConfig.GetOrderPayloadPath, OrderConfig.GetOrderPayloadMethod);
+            request.AddQueryParameter(OrderConfig.orderIdParamName, orderId);
+            request.AddQueryParameter(OrderConfig.askerIdParamName, askerId);
+            
+            var response = await _client.ExecuteAsync<OrderPayload>(request);
 
             var functionName = GetCurrentMethod();
             _responseStatusHandler.ThrowExceptionIfNotSucces(response, functionName);

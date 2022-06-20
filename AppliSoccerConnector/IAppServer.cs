@@ -17,5 +17,8 @@ namespace AppliSoccerConnector
         Task<bool> CreateUser(User newUser);
         Task<bool> RemoveMember(TeamMember playerToShow);
         Task<bool> CreateOrder(Order order);
+        Task<List<OrderMetadata>> FetchOrdersMetadata(DateTime earliestOrderDate, int batchSize, String receiverId);
+        Task<List<OrderMetadata>> PullNewOrders(DateTime latestOrderDate, string receiverId);
+        Task<OrderPayload> GetOrderPayload(string orderId, string askerId);
     }
 }

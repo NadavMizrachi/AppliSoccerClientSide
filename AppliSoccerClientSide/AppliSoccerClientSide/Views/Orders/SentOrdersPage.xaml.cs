@@ -1,8 +1,10 @@
 ﻿using AppliSoccerClientSide.Services;
+using AppliSoccerClientSide.ViewModel;
 using AppliSoccerClientSide.Views.ViewsUtil;
 using AppliSoccerObjects.Modeling;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,8 +18,8 @@ namespace AppliSoccerClientSide.Views.Orders
     public partial class SentOrdersPage : ContentPage
     {
         public TeamMember MyMember { get; set; }
+        public ObservableCollection<OrderMetadataViewModel> OrdersToDisplay { get; set; }
 
-        
         public SentOrdersPage()
         {
             InitializeComponent();

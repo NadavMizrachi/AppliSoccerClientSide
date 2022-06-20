@@ -3,10 +3,57 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppliSoccerClientSide.Views.Orders.SentOrdersPage">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="SentOrdersPage!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <!--List Of Orders Metadata-->
+
+            <RefreshView IsRefreshing="{Binding IsRefreshing}"
+                         Command="{Binding RefreshCommand}">
+                <CollectionView x:Name="ordersCollectionView"
+                                ItemsSource="{Binding OrdersToDisplay}"
+                                RemainingItemsThreshold="15"
+                                RemainingItemsThresholdReachedCommand="{Binding LoadMoreOrdersCommand}"
+                                SelectionMode="Single"
+                                SelectionChanged="ordersCollectionView_SelectionChanged"
+                                VerticalScrollBarVisibility="Always"
+                                Scrolled="CollectionView_OnScrolled"
+                                BackgroundColor="{StaticResource SystemGray6}">
+
+                    <!--Order Metadata-->
+
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout ItemSpacing="5"
+                                           Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Padding="10">
+                                <Frame>
+                                    <StackLayout Spacing="10">
+                                        <Label Text="{Binding Title}"
+                                               FontSize="Large"
+                                               FontAttributes="{Binding FontAttribute}" />
+                                        <Label Text="{Binding SenderName}"
+                                               FontAttributes="{Binding FontAttribute}" />
+                                        <Label Text="{Binding SentDate}"
+                                               FontAttributes="{Binding FontAttribute}" />
+                                    </StackLayout>
+                                </Frame>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </RefreshView>
+
+            <ActivityIndicator Color="Blue"
+                               IsRunning="{Binding IsBusy}"
+                               HorizontalOptions="Center"
+                               VerticalOptions="End"
+                               Margin="0,0,0,20"
+                               InputTransparent="True" />
+        </Grid>
     </ContentPage.Content>
 </ContentPage>
