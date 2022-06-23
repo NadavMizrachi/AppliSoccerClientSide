@@ -14,8 +14,8 @@
                          Command="{Binding RefreshCommand}">
                 <CollectionView x:Name="ordersCollectionView"
                                 ItemsSource="{Binding OrdersToDisplay}"
-                                RemainingItemsThreshold="15"
-                                RemainingItemsThresholdReachedCommand="{Binding LoadMoreOrdersCommand}"
+                                RemainingItemsThreshold="10"
+                                RemainingItemsThresholdReachedCommand="{Binding LoadMoreOlderOrdersCommand}"
                                 SelectionMode="Single"
                                 SelectionChanged="ordersCollectionView_SelectionChanged"
                                 VerticalScrollBarVisibility="Always"
@@ -36,10 +36,9 @@
                                         <Label Text="{Binding Title}"
                                                FontSize="Large"
                                                FontAttributes="{Binding FontAttribute}" />
-                                        <Label Text="{Binding SenderName}"
-                                               FontAttributes="{Binding FontAttribute}" />
                                         <Label Text="{Binding SentDate}"
                                                FontAttributes="{Binding FontAttribute}" />
+                                        <!-- TODO Receiver expander list-->
                                     </StackLayout>
                                 </Frame>
                             </Grid>

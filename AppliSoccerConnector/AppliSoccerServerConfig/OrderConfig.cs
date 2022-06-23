@@ -35,5 +35,23 @@ namespace AppliSoccerConnector.AppliSoccerServerConfig
         public static readonly string orderIdParamName = "orderId";
         public static readonly string askerIdParamName = "askerId";
         #endregion
+
+        #region FetchOrdersMetadataForSender
+        public static readonly string FetchOrdersMetadataForSenderPath = _baseResource + "/FetchOrdersMetadataForSender";
+        public static readonly Method FetchOrdersMetadataForSenderMethod = Method.GET;
+        public static readonly string senderIdParamName = "senderId";
+        #endregion
+
+        #region PullNewOrdersMetadataForSender
+        public static readonly string PullNewOrdersMetadataForSenderPath = _baseResource + "/PullNewOrdersMetadataForSender";
+        public static readonly Method PullNewOrdersMetadataForSenderMethod = Method.GET;
+        //[HttpGet]
+        //public async Task<List<OrderMetadata>> PullNewOrdersMetadataForSender(DateTime lowerBoundDate, int ordersQuantity, String senderId) 
+        #endregion
+
+        #region GetOrder
+        public static readonly string GetOrderPath = _baseResource + "/GetSentOrder";
+        public static readonly Method GetOrderMethod = Method.GET;
+        #endregion
     }
 }

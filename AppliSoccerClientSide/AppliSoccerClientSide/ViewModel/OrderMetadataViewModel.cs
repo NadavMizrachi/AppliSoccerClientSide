@@ -10,10 +10,19 @@ namespace AppliSoccerClientSide.ViewModel
 {
     public class OrderMetadataViewModel : INotifyPropertyChanged
     {
+        #region Title
         public string Title { get; set; }
-        public string Id { get; set; }
-        public string SenderName { get; set; }
+        #endregion
 
+        #region ID
+        public string Id { get; set; }
+        #endregion
+
+        #region SenderName
+        public string SenderName { get; set; }
+        #endregion
+
+        #region SendDate
         private DateTime _sentDate;
         public DateTime SentDate
         {
@@ -24,8 +33,9 @@ namespace AppliSoccerClientSide.ViewModel
                 OnPropertyChanged("SentDate");
             }
         }
+        #endregion
 
-
+        #region WasRead
         private bool _wasRead;
         public bool WasRead
         {
@@ -41,7 +51,9 @@ namespace AppliSoccerClientSide.ViewModel
                 OnPropertyChanged("WasRead");
             }
         }
+        #endregion
 
+        #region FontAttribute
         private FontAttributes _fontAttributes = FontAttributes.Bold;
         public FontAttributes FontAttribute
         {
@@ -53,7 +65,15 @@ namespace AppliSoccerClientSide.ViewModel
                 OnPropertyChanged("FontAttribute");
             }
         }
-        //public FontAttributes FontAttribute
+        #endregion
+
+        #region ReceiversNames
+        public List<string> ReceiversNames { get; set; }
+        #endregion
+
+        #region ReceiverInfos
+        public List<ReceiverInfo> RecieverInfos { get; set; } 
+        #endregion
 
         public event PropertyChangedEventHandler PropertyChanged;
         void OnPropertyChanged(string name)
@@ -69,7 +89,8 @@ namespace AppliSoccerClientSide.ViewModel
                 SenderName = omd.SenderName,
                 SentDate = omd.SentDate,
                 Title = omd.Title,
-                WasRead = omd.WasRead
+                WasRead = omd.WasRead,
+                ReceiversNames = omd.ReceiversNames
             };
         }
 

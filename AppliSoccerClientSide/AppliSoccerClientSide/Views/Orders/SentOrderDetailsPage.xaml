@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppliSoccerClientSide.Views.Orders.SentOrderDetailsPage">
+    <ContentPage.Content>
+        <ContentView>
+            <ScrollView>
+                <StackLayout Margin="10">
+                    <!--SendingDate-->
+                    <Label Text="{Binding Order.SendingDate}"
+                           FontSize="Small" />
+
+
+                    <StackLayout HorizontalOptions="Center">
+                        <Frame>
+                            <StackLayout>
+                                <!--Title-->
+                                <Label Text="{Binding Order.Title}"
+                                       FontSize="Title"
+                                       FontAttributes="Bold"
+                                       HorizontalOptions="Center" />
+                                <Label Text="{Binding Order.Content}"
+                                       TextColor="Black"
+                                       FontSize="Body" />
+                            </StackLayout>
+
+                        </Frame>
+                    </StackLayout>
+
+
+                    <StackLayout Margin="20,30,30,0"
+                                 HorizontalOptions="Center">
+
+                        <ListView x:Name="receiverInfosListView"
+                                  ItemsSource="{Binding Order.ReceiverInfos}"
+                                  HasUnevenRows="False"
+                                  RowHeight="30"
+                                  SeparatorColor="{StaticResource SystemGray4}"
+                                  SeparatorVisibility="Default">
+                            <ListView.Header>
+                                <Label Text="To"
+                                       FontAttributes="Bold" />
+                            </ListView.Header>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label Text="{Binding Name}" />
+                                            <Label Text="R"
+                                                   TextColor="{StaticResource SystemBlue}"
+                                                   IsVisible="{Binding Read}" />
+                                        </StackLayout>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+        </ContentView>
+    </ContentPage.Content>
+</ContentPage>

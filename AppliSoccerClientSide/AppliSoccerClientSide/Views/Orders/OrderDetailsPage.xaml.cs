@@ -15,11 +15,11 @@ namespace AppliSoccerClientSide.Views.Orders
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class OrderDetailsPage : ContentPage
     {
-        public OrderViewModel Order { get; set; }
+        public OrderPayloadViewModel Order { get; set; }
         public OrderDetailsPage(OrderPayload orderToShow)
         {
             InitializeComponent();
-            Order = OrderViewModel.ConvertFromOrderPayload(orderToShow);
+            Order = OrderPayloadViewModel.ConvertFromOrderPayload(orderToShow);
             UpdateReceiversListViewHeight();
             BindingContext = this;
         }

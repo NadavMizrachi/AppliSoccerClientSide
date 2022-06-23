@@ -14,8 +14,8 @@
                          Command="{Binding RefreshCommand}">
                 <CollectionView x:Name="ordersCollectionView"
                                 ItemsSource="{Binding OrdersToDisplay}"
-                                RemainingItemsThreshold="15"
-                                RemainingItemsThresholdReachedCommand="{Binding LoadMoreOrdersCommand}"
+                                RemainingItemsThreshold="10"
+                                RemainingItemsThresholdReachedCommand="{Binding LoadMoreOlderOrdersCommand}"
                                 SelectionMode="Single"
                                 SelectionChanged="ordersCollectionView_SelectionChanged"
                                 VerticalScrollBarVisibility="Always"
