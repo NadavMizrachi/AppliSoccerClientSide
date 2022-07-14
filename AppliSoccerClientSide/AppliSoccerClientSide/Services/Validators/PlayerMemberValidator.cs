@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AppliSoccerClientSide.Services
+namespace AppliSoccerClientSide.Services.Validators
 {
     public class PlayerMemberValidator : TeamMemberValidator
     {

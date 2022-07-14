@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppliSoccerClientSide.Views.Schedule.SchedulePage"
+             xmlns:controls="clr-namespace:Xamarin.Plugin.Calendar.Controls;assembly=Xamarin.Plugin.Calendar"
+             Title="Schedule">
+   
+
+    <ContentPage.Content>
+        <ContentView>
+            <StackLayout>
+                <controls:Calendar x:Name="calender"
+                                       MaximumDate="{Binding MaxDate}"
+                                       MinimumDate="{Binding MinDate}"
+                                       Events="{Binding Events}"
+                                       VerticalOptions="FillAndExpand"
+                                       HorizontalOptions="FillAndExpand"
+                                       MonthLabelColor="{StaticResource SystemGray6Dark}"
+                                       YearLabelColor="Black"
+                                       DaysTitleColor="{StaticResource SystemGray6Dark}"
+                                       DeselectedDayTextColor="{StaticResource SystemGray5Dark}"
+                                       EventIndicatorTextColor="{StaticResource SystemGray5Dark}"
+                                       OtherMonthDayColor="Gray"
+                                       SelectedDayTextColor="{StaticResource SystemGray5Dark}"
+                                       SelectedDayBackgroundColor="{StaticResource SystemGray3}"
+                                       SelectedDateColor="Black"
+                                       DayTappedCommand="{Binding ShowDayCommand}"
+                                       SelectedTodayTextColor="White"
+                                       TodayOutlineColor="{StaticResource SystemGray}"
+                                       TodayFillColor="Transparent"
+                                       TodayTextColor="Black"
+                                       AnimateCalendar="True"
+                                       ArrowsColor="{StaticResource SystemGray6Dark}"
+                                       DisableSwipeDetection="True"
+                                       FooterArrowVisible="True">
+                        <controls:Calendar.EventTemplate>
+                            <DataTemplate>
+                                <StackLayout HeightRequest="100"></StackLayout>
+                            </DataTemplate>
+                        </controls:Calendar.EventTemplate>
+                    </controls:Calendar>
+                </StackLayout>
+        </ContentView>
+    </ContentPage.Content>
+</ContentPage>

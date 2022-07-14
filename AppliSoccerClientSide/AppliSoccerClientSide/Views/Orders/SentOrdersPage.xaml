@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="AppliSoccerClientSide.Views.Orders.SentOrdersPage">
+             x:Class="AppliSoccerClientSide.Views.Orders.SentOrdersPage"
+             Title="Orders">
     <ContentPage.Content>
         <Grid>
             <Grid.RowDefinitions>
@@ -25,19 +26,43 @@
                     <!--Order Metadata-->
 
                     <CollectionView.ItemsLayout>
-                        <LinearItemsLayout ItemSpacing="5"
+                        <LinearItemsLayout ItemSpacing="1"
                                            Orientation="Vertical" />
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Grid Padding="10">
+                            <Grid>
                                 <Frame>
-                                    <StackLayout Spacing="10">
-                                        <Label Text="{Binding Title}"
-                                               FontSize="Large"
-                                               FontAttributes="{Binding FontAttribute}" />
-                                        <Label Text="{Binding SentDate}"
-                                               FontAttributes="{Binding FontAttribute}" />
+                                    <StackLayout Spacing="1">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="50"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="5*" />
+                                                <ColumnDefinition Width="2*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Label Grid.Column="0"
+                                                   HorizontalOptions="Start"
+                                                   Text="{x:StaticResource PaperPlanIcon}"
+                                                   FontSize="Caption"
+                                                   TextColor="{StaticResource SystemGray}"
+                                                   FontFamily="FA-S" />
+                                            <Label
+                                                   Grid.Column="1"
+                                                Text="{Binding Title}"
+                                                   FontSize="Medium"
+                                                   FontAttributes="{Binding FontAttribute}" />
+                                            <Label Grid.Row="0"
+                                                   Grid.Column="2"
+                                                   VerticalOptions="Start"
+                                                   HorizontalOptions="End"
+                                                   Text="{Binding SentDate, StringFormat='{0:MMMM dd, yyyy}'}"
+                                                   FontSize="Caption"
+                                                   TextColor="{StaticResource SystemGray}"
+                                                   FontAttributes="{Binding FontAttribute}" />
+                                        </Grid>
                                         <!-- TODO Receiver expander list-->
                                     </StackLayout>
                                 </Frame>

@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppliSoccerClientSide.Views.Schedule.DayEventsPage"
+             xmlns:helpers="clr-namespace:AppliSoccerClientSide.Helpers"
+             Title="Events"
+             Shell.FlyoutBehavior="Disabled">
+    <ContentPage.Content>
+        <StackLayout>
+            <ListView ItemsSource="{Binding Events}"
+                      HasUnevenRows="True">
+                <ListView.Header>
+                    <Label Text="{Binding SelectedDay, StringFormat='{0:MMMM dd, yyyy}'}"
+                           FontSize="Large"
+                           HorizontalOptions="CenterAndExpand" />
+                </ListView.Header>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame HasShadow="True">
+                                <StackLayout HorizontalOptions="FillAndExpand">
+                                    <StackLayout Padding="10,0,0,0" Orientation="Horizontal">
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                                        </StackLayout.GestureRecognizers>
+                                        <StackLayout Orientation="Horizontal"
+                                                     VerticalOptions="CenterAndExpand"
+                                                     WidthRequest="130">
+                                            <Label Text="{Binding StartTimeSpan, StringFormat=\{0:h\\:mm\}}"
+                                                   CharacterSpacing="1"
+                                                   FontSize="Small" />
+                                            <Label Text=" - " />
+                                            <Label Text="{Binding EndTimeSpan, StringFormat=\{0:h\\:mm\}}"
+                                                   CharacterSpacing="1"
+                                                   FontSize="Small" />
+                                        </StackLayout>
+                                        <StackLayout HorizontalOptions="Start"
+                                                     Margin="10,0,0,0">
+                                            <Label Text="{Binding EventType}"
+                                                   FontSize="Micro"
+                                                   TextColor="{StaticResource SystemGray3}"
+                                                   CharacterSpacing="3" />
+                                            <Label Text="{Binding Title}"
+                                                   FontAttributes="Bold"
+                                                   CharacterSpacing="1"
+                                                   FontSize="Small"
+                                                   TextColor="Black"
+                                                   LineBreakMode="WordWrap" 
+                                                   WidthRequest="200"/>
+                                        </StackLayout>
+                                    </StackLayout>
+                                    <BoxView Color="Black"
+                                             HeightRequest="1"
+                                             WidthRequest="250"
+                                             Opacity="0.5" />
+                                </StackLayout>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -3,11 +3,27 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppliSoccerClientSide.Views.Registration.TeamRegistrationPage"
              Shell.FlyoutBehavior="Disabled"
-             Title="Choose Team">
+             Shell.BackgroundColor="White"
+             Shell.ForegroundColor="Black"
+             Shell.NavBarHasShadow="False">
     <ContentPage.Content>
-        <StackLayout VerticalOptions="Center" Padding="40,0,40,0">
-            <Picker x:Name="TeamPicker"></Picker>
-            <Button Text="Continue" Clicked="ContinueButton_Clicked"></Button>
+        <StackLayout HorizontalOptions="Center"
+                     VerticalOptions="Center">
+            <StackLayout Margin="0,0,0,80">
+                <Label Text="Choose Team"
+                       FontSize="Medium"
+                       LineBreakMode="WordWrap"
+                       CharacterSpacing="5" />
+            </StackLayout>
+            <Picker x:Name="TeamPicker"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    WidthRequest="200"
+                    Margin="0,0,0,10" />
+            <Button Text="Continue"
+                    Clicked="ContinueButton_Clicked"
+                    HorizontalOptions="Center"
+                    WidthRequest="200"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

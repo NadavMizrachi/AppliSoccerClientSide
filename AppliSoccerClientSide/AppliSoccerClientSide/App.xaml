@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              x:Class="AppliSoccerClientSide.App">
     <!--
         Define global resources and styles here, that apply to all pages in your app.
@@ -10,10 +10,23 @@
             <!--Icons-->
             <x:String x:Key="ExpandIcon">&#xf078;</x:String>
             <x:String x:Key="CollapseIcon">&#xf077;</x:String>
+            <x:String x:Key="BookmarkIcon">&#xf02e;</x:String>
+            <x:String x:Key="DateIcon">&#xf783;</x:String>
+            <x:String x:Key="ClockIcon">&#xf017;</x:String>
+            <x:String x:Key="MapMarkerIcon">&#xf041;</x:String>
+            <x:String x:Key="TypesIcon">&#xf5fd;</x:String>
+            <x:String x:Key="InfoIcon">&#xf05a;</x:String>
+            <x:String x:Key="PaperPlanIcon">&#xf1d8;</x:String>
+            <x:String x:Key="EyeIcon">&#xf06e;</x:String>
+            <x:String x:Key="UserEditIcon">&#xf4ff;</x:String>
+            <x:String x:Key="DownloadIcon">&#xf019;</x:String>
             
             <!--Colors-->
-            <Color x:Key="Primary">#8E8E93</Color>
-            
+            <Color x:Key="Primary">#484848</Color>
+            <Color x:Key="Secondery">#FFFFFF</Color>
+            <Color x:Key="SystemWhite">#FFFFFF</Color>
+            <Color x:Key="SystemBlack">#000000</Color>
+
             <Color x:Key="TextColor">#000000</Color>
             <Color x:Key="TextColorDark">White</Color>
 
@@ -59,15 +72,41 @@
 
             <Style TargetType="Entry">
                 <Setter Property="TextColor" Value="{StaticResource TextColor}"/>
+                <Setter Property="FontSize"
+                        Value="Small" />
                 <Setter Property="BackgroundColor" Value="Transparent"/>
                 <Setter Property="PlaceholderColor" Value="{StaticResource SystemGray}"/>
             </Style>
 
+
+            
             <Style TargetType="Picker">
-                <Setter Property="TextColor" Value="{StaticResource TextColor}"/>
+                <Setter Property="TextColor"
+                        Value="{StaticResource TextColor}"/>
+                <Setter Property="FontSize"
+                        Value="Small" />
             </Style>
 
-
+            
+            <!--<Style TargetType="TabbedPage">
+                <Setter Property="BarBackgroundColor"
+                        Value="{StaticResource Secondery}" />
+                <Setter Property="BarTextColor"
+                        Value="{StaticResource Primary}" />
+            </Style>
+            <Style TargetType="NavigationPage">
+                <Setter Property="BarBackgroundColor"
+                        Value="White" />
+                <Setter Property="BarTextColor"
+                        Value="Black" />
+            </Style>
+            <Style TargetType="ContentPage">
+                <Setter Property="NavigationPage.BarBackgroundColor"
+                        Value="Black" />
+            </Style>-->
+            
+           
+            
             <Style TargetType="DatePicker">
                 <Setter Property="TextColor" Value="{StaticResource TextColor}"/>
                 <Setter Property="VerticalOptions"
@@ -76,12 +115,16 @@
 
             <Style TargetType="Label">
                 <Setter Property="TextColor" Value="{StaticResource TextColor}"/>
+                <Setter Property="FontSize"
+                        Value="Small" />
                 <Setter Property="VerticalOptions" Value="Center" />
             </Style>
             
             <Style TargetType="Button">
                 <Setter Property="TextColor"
-                        Value="Black" />
+                        Value="{StaticResource Secondery}" />
+                <Setter Property="FontSize"
+                        Value="Small" />
                 <Setter Property="CornerRadius" Value="15" />
                 <Setter Property="VisualStateManager.VisualStateGroups">
                     <VisualStateGroupList>
@@ -89,6 +132,8 @@
                             <VisualState x:Name="Normal">
                                 <VisualState.Setters>
                                     <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+                                    <Setter Property="FontSize"
+                                            Value="Small" />
                                 </VisualState.Setters>
                             </VisualState>
                             <VisualState x:Name="Disabled">

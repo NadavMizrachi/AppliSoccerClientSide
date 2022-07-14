@@ -2,20 +2,37 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppliSoccerClientSide.Views.Registration.TeamAdminRegistrationPage"
+             Shell.BackgroundColor="White"
+             Shell.ForegroundColor="Black"
+             Shell.NavBarHasShadow="False"
              Shell.FlyoutBehavior="Disabled"
              Title="Enter Admin Details">
     <ContentPage.Content>
-        <StackLayout  
-                      VerticalOptions="Center"
-                      Padding="40,0,40,0">
-            <Label x:Name="TeamNameLabel"
-                   FontSize="Title"
-                   HorizontalTextAlignment="Center"
-                   Margin="0, 50, 0,50"/>
+        <StackLayout  HorizontalOptions="Center"
+                      VerticalOptions="Center">
+            <StackLayout Margin="0,0,0,20">
+                <Label x:Name="TeamNameLabel"
+                       FontSize="Title"
+                       FontAttributes="Bold"
+                       HorizontalTextAlignment="Center"
+                       CharacterSpacing="2"
+                       Margin="0,20,0,50" />
+                <Label Text="Enter Admin Details"
+                       HorizontalOptions="Center"
+                       FontSize="Medium"
+                       LineBreakMode="WordWrap"
+                       CharacterSpacing="5"
+                       Margin="0,20,0,20" />
+            </StackLayout>
 
-            <StackLayout Padding="40,0,40,0" VerticalOptions="Center">
-                <Entry x:Name="UsernameEntry" Placeholder="Admin Username"></Entry>
-                <Entry x:Name="PasswordEntry" Placeholder="Admin Password" IsPassword="True"></Entry>
+
+            <StackLayout Padding="40,0,40,0" 
+                         VerticalOptions="Center"
+                         HorizontalOptions="Center">
+                <Entry x:Name="UsernameEntry"
+                       Placeholder="Admin Username" />
+                <Entry x:Name="PasswordEntry" 
+                       Placeholder="Admin Password" IsPassword="True"></Entry>
                 <Entry x:Name="PasswordEntryValidation" Placeholder="Type Password Again" IsPassword="True"></Entry>
                 <Grid Margin="0, 20 ,0 ,40">
                     <Grid.RowDefinitions>

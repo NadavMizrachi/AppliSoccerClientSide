@@ -1,7 +1,11 @@
 ﻿using AppliSoccerClientSide.Services;
 using AppliSoccerClientSide.Views;
+using AppliSoccerClientSide.Views.Schedule;
+using AppliSoccerClientSide.Views.Tables;
+using AppliSoccerObjects.ActionResults.LeagueActions;
 using AppliSoccerObjects.Modeling;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -23,10 +27,17 @@ namespace AppliSoccerClientSide.Views
         {
             if (await IsValidUser())
             {
-                ApplicationGlobalData.Insert(_loggedTeamMember);
+                ApplicationGlobalData.InsertTeamMember(_loggedTeamMember);
                 _permissionManager.UpdateUserPermissions(_loggedTeamMember, (Shell.Current as AppShell));
-                await Shell.Current.GoToAsync($"//{nameof(PlayersPage)}");
-                //await Shell.Current.GoToAsync($"//{nameof(SchedulePage)}");
+                await ApplicationGlobalData.Init();
+                if (_loggedTeamMember.MemberType == MemberType.Admin)
+                {
+                    await Shell.Current.GoToAsync($"//{nameof(PlayersPage)}");
+                }
+                else
+                {
+                    await Shell.Current.GoToAsync($"//{nameof(SchedulePage)}");
+                }
             }
             else
             {

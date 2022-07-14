@@ -1,5 +1,6 @@
 ﻿using AppliSoccerClientSide.Exceptions;
 using AppliSoccerClientSide.Services;
+using AppliSoccerClientSide.Services.Validators;
 using AppliSoccerObjects.Modeling;
 using Newtonsoft.Json;
 using System;
@@ -36,7 +37,7 @@ namespace AppliSoccerClientSide.Views.Registration
             try
             {
                 TeamMember registeredUser = await Register();
-                ApplicationGlobalData.Insert(registeredUser);
+                ApplicationGlobalData.InsertTeamMember(registeredUser);
                 _permissionManager.UpdateUserPermissions(registeredUser, (Shell.Current as AppShell));
                 // Go to admin page
                 await Shell.Current.GoToAsync($"//{nameof(PlayersPage)}");

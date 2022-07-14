@@ -5,6 +5,7 @@
              x:Class="AppliSoccerClientSide.Views.PlayersPage">
     <ContentPage.Content>
         <ListView  x:Name="PlayersListView"
+                   ItemsSource="{Binding PlayerMembers}"
                    BackgroundColor="Transparent"
                    HasUnevenRows="True"
                    IsPullToRefreshEnabled="True"

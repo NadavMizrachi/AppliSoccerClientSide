@@ -1,5 +1,7 @@
 ﻿using AppliSoccerClientSide.Views;
 using AppliSoccerClientSide.Views.Orders;
+using AppliSoccerClientSide.Views.Schedule;
+using AppliSoccerClientSide.Views.Tables;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,6 +18,12 @@ namespace AppliSoccerClientSide
             BindingContext = this;
             InitializeComponent();
             InitRoutes();
+            IsOrdersPageAllowed = true;
+            IsSchedulePageAllowed = true;
+            IsSentOrdersPageAllowed = true;
+            IsReceivedOrdersPageAllowed = true;
+            IsTablesPageAllowed = true;
+
         }
 
         private void InitRoutes()
@@ -24,6 +32,8 @@ namespace AppliSoccerClientSide
             Routing.RegisterRoute($"{nameof(PlayersPage)}", typeof(PlayersPage));
             Routing.RegisterRoute($"{nameof(SentOrdersPage)}", typeof(SentOrdersPage));
             Routing.RegisterRoute($"{nameof(ReceivedOrdersPage)}", typeof(ReceivedOrdersPage));
+            //Routing.RegisterRoute($"{nameof(SchedulePage)}", typeof(SchedulePage));
+            Routing.RegisterRoute($"{nameof(MainLeaguePage)}", typeof(MainLeaguePage));
         }
         
         public bool IsSchedulePageAllowed
@@ -63,16 +73,31 @@ namespace AppliSoccerClientSide
 
         public static readonly BindableProperty IsReceivedOrdersPageAllowedProperty =
             BindableProperty.Create("IsReceivedOrdersPageAllowed", typeof(bool), typeof(AppShell), false);
-        
+
+        public bool IsTablesPageAllowed
+        {
+            get => (bool)GetValue(IsTablesPageAllowedProperty);
+            set => SetValue(IsTablesPageAllowedProperty, value);
+        }
+
+        public static readonly BindableProperty IsTablesPageAllowedProperty =
+            BindableProperty.Create("IsTablesPageAllowed", typeof(bool), typeof(AppShell), false);
+
+        // TODO ask if logout or not
 
         private async void LogoutClicked(object sender, EventArgs e)
         {
-            ApplicationGlobalData.Insert(null);
-            
-            // Clear all app data:
-            Application.Current.MainPage = new AppShell();
-            
-            await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
+            bool yes = await DisplayAlert(
+                "Logout",
+                $"Are you sure you want logout?", "Yes", "No");
+            if (yes)
+            {
+                ApplicationGlobalData.CleanData();
+                // Clear all app data:
+                Application.Current.MainPage = new AppShell();
+
+                await Shell.Current.GoToAsync($"//{nameof(LoginPage)}");
+            }
         }
     }
 }

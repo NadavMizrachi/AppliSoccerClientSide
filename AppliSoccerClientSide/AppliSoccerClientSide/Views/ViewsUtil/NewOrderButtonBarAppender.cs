@@ -15,8 +15,7 @@ namespace AppliSoccerClientSide.Views.ViewsUtil
         /// <param name="page"></param>
         public static void Append(Page page)
         {
-            var newOrderButtonToolBar = new ToolbarItem() { Text = "New Order" };
-            
+            ToolbarItem newOrderButtonToolBar = new ToolbarItem() { Text = "New Order" };
             newOrderButtonToolBar.Clicked += async (sender, e) => {
                 await page.Navigation.PushAsync(new NewOrderPage()); ;
             };

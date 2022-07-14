@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppliSoccerClientSide.Views.Tables.LeagueTablePage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="{Binding Table.SubLeagueDescription}"
+                   FontSize="Large"
+                   HorizontalOptions="Center"
+                   Padding="10"/>
+            <ListView x:Name="listViewm"
+                      ItemsSource="{Binding Table.Rows}"
+                      ItemTapped="listViewm_ItemTapped"
+                      ItemSelected="listViewm_ItemSelected">
+                <ListView.Header>
+                    <Grid >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="3*" />
+                            <ColumnDefinition Width="2*" />
+                            <ColumnDefinition Width="2*" />
+                        </Grid.ColumnDefinitions>
+                        <Label Text="Team"
+                               HorizontalOptions="Fill"
+                               Grid.Column="2"
+                               FontSize="Small"
+                               FontAttributes="Bold"
+                               HorizontalTextAlignment="Center"
+                               Margin="1" />
+                        <Label Text="Goals Diff"
+                               HorizontalOptions="Fill"
+                               Grid.Column="3"
+                               FontSize="Small"
+                               FontAttributes="Bold"
+                               HorizontalTextAlignment="Center"
+                               Margin="1" />
+                        <Label Text="Points"
+                               HorizontalOptions="Fill"
+                               Grid.Column="4"
+                               FontSize="Small"
+                               FontAttributes="Bold"
+                               HorizontalTextAlignment="Center"
+                               Margin="1" />
+                    </Grid>
+                </ListView.Header>
+
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="3*" />
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="2*" />
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0"
+                                       Text="{Binding Rank}"
+                                       HorizontalOptions="Fill"
+                                       FontSize="Small"
+                                       HorizontalTextAlignment="Center"
+                                       Margin="1"
+                                       FontAttributes="{Binding FontAttribute}"/>
+                                <Image  Grid.Column="1"
+                                        Source="{Binding TeamLogoUrl}" 
+                                        WidthRequest="50"
+                                        HeightRequest="50"/>
+
+                                <!--<Image Source="{Binding TeamLogoUrl}"/>-->
+                                <Label Grid.Column="2"
+                                       Text="{Binding TeamName}"
+                                       HorizontalOptions="Fill"
+                                       FontSize="Small"
+                                       HorizontalTextAlignment="Center"
+                                       Margin="1"
+                                       FontAttributes="{Binding FontAttribute}"/>
+                                <Label Grid.Column="3"
+                                       Text="{Binding GoalsDiff}"
+                                       FontSize="Small"
+                                       HorizontalTextAlignment="Center"
+                                       Margin="1"
+                                       FontAttributes="{Binding FontAttribute}" />
+                                <Label Grid.Column="4"
+                                       Text="{Binding Points}"
+                                       FontSize="Small"
+                                       HorizontalTextAlignment="Center"
+                                       Margin="1"
+                                       FontAttributes="{Binding FontAttribute}" />
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

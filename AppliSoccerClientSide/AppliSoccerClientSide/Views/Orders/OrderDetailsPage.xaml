@@ -5,30 +5,34 @@
     <ContentPage.Content>
         <ContentView>
             <ScrollView>
-                <StackLayout Margin="10">
+                <StackLayout Margin="10"
+                             HorizontalOptions="FillAndExpand">
                     <!--SendingDate-->
-                    <Label Text="{Binding Order.SendingDate}"
-                           FontSize="Small" />
+                    <Label Text="{Binding Order.SendingDate, StringFormat='{0:MMMM dd, yyyy HH:mm}'}}"
+                           FontSize="Caption"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource SystemGray}"
+                           HorizontalOptions="End" />
 
 
-                    <StackLayout HorizontalOptions="Center">
-                        <Frame>
-                            <StackLayout>
-                                <!--Title-->
-                                <Label Text="{Binding Order.Title}"
-                                       FontSize="Title"
-                                       FontAttributes="Bold"
-                                       HorizontalOptions="Center" />
-                                <Label Text="{Binding Order.Content}"
-                                       TextColor="Black"
-                                       FontSize="Body"/>
-                            </StackLayout>
-                            
-                        </Frame>
+                    <StackLayout>
+                        <StackLayout Margin="10,30,10,10">
+                            <!--Title-->
+                            <Label Text="{Binding Order.Title}"
+                                   FontSize="Title"
+                                   Margin="0,0,0,10"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="Center" />
+                            <Label Text="{Binding Order.Content}"
+                                   HorizontalTextAlignment="Start"
+                                   Margin="4"
+                                   TextColor="Black"
+                                   FontSize="Body" />
+                        </StackLayout>
                     </StackLayout>
 
 
-                    <StackLayout Margin="20,30,30,0"
+                    <StackLayout Margin="10,30,30,0"
                                  HorizontalOptions="Center">
                         <!--Sender-->
                         <Label Text="From" 

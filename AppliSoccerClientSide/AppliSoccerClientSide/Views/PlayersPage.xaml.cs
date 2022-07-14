@@ -32,6 +32,7 @@ namespace AppliSoccerClientSide.Views
             {
                 AddAdminToolBarItems();
             }
+            BindingContext = this;
             //PullPlayersFromServer().Wait();
         }
 
@@ -41,7 +42,7 @@ namespace AppliSoccerClientSide.Views
             base.OnAppearing();
             if (!_wasAppeared)
             {
-                await PullPlayersFromServer();
+                await AddPlayersFromServerToUI();
                 _wasAppeared = true;
             }
             
@@ -62,15 +63,30 @@ namespace AppliSoccerClientSide.Views
 
 
 
-        private async Task PullPlayersFromServer()
+        private async Task AddPlayersFromServerToUI()
         {
             IsBusy = true;
+            //var teamMembers = await AppliSoccerServerService.AppServer.PullTeamMembers(MyMember.TeamId);
+            //var playersFromServer = teamMembers.Where(teamMember => teamMember.MemberType == MemberType.Player).ToList();
+            var playersFromServer = await PullPlayersFromServer();
+            await Task.Run(() =>
+            {
+                Device.BeginInvokeOnMainThread( () => {
+                    PlayerMembers.Clear();
+                    playersFromServer.ForEach(member => PlayerMembers.Add(member));
+                    PlayersListView.ItemsSource = null;
+                    PlayersListView.ItemsSource = PlayerMembers;
+                });
+            });
+            IsBusy = false;
+        }
+
+
+        private async Task<List<TeamMember>> PullPlayersFromServer()
+        {
             var teamMembers = await AppliSoccerServerService.AppServer.PullTeamMembers(MyMember.TeamId);
             var playersFromServer = teamMembers.Where(teamMember => teamMember.MemberType == MemberType.Player).ToList();
-            playersFromServer.ForEach(member => PlayerMembers.Add(member));
-            PlayersListView.ItemsSource = PlayerMembers;
-            PlayersListView.ItemsSource = playersFromServer;
-            IsBusy = false;
+            return playersFromServer;
         }
 
         // TODO: Prevent trigger openning player edit page when tapping fast on the same player
@@ -92,7 +108,7 @@ namespace AppliSoccerClientSide.Views
 
         private async void PlayersListView_Refreshing(object sender, EventArgs e)
         {
-            await PullPlayersFromServer();
+            await AddPlayersFromServerToUI();
         }
     }
 }

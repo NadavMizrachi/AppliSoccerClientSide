@@ -251,7 +251,5 @@ namespace AppliSoccerClientSide.Views.Orders
             return;
         }
 
-        
-        
     }
 }

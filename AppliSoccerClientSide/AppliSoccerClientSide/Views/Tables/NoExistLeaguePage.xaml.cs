@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace AppliSoccerClientSide.Views
+namespace AppliSoccerClientSide.Views.Tables
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class SchedulePage : ContentPage
+    public partial class NoExistLeaguePage : ContentPage
     {
-        public SchedulePage()
+        public NoExistLeaguePage()
         {
             InitializeComponent();
         }

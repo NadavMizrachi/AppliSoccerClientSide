@@ -16,6 +16,13 @@ namespace AppliSoccerClientSide.Models
             }
         }
 
-       
+        public static List<string> EventTypeNames
+        {
+            get
+            {
+                return Enum.GetNames(typeof(EventType)).ToList();
+            }
+        }
+
     }
 }

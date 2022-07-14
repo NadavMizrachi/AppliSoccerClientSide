@@ -2,7 +2,10 @@
 <Shell xmlns="http://xamarin.com/schemas/2014/forms" 
        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
        xmlns:local="clr-namespace:AppliSoccerClientSide.Views"
+       xmlns:fonts="clr-namespace:AppliSoccerClientSide.Helpers.Fonts"
        Title="AppliSoccer"
+       BackgroundColor="{DynamicResource SystemWhite}"
+       Shell.ForegroundColor="{DynamicResource Primary}"
        x:Class="AppliSoccerClientSide.AppShell">
 
     <!--
@@ -15,19 +18,36 @@
         <ResourceDictionary>
             <Style x:Key="BaseStyle" TargetType="Element">
                 <Setter Property="Shell.BackgroundColor" Value="{StaticResource Primary}" />
-                <Setter Property="Shell.ForegroundColor" Value="White" />
-                <Setter Property="Shell.TitleColor" Value="White" />
+                <Setter Property="Shell.ForegroundColor"
+                        Value="{DynamicResource Secondery}" />
+                <Setter Property="Shell.TitleColor" Value="{DynamicResource Secondery}" />
                 <Setter Property="Shell.DisabledColor" Value="#B4FFFFFF" />
-                <Setter Property="Shell.UnselectedColor" Value="#95FFFFFF" />
-                <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource Primary}" />
-                <Setter Property="Shell.TabBarForegroundColor" Value="White"/>
-                <Setter Property="Shell.TabBarUnselectedColor" Value="#95FFFFFF"/>
-                <Setter Property="Shell.TabBarTitleColor" Value="White"/>
+                <Setter Property="Shell.UnselectedColor"
+                        Value="{DynamicResource Secondery}" />
+                <Setter Property="Shell.TabBarBackgroundColor"
+                        Value="{DynamicResource Primary}" />
+                <Setter Property="Shell.TabBarForegroundColor"
+                        Value="{DynamicResource Secondery}"/>
+                <Setter Property="Shell.TabBarUnselectedColor"
+                        Value="{DynamicResource Secondery}" />
+                <Setter Property="Shell.TabBarTitleColor"
+                        Value="{DynamicResource Secondery}"/>
             </Style>
             <Style TargetType="NavigationPage">
-                <Setter Property="BarBackgroundColor" Value="{StaticResource Primary}" />
-                <Setter Property="BarTextColor" Value="White" />
+                <Setter Property="BarBackgroundColor"
+                        Value="{DynamicResource Primary}" />
+                <Setter Property="BarTextColor"
+                        Value="{DynamicResource Secondery}" />
             </Style>
+            <Style TargetType="TabbedPage">
+                <Setter Property="BarBackgroundColor"
+                        Value="{DynamicResource Primary}" />
+                <Setter Property="BarTextColor"
+                        Value="{DynamicResource Secondery}" />
+                <Setter Property="UnselectedTabColor"
+                        Value="{DynamicResource Secondery}" />
+            </Style>
+            
             <Style TargetType="TabBar" BasedOn="{StaticResource BaseStyle}" />
             <Style TargetType="FlyoutItem" BasedOn="{StaticResource BaseStyle}" />
 
@@ -36,7 +56,8 @@
             https://docs.microsoft.com/xamarin/xamarin-forms/app-fundamentals/shell/flyout#flyoutitem-and-menuitem-style-classes
             -->
             <Style Class="FlyoutItemLabelStyle" TargetType="Label">
-                <Setter Property="TextColor" Value="White"></Setter>
+                <Setter Property="TextColor"
+                        Value="{StaticResource Primary}"></Setter>
             </Style>
             <Style Class="FlyoutItemLayoutStyle" TargetType="Layout" ApplyToDerivedTypes="True">
                 <Setter Property="VisualStateManager.VisualStateGroups">
@@ -50,7 +71,7 @@
                             </VisualState>
                             <VisualState x:Name="Selected">
                                 <VisualState.Setters>
-                                    <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+                                    <Setter Property="BackgroundColor" Value="{StaticResource SystemGray6}" />
                                 </VisualState.Setters>
                             </VisualState>
                         </VisualStateGroup>
@@ -85,7 +106,9 @@
     
     <!--First page-->
     
-    <ShellItem Route="LoginPage" FlyoutItemIsVisible="False">
+    <ShellItem Route="LoginPage"
+               FlyoutItemIsVisible="False"
+               TabIndex="0">
         <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate local:LoginPage}" />
     </ShellItem>
 
@@ -93,13 +116,25 @@
         <ShellContent Route="CountryRegistrationPage" ContentTemplate="{DataTemplate local:CountryRegistrationPage}" />
     </ShellItem>-->
 
-    <FlyoutItem Title="Schedule" Icon="icon_about.png"  IsVisible="{Binding IsSchedulePageAllowed}">
-        <ShellContent Route="SchedulePage" ContentTemplate="{DataTemplate local:SchedulePage}" />
+    <FlyoutItem Title="Schedule"
+                IsVisible="{Binding IsSchedulePageAllowed}"
+                TabIndex="1">
+        <FlyoutItem.Icon>
+            <FontImageSource Glyph="{x:Static fonts:IconFont.Calendar}"
+                             Color="{StaticResource Primary}"
+                             FontFamily="FA-S" />
+        </FlyoutItem.Icon>
+        <ShellContent Route="SchedulePage" ContentTemplate="{DataTemplate local:Schedule.SchedulePage}" />
     </FlyoutItem>
 
     <FlyoutItem Title="Orders"
-                Icon="icon_about.png"
-                IsVisible="{Binding IsOrdersPageAllowed}">
+                IsVisible="{Binding IsOrdersPageAllowed}"
+                TabIndex="2">
+        <FlyoutItem.Icon>
+            <FontImageSource Glyph="{x:Static fonts:IconFont.Comments}"
+                             Color="{StaticResource Primary}"
+                             FontFamily="FA-S" />
+        </FlyoutItem.Icon>
         <Tab>
             <ShellContent Route="SentOrdersPage"
                           Title="Sent"
@@ -113,7 +148,10 @@
     </FlyoutItem>
 
 
-    <FlyoutItem Title="Team Members" Icon="icon_about.png" Route="TeamMembers">
+    <FlyoutItem Title="Team Members"
+                Icon="icon_about.png" 
+                Route="TeamMembers"
+                TabIndex="3">
         <Tab Title="Players">
             <ShellContent Route="PlayersPage" 
                           Title="Players"
@@ -127,6 +165,14 @@
         </Tab>-->
     </FlyoutItem>
 
+    <FlyoutItem Title="Tables"
+                Route="Tables"
+                IsVisible="{Binding IsTablesPageAllowed}"
+                TabIndex="4">
+        <ShellContent Route="MainLeaguePage"
+                      ContentTemplate="{DataTemplate local:Tables.MainLeaguePage}"
+                      />
+    </FlyoutItem>
 
     <!-- When the Flyout is visible this will be a menu item you can tie a click behavior to  -->
     <MenuItem Text="Logout" 

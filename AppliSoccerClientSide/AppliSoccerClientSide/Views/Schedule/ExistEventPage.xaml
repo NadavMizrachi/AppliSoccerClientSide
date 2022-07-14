@@ -1,0 +1,233 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ec="clr-namespace:AppliSoccerClientSide.Extensions"
+             xmlns:models="clr-namespace:AppliSoccerClientSide.Models"
+             Title="Events"
+             x:Class="AppliSoccerClientSide.Views.Schedule.ExistEventPage"
+             Shell.FlyoutBehavior="Disabled">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ec:IntEnumConverter x:Key="IntEnum" />
+            <Style TargetType="Picker">
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="TextColor"
+                                            Value="Black" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Disabled">
+                                <VisualState.Setters>
+                                    <Setter Property="TextColor"
+                                            Value="Black" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+            <Style TargetType="DatePicker">
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="TextColor"
+                                            Value="Black" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Disabled">
+                                <VisualState.Setters>
+                                    <Setter Property="TextColor"
+                                            Value="Black" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+            <Style TargetType="TimePicker">
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="TextColor"
+                                            Value="Black" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Disabled">
+                                <VisualState.Setters>
+                                    <Setter Property="TextColor"
+                                            Value="Black" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid HorizontalOptions="FillAndExpand"
+              Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="150" />
+                <RowDefinition Height="60" />
+                <RowDefinition Height="60" />
+                <RowDefinition Height="60" />
+                <RowDefinition Height="60" />
+                <RowDefinition Height="60" />
+                <RowDefinition Height="150" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="3*" />
+            </Grid.ColumnDefinitions>
+
+            <Entry  x:Name="titleEntry"
+                    Grid.Row="0"
+                    Grid.ColumnSpan="3"
+                    Text="{Binding EventDetails.Title}"
+                    FontSize="Medium"
+                    HorizontalTextAlignment="Center"
+                    IsReadOnly="True"
+                    Placeholder="Title"
+                    HorizontalOptions="FillAndExpand"
+                    FontAttributes="Bold" />
+
+            <!--Title--><!--
+            <Label Grid.Row="1"
+                   Grid.Column="0"
+                   Text="Title"
+                   FontAttributes="Bold" />
+            <Entry Grid.Row="1"
+                   Grid.Column="1"
+                   FontSize="Small"
+                   Placeholder="Title"
+                   Text="{Binding EventDetails.Title}" />-->
+
+
+            <!--Date-->
+            <Label Grid.Row="1"
+                   Grid.Column="0"
+                   HorizontalOptions="Center"
+                   Text="{x:StaticResource DateIcon}"
+                   FontSize="Medium"
+                   FontFamily="FA-S" />
+            <Label Grid.Row="1"
+                   Grid.Column="1"
+                   Text="Date"
+                   FontAttributes="Bold" />
+            <DatePicker  x:Name="datePicker"
+                         Grid.Row="1"
+                         Grid.Column="2"
+                         Date="{Binding EventDetails.Date, Mode=TwoWay}"
+                         IsEnabled="False"
+                         TextColor="Black"
+                         FontSize="Small"
+                         Visual="Material" />
+
+            <!-- Hours -->
+            <Label Grid.Row="2"
+                   Grid.Column="0"
+                   HorizontalOptions="Center"
+                   Text="{x:StaticResource ClockIcon}"
+                   FontSize="Medium"
+                   FontFamily="FA-S" />
+            <Label Grid.Row="2"
+                   Grid.Column="1"
+                   Text="Hours"
+                   FontAttributes="Bold" />
+            <StackLayout Grid.Row="2"
+                         Grid.Column="2"
+                         Orientation="Horizontal">
+                <TimePicker x:Name="startTimePicker"
+                            Time="{Binding EventDetails.StartTimeSpan, Mode=TwoWay}"
+                            TextColor="Black"
+                            FontSize="Small"
+                            IsEnabled="False"
+                            HorizontalOptions="End" />
+                <TimePicker x:Name="endTimePicker"
+                            Time="{Binding EventDetails.EndTimeSpan, Mode=TwoWay}"
+                            TextColor="Black"
+                            FontSize="Small"
+                            IsEnabled="False"
+                            HorizontalOptions="End" />
+            </StackLayout>
+
+            <!--Place-->
+            <Label Grid.Row="3"
+                   Grid.Column="0"
+                   HorizontalOptions="Center"
+                   Text="{x:StaticResource MapMarkerIcon}"
+                   FontSize="Medium"
+                   FontFamily="FA-S" />
+            <Label Grid.Row="3"
+                   Grid.Column="1"
+                   Text="Place"
+                   FontAttributes="Bold" />
+            <Entry x:Name="placeNameEntry"
+                   Grid.Row="3"
+                   Grid.Column="2"
+                   Placeholder="Place"
+                   IsReadOnly="True"
+                   FontSize="Small"
+                   Text="{Binding EventDetails.Place.Name}" />
+
+
+            <!--Event Type-->
+            <Label Grid.Row="4"
+                   Grid.Column="0"
+                   HorizontalOptions="Center"
+                   Text="{x:StaticResource TypesIcon}"
+                   FontSize="Medium"
+                   FontFamily="FA-S" />
+            <Label Grid.Row="4"
+                   Grid.Column="1"
+                   FontAttributes="Bold"
+                   Text="Event Type" />
+            <Picker x:Name="eventTypePicker"
+                    Grid.Row="4"
+                    Grid.Column="2"
+                    FontSize="Small"
+                    IsEnabled="False"
+                    ItemsSource="{x:Static models:Enums.EventTypeNames}"
+                    SelectedIndex="{Binding EventDetails.EventType, Mode=TwoWay, Converter={StaticResource IntEnum}}" />
+
+            <!--Description-->
+            <Label Grid.Row="5"
+                   Grid.Column="0"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Start"
+                   Text="{x:StaticResource InfoIcon}"
+                   FontSize="Medium"
+                   FontFamily="FA-S" />
+            <ScrollView Grid.Row="5"
+                        Grid.Column="1"
+                        Grid.ColumnSpan="2"
+                        VerticalScrollBarVisibility="Always">
+                <StackLayout Padding="10,5,10,5"
+                             HeightRequest="150">
+                    <Editor x:Name="descriptionEditor"
+                            HeightRequest="150"
+                            FontAttributes="Italic"
+                            IsSpellCheckEnabled="True"
+                            FontSize="Small"
+                            BackgroundColor="{StaticResource SystemGray6}"
+                            TextColor="Black"
+                            AutoSize="TextChanges"
+                            Placeholder="Type Description"
+                            IsReadOnly="True"
+                            PlaceholderColor="{StaticResource SystemGray}"
+                            Text="{Binding EventDetails.Description, Mode=TwoWay}" />
+                </StackLayout>
+            </ScrollView>
+            
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

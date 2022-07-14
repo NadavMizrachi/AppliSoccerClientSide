@@ -7,7 +7,8 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style TargetType="ListView">
-                <Setter Property="RowHeight" Value="40" />
+                <Setter Property="RowHeight"
+                        Value="40" />
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>

@@ -2,6 +2,7 @@
 using Xamarin.Forms;
 using System.Threading.Tasks;
 using AppliSoccerClientSide.Services;
+using AppliSoccerClientSide.Services.Validators;
 
 namespace AppliSoccerClientSide.Views.ViewsUtil
 {

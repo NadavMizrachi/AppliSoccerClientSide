@@ -50,6 +50,7 @@ namespace AppliSoccerClientSide.Views.Orders
         {
             MyMember = ApplicationGlobalData.GetMyTeamMember();
         }
+
         private void InitPermissionedElements()
         {
             ViewsPermissionManager viewsPermissionManager =

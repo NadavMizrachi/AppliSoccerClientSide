@@ -1,4 +1,6 @@
-﻿using AppliSoccerObjects.Modeling;
+﻿using AppliSoccerObjects.ActionResults.EventsActions;
+using AppliSoccerObjects.ActionResults.LeagueActions;
+using AppliSoccerObjects.Modeling;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -22,6 +24,11 @@ namespace AppliSoccerConnector
         Task<List<OrderMetadata>> FetchOrdersMetadata(DateTime earliestOrderDate, int batchSize, String receiverId);
         Task<List<OrderMetadata>> PullNewOrders(DateTime latestOrderDate, string receiverId);
         Task<OrderPayload> GetOrderPayload(string orderId, string askerId);
+        Task<GetMainLeagueActionResult> GetMainLeague(string teamId);
         Task<SentOrderWithReceiversInfo> GetSentOrder(string id);
+        Task<CreateEventActionResult> CreateEvent(EventDetails eventDetails);
+        Task<EditEventActionResult> EditEvent(EventDetails edittedEvent);
+        Task<GetEventsActionResult> GetEvents(DateTime lowerBoundDate, DateTime upBoundDate, string askerId);
+        Task<GetEventsActionResult> GetAllEvents(string askerId);
     }
 }

@@ -2,12 +2,29 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppliSoccerClientSide.Views.CountryRegistrationPage"
-             Shell.FlyoutBehavior="Disabled"
-             Title="Choose Country">
+             Shell.BackgroundColor="White"
+             Shell.ForegroundColor="Black"
+             Shell.NavBarHasShadow="False"
+             Shell.FlyoutBehavior="Disabled">
     <ContentPage.Content>
         <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
-            <Picker x:Name="CountryPicker"></Picker>
-            <Button Text="Continue" Clicked="ContinueButton_Clicked"></Button>
+            <StackLayout Margin="0,0,0,80">
+                <Label Text="Choose Country"
+                       FontSize="Medium"
+                       LineBreakMode="WordWrap"
+                       CharacterSpacing="5" />
+            </StackLayout>
+            <StackLayout>
+                <Picker x:Name="CountryPicker"
+                        HorizontalOptions="Center"
+                        HorizontalTextAlignment="Center"
+                        WidthRequest="130"
+                        Margin="0,0,0,10"/>
+                <Button Text="Continue"
+                        HorizontalOptions="Center"
+                        Clicked="ContinueButton_Clicked"
+                        WidthRequest="130" />
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -12,7 +12,9 @@ namespace AppliSoccerClientSide.Services
     class ViewsPermissionManager
     {
 
+        public bool IsPermissionedForNewEventButton { get; private set; }
         public bool IsPermissionedForNewOrderButton { get; private set; }
+        public bool IsPermissionedForEditExistEvent { get; set; }
 
         private static ViewsPermissionManager _viewsPermissionManager;
         private ViewsPermissionManager()
@@ -65,7 +67,10 @@ namespace AppliSoccerClientSide.Services
         {
             appShell.IsReceivedOrdersPageAllowed = true;
             appShell.IsSentOrdersPageAllowed = false;
+            appShell.IsTablesPageAllowed = true;
             IsPermissionedForNewOrderButton = false;
+            IsPermissionedForNewEventButton = false;
+
         }
 
         private void OnStaffLogin(AppShell appShell)
@@ -73,19 +78,25 @@ namespace AppliSoccerClientSide.Services
             appShell.IsSentOrdersPageAllowed = true;
             appShell.IsReceivedOrdersPageAllowed = true;
             IsPermissionedForNewOrderButton = true;
+            appShell.IsTablesPageAllowed = true;
+
         }
 
         private void OnCoachLogin(AppShell appShell)
         {
             appShell.IsSentOrdersPageAllowed = true;
             appShell.IsReceivedOrdersPageAllowed = false;
+            appShell.IsTablesPageAllowed = true;
             IsPermissionedForNewOrderButton = true;
+            IsPermissionedForNewEventButton = true;
+            IsPermissionedForEditExistEvent = true;
         }
 
         private void OnAdminLogin(AppShell appShell)
         {
             appShell.IsSchedulePageAllowed = false;
             appShell.IsOrdersPageAllowed = false;
+            appShell.IsTablesPageAllowed = false;
         }
 
     }
