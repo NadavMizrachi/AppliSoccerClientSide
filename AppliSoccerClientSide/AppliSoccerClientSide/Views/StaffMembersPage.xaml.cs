@@ -45,7 +45,7 @@ namespace AppliSoccerClientSide.Views
         private void AddAdminToolBarItems()
         {
             // Add 'Add' button to toolbar
-            var addToolBarItem = new ToolbarItem() { Text = "Add" };
+            var addToolBarItem = new ToolbarItem() { IconImageSource = ImageSource.FromResource("AppliSoccerClientSide.Images.icons8-add-user-male-90.png") };
             addToolBarItem.Clicked += this.AddItem_Clicked;
 
             ToolbarItems.Add(addToolBarItem);

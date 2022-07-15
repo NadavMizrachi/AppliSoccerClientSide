@@ -15,7 +15,7 @@ namespace AppliSoccerClientSide.Views.ViewsUtil
         /// <param name="page"></param>
         public static void Append(Page page)
         {
-            ToolbarItem newOrderButtonToolBar = new ToolbarItem() { Text = "New Order" };
+            ToolbarItem newOrderButtonToolBar = new ToolbarItem() { IconImageSource = ImageSource.FromResource("AppliSoccerClientSide.Images.icons8-edit-message-100.png") };
             newOrderButtonToolBar.Clicked += async (sender, e) => {
                 await page.Navigation.PushAsync(new NewOrderPage()); ;
             };

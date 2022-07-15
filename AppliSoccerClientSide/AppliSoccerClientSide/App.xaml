@@ -20,6 +20,13 @@
             <x:String x:Key="EyeIcon">&#xf06e;</x:String>
             <x:String x:Key="UserEditIcon">&#xf4ff;</x:String>
             <x:String x:Key="DownloadIcon">&#xf019;</x:String>
+            <x:String x:Key="MailIcon">&#xf0e0;</x:String>
+            <x:String x:Key="UsersIcon">&#xf0c0;</x:String>
+            <x:String x:Key="RunningIcon">&#xf70c;</x:String>
+            <x:String x:Key="UserTieIcon">&#xf508;</x:String>
+            <x:String x:Key="AddressBookIcon">&#xf2b9;</x:String>
+            <x:String x:Key="StarIcon">&#xf005;</x:String>
+            <x:String x:Key="VolleyBallIcon">&#xf45f;</x:String>
             
             <!--Colors-->
             <Color x:Key="Primary">#484848</Color>

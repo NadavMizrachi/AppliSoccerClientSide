@@ -2,122 +2,202 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ec="clr-namespace:AppliSoccerClientSide.Extensions"
-             x:Class="AppliSoccerClientSide.Views.StaffDetails">
+             xmlns:fonts="clr-namespace:AppliSoccerClientSide.Helpers.Fonts"
+             x:Class="AppliSoccerClientSide.Views.StaffDetails"
+             Shell.FlyoutBehavior="Disabled">
     
     <ContentPage.Resources>
         <ResourceDictionary>
             <ec:IntEnumConverter x:Key="IntEnum" />
+            <Style TargetType="Label">
+                <Setter Property="HorizontalOptions"
+                        Value="End" />
+                <Setter Property="Margin"
+                        Value="0,0,20,0" />
+                <Setter Property="FontAttributes"
+                        Value="Bold" />
+                <Setter Property="TextColor"
+                        Value="Black" />
+            </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
 
     <!--If the user is admin, the code behind will create toolbars items of: remove and edit.-->
 
     <ContentPage.Content>
-        <StackLayout Padding="20,0,20,0">
-
+        <StackLayout>
+            <Label Text="{x:StaticResource UserTieIcon}"
+                   FontSize="Header"
+                   HorizontalOptions="Center"
+                   FontAttributes="{Binding FontAttribute}"
+                   TextColor="{StaticResource Primary}"
+                   FontFamily="FA-S"
+                   Margin="20" />
             <StackLayout Orientation="Horizontal"
-                         IsVisible="{Binding StaffToShow.AdditionalInfo.IsCoach}">
+                         HorizontalOptions="Center"
+                         IsVisible="{Binding StaffToShow.AdditionalInfo.IsCoach}"
+                         Margin="0,0,0,10">
+                <Label Text="{x:StaticResource StarIcon}"
+                       FontSize="Large"
+                       HorizontalOptions="Center"
+                       FontFamily="FA-S"
+                       TextColor="{StaticResource Primary}" />
                 <Label Text="Coach"
-                       FontSize="Large" />
+                       FontSize="Large"
+                       TextColor="{StaticResource Primary}" />
             </StackLayout>
-            
-            <!--First Name-->
-            <StackLayout Orientation="Horizontal">
-                <Label Text="First Name"
-                       TextColor="Gray" />
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition Height="85"/>
+                    <RowDefinition Height="120" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="4*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                
+               
+                <!--First Name-->
+                <Label Grid.Row="0"
+                       Text="First Name"
+                       FontSize="Small"
+                       FontAttributes="Bold" />
                 <Entry x:Name="FirstNameEntry"
-                       FontSize="Title"
+                       Grid.Row="0"
+                       FontSize="Small"
+                       Grid.Column="1"
                        IsReadOnly="True"
                        Text="{Binding StaffToShow.FirstName}" />
-            </StackLayout>
 
 
-            <!--Last Name-->
-            <StackLayout Orientation="Horizontal">
-                <Label Text="Last Name"
-                       TextColor="Gray" />
+                <!--Last Name-->
+                <Label  Grid.Row="1"
+                        Text="Last Name"
+                        FontSize="Small"/>
                 <Entry x:Name="LastNameEntry"
-                       FontSize="Title"
-                       IsReadOnly="True"
-                       Text="{Binding StaffToShow.LastName}" />
-            </StackLayout>
-
-
-            <!--Phone-->
-            <StackLayout Orientation="Horizontal">
-                <Label Text="Phone Number"
-                       TextColor="Gray" />
-                <Entry x:Name="PhoneNumberEntry"
-                       Keyboard="Telephone"
-                       IsReadOnly="True"
-                       MaxLength="10"
-                       Text="{Binding StaffToShow.PhoneNumber, Mode=TwoWay}" />
-            </StackLayout>
-
-
-            <!--Birth Date-->
-            <StackLayout Orientation="Horizontal">
-                <Label Text="Birth Date"
-                       TextColor="Gray" />
-                <DatePicker x:Name="BirthdatePicker"
-                            IsVisible="False"
-                            Date="{Binding StaffToShow.BirthDate}" />
-                <Label x:Name="BirthdateLabel"
-                       VerticalOptions="Center"
-                       Text="{Binding StaffToShow.BirthDate, StringFormat='{0:MM/dd/yyyy}'}"
-                       FontSize="Medium" />
-            </StackLayout>
-
-            <!--Staff Responsible Roles-->
-            <StackLayout Orientation="Vertical">
-                <Label Text="Responsible Roles"
-                       TextColor="Gray"
-                       VerticalOptions="Center" />
-                <ListView x:Name="MyListView"
-                          ItemsSource="{Binding ManagedRoles}"
-                          ItemTapped="MyListView_ItemTapped">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <StackLayout Orientation="Horizontal"
-                                             IsVisible="{Binding IsVisible}">
-                                    <CheckBox  IsChecked="{Binding IsManaged, Mode=TwoWay}"
-                                               IsVisible="{Binding IsCheckBoxVisible}"
-                                               CheckedChanged="CheckBox_CheckedChanged"/>
-                                    <Label Text="{Binding RoleName}" />
-                                </StackLayout>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-                <Button x:Name="ChangeRoleButton"
-                        Text="Change Role"
-                        IsVisible="{Binding IsCoach}"
-                        Clicked="ChangeRoleButton_Clicked" />
-            </StackLayout>
-
-            <!--Description-->
-            <StackLayout Padding="0,20,0,0">
-                <Label Text="Description:"
-                       TextColor="Gray" />
-                <Editor x:Name="DescriptionEditor"
-                        AutoSize="TextChanges"
-                        TextColor="Black"
+                        Grid.Row="1"
+                        Grid.Column="1"
+                       FontSize="Small"
                         IsReadOnly="True"
-                        Text="{Binding StaffToShow.Description, Mode=TwoWay}" />
-            </StackLayout>
-            
+                        Text="{Binding StaffToShow.LastName}" />
+
+
+                <!--Phone-->
+                <Label Text="Phone Number"
+                        Grid.Row="2"/>
+                <Entry x:Name="PhoneNumberEntry"
+                        Grid.Row="2"
+                        Grid.Column="1"
+                       FontSize="Small"
+                        Keyboard="Telephone"
+                        IsReadOnly="True"
+                        MaxLength="10"
+                        Text="{Binding StaffToShow.PhoneNumber, Mode=TwoWay}" />
+
+
+                <!--Birth Date-->
+                <Label Text="Birth Date"
+                       Grid.Row="3"/>
+                <StackLayout Grid.Row="3"
+                             Grid.Column="1"
+                             Orientation="Horizontal">
+                    <DatePicker x:Name="BirthdatePicker"
+                                IsVisible="False"
+                                Date="{Binding StaffToShow.BirthDate}"
+                                FontSize="Small"/>
+                    <Label x:Name="BirthdateLabel"
+                           VerticalOptions="Center"
+                           Text="{Binding StaffToShow.BirthDate, StringFormat='{0:MM/dd/yyyy}'}"
+                           FontSize="Small" />
+                </StackLayout>
+
+                <!--Description-->
+                <Label Text="Description:"
+                       Grid.Row="4" />
+                <StackLayout Padding="0,20,0,0"
+                             Grid.Row="4"
+                             Grid.Column="1">
+                    <Editor x:Name="DescriptionEditor"
+                            AutoSize="TextChanges"
+                            TextColor="Black"
+                            BackgroundColor="{StaticResource SystemGray6}"
+                            HeightRequest="60"
+                            FontSize="Small"
+                            IsReadOnly="True"
+                            Text="{Binding StaffToShow.Description, Mode=TwoWay}" />
+                </StackLayout>
+
+
+                <!--Staff Responsible Roles-->
+                <StackLayout Grid.Row="5">
+                    <Label Text="Responsible Roles"
+                           x:Name="responsibleRolesLabel"
+                           VerticalOptions="Start"
+                            />
+                    <Button x:Name="ChangeRoleButton"
+                            Text="Change"
+                            VerticalOptions="Center"
+                            HorizontalOptions="End"
+                            FontSize="Caption"
+                            IsVisible="{Binding IsCoach}"
+                            Clicked="ChangeRoleButton_Clicked" />
+                </StackLayout>
+                <StackLayout Orientation="Vertical"
+                                Grid.Row="5"
+                                Grid.Column="1">
+                    
+                    <ListView x:Name="MyListView"
+                                ItemsSource="{Binding ManagedRoles}"
+                              HasUnevenRows="False"
+                              RowHeight="22"
+                                ItemTapped="MyListView_ItemTapped">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <StackLayout Orientation="Horizontal"
+                                                    IsVisible="{Binding IsVisible}">
+                                        <CheckBox  IsChecked="{Binding IsManaged, Mode=TwoWay}"
+                                                    IsVisible="{Binding IsCheckBoxVisible}"
+                                                    CheckedChanged="CheckBox_CheckedChanged" />
+                                        <Label Text="{Binding RoleName}"
+                                               FontSize="Caption"/>
+                                    </StackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    
+                </StackLayout>
+
+                
+
+
+            </Grid>
             <!--Save Button (For Admin/Coach only)-->
             <StackLayout Padding="30"
                          Orientation="Horizontal"
                          HorizontalOptions="Center">
                 <Button x:Name="SaveButton"
                         Text="Save"
-                        Padding="20"
+                        WidthRequest="110"
+                        FontSize="Caption"
+                        ContentLayout="Top,5"
+                        Padding="2"
+                        HorizontalOptions="Center"
                         Clicked="SaveButton_Clicked"
-                        IsVisible="False" />
+                        IsVisible="False">
+                    <Button.ImageSource>
+                        <FontImageSource Glyph="{x:Static fonts:IconFont.Save}"
+                                         FontFamily="FA-S"
+                                         Size="Medium" />
+                    </Button.ImageSource>
+                </Button>
             </StackLayout>
-
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

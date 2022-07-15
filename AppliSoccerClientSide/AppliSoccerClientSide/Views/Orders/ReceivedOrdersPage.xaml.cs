@@ -74,7 +74,7 @@ namespace AppliSoccerClientSide.Views.Orders
             {
                 return;
             }
-            var refreshToolBarItem = new ToolbarItem() { Text = "Refresh" };
+            var refreshToolBarItem = new ToolbarItem() { IconImageSource = ImageSource.FromResource("AppliSoccerClientSide.Images.refresh.png") };
             refreshToolBarItem.Clicked += this.RefreshButton_Clicked;
             ToolbarItems.Add(refreshToolBarItem);
         }

@@ -2,11 +2,12 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:models="clr-namespace:AppliSoccerObjects.Modeling;assembly=AppliSoccerObjects"
-             x:Class="AppliSoccerClientSide.Views.PlayersPage">
+             x:Class="AppliSoccerClientSide.Views.PlayersPage"
+             Title="Team Members">
     <ContentPage.Content>
         <ListView  x:Name="PlayersListView"
                    ItemsSource="{Binding PlayerMembers}"
-                   BackgroundColor="Transparent"
+                   BackgroundColor="{StaticResource SystemWhite}"
                    HasUnevenRows="True"
                    IsPullToRefreshEnabled="True"
                    Refreshing="PlayersListView_Refreshing"
@@ -15,16 +16,26 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <Grid Padding="10">
+                        <Grid>
                             <Frame>
-                                <StackLayout>
+                                <StackLayout  Spacing="11">
                                     <StackLayout Orientation="Horizontal"
                                                  VerticalOptions="Center">
+                                        <Label Grid.Column="0"
+                                               HorizontalOptions="Start"
+                                               Text="{x:StaticResource RunningIcon}"
+                                               FontSize="Small"
+                                               FontAttributes="{Binding FontAttribute}"
+                                               TextColor="{StaticResource SystemGray}"
+                                               FontFamily="FA-S"
+                                               Margin="0,0,30,0"/>
                                         <Label VerticalOptions="Center"
-                                               FontSize="Medium"
+                                               FontSize="Small"
+                                               FontAttributes="Bold"
                                                Text="{Binding FirstName}" />
                                         <Label VerticalOptions="Center"
-                                               FontSize="Medium"
+                                               FontAttributes="Bold"
+                                               FontSize="Small"
                                                Text="{Binding LastName}" />
                                     </StackLayout>
                                 </StackLayout>

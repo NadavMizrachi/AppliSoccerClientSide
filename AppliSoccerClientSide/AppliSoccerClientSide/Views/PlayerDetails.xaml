@@ -2,121 +2,182 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ec="clr-namespace:AppliSoccerClientSide.Extensions"
+             xmlns:fonts="clr-namespace:AppliSoccerClientSide.Helpers.Fonts"
              xmlns:models="clr-namespace:AppliSoccerClientSide.Models"
+             Shell.FlyoutBehavior="Disabled"
              x:Class="AppliSoccerClientSide.Views.PlayerDetails">
     <ContentPage.Resources>
         <ResourceDictionary>
             <ec:IntEnumConverter x:Key="IntEnum" />
+            <Style TargetType="Label">
+                <Setter Property="HorizontalOptions"
+                        Value="End" />
+                <Setter Property="Margin"
+                        Value="0,0,20,0" />
+                <Setter Property="FontAttributes"
+                        Value="Bold" />
+                <Setter Property="TextColor"
+                        Value="Black" />
+            </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
 
     <!--If the user is admin, the code behind will create toolbars items of: remove and edit.-->
 
     <ContentPage.Content>
-        <StackLayout Padding="20,0,20,0">
+        <StackLayout>
+            <Label Text="{x:StaticResource RunningIcon}"
+                   FontSize="Header"
+                   HorizontalOptions="Center"
+                   FontAttributes="{Binding FontAttribute}"
+                   TextColor="{StaticResource Primary}"
+                   FontFamily="FA-S"
+                   Margin="20" />
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition Height="60" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <!--First Name-->
+                    <Label Grid.Row="0"
+                            Text="First Name"/>
+                <Entry  Grid.Row="0"
+                        Grid.Column="1"
+                        x:Name="FirstNameEntry"
+                           FontSize="Small"
+                           IsReadOnly="True"
+                           Text="{Binding PlayerToShow.FirstName}" />
 
-            <!--First Name-->
-            <StackLayout Orientation="Horizontal">
-                <Label Text="First Name"
-                       TextColor="Gray" />
-                <Entry x:Name="FirstNameEntry"
-                       FontSize="Title"
-                       IsReadOnly="True"
-                       Text="{Binding PlayerToShow.FirstName}" />
-            </StackLayout>
 
-
-            <!--Last Name-->
-            <StackLayout Orientation="Horizontal">
-                <Label Text="Last Name"
-                       TextColor="Gray" />
+                <!--Last Name-->
+                <Label Grid.Row="1"
+                       Text="Last Name"/>
                 <Entry x:Name="LastNameEntry"
-                       FontSize="Title"
+                       Grid.Row="1"
+                       Grid.Column="1"
+                       FontSize="Small"
                        IsReadOnly="True"
                        Text="{Binding PlayerToShow.LastName}" />
-            </StackLayout>
 
 
-            <!--Phone-->
-            <StackLayout Orientation="Horizontal">
-                <Label Text="Phone Number"
-                       TextColor="Gray" />
-                <Entry x:Name="PhoneNumberEntry"
+                <!--Phone-->
+                <Label Grid.Row="2"
+                       Text="Phone Number"/>
+                    <Entry x:Name="PhoneNumberEntry"
+                           Grid.Row="2"
+                           Grid.Column="1"
+                       FontSize="Small"
                        Keyboard="Telephone"
-                       IsReadOnly="True"
-                       MaxLength="10"
-                       Text="{Binding PlayerToShow.PhoneNumber, Mode=TwoWay}" />
-            </StackLayout>
+                           IsReadOnly="True"
+                           MaxLength="10"
+                           Text="{Binding PlayerToShow.PhoneNumber, Mode=TwoWay}" />
 
 
-            <!--Birth Date-->
-            <StackLayout Orientation="Horizontal">
-                <Label Text="Birth Date"
-                       TextColor="Gray" />
-                <DatePicker x:Name="BirthdatePicker"
+                    <!--Birth Date-->
+                <Label Grid.Row="3"
+                       Text="Birth Date"/>
+                    <DatePicker x:Name="BirthdatePicker"
+                                Grid.Row="3"
+                            Grid.Column="1"
+                            FontSize="Small"
                             IsVisible="False"
-                            Date="{Binding PlayerToShow.BirthDate}" />
-                <Label x:Name="BirthdateLabel"
+                                Date="{Binding PlayerToShow.BirthDate}" />
+                    <Label x:Name="BirthdateLabel"
+                       Grid.Row="3"
+                           Grid.Column="1"
+                           HorizontalOptions="Start"
+                           FontAttributes="None"
                        VerticalOptions="Center"
-                       Text="{Binding PlayerToShow.BirthDate, StringFormat='{0:MM/dd/yyyy}'}"
-                       FontSize="Medium" />
-            </StackLayout>
+                           Text="{Binding PlayerToShow.BirthDate, StringFormat='{0:MM/dd/yyyy}'}"
+                           FontSize="Small" />
 
-            <!--Player Number -->
-            <StackLayout Orientation="Horizontal">
-                <Label Text="Number"
-                       FontSize="Caption"
-                       TextColor="Gray" />
+                    <!--Player Number -->
+                <Label Grid.Row="4"
+                       Text="Number"/>
                 <Entry x:Name="NumberEntry"
+                       Grid.Row="4"
+                       Grid.Column="1"
                        IsReadOnly="True"
                        Keyboard="Numeric"
                        MaxLength="3"
                        Text="{Binding PlayerToShow.AdditionalInfo.Number, Mode=TwoWay}" />
-            </StackLayout>
 
-            <!--Player Role-->
-            <StackLayout Orientation="Horizontal">
-                <Label Text="Role"
-                       TextColor="Gray"
-                       VerticalOptions="Center" />
-                <Picker x:Name="RolePicker"
-                        IsVisible="False"
-                        VerticalOptions="Center"
-                        MinimumWidthRequest="90"
-                        ItemsSource="{x:Static models:Enums.RoleNames}"
-                        SelectedIndex="{Binding PlayerToShow.AdditionalInfo.Role, Converter={StaticResource IntEnum}}" />
-                <Label x:Name="RoleLabel"
-                       IsVisible="True"
-                       FontSize="Medium"
-                       VerticalOptions="Center"
-                       Text="{Binding PlayerToShow.AdditionalInfo.Role}" />
-                <Button x:Name="ChangeRoleButton"
-                        Text="Change Role"
-                        IsVisible="{Binding IsCoach}"
-                        Clicked="ChangeRoleButton_Clicked" />
-            </StackLayout>
+                <!--Player Role-->
+                <Label Grid.Row="5"
+                       Text="Role"
+                           VerticalOptions="Center" />
+                <StackLayout Grid.Row="5"
+                             Grid.Column="1"
+                             Orientation="Horizontal"
+                             HorizontalOptions="CenterAndExpand">
+                    <Picker x:Name="RolePicker"
+                            IsVisible="False"
+                            FontSize="Caption"
+                            HorizontalOptions="Start"
+                            VerticalOptions="Center"
+                            MinimumWidthRequest="90"
+                            ItemsSource="{x:Static models:Enums.RoleNames}"
+                            SelectedIndex="{Binding PlayerToShow.AdditionalInfo.Role, Converter={StaticResource IntEnum}}" />
+                    <Label x:Name="RoleLabel"
+                           IsVisible="True"
+                           FontSize="Caption"
+                           FontAttributes="None"
+                            HorizontalOptions="Start"
+                           VerticalOptions="Center"
+                           Text="{Binding PlayerToShow.AdditionalInfo.Role}" />
+                    <StackLayout HorizontalOptions="End">
+                        <Button x:Name="ChangeRoleButton"
+                                Text="Change"
+                                ContentLayout="Top,5"
+                                FontSize="Caption"
+                                VerticalOptions="Center"
+                                HorizontalOptions="End"
+                                IsVisible="{Binding IsCoach}"
+                                Clicked="ChangeRoleButton_Clicked">
+                        </Button>
+                    </StackLayout>
+                </StackLayout>
 
-            <!--Description-->
-            <StackLayout Padding="0,20,0,0">
-                <Label Text="Description:"
-                       TextColor="Gray" />
+                <!--Description-->
+                <Label Grid.Row="6"
+                       Text="Description:" />
                 <Editor x:Name="DescriptionEditor"
+                       Grid.Row="6"
+                        Grid.Column="1"
                         AutoSize="TextChanges"
                         TextColor="Black"
+                        VerticalOptions="End"
+                        FontSize="Small"
                         IsReadOnly="True"
                         Text="{Binding PlayerToShow.Description, Mode=TwoWay}" />
-            </StackLayout>
-            <!--Save Button (For Admin/Coach only)-->
-            <StackLayout Padding="30"
-                         Orientation="Horizontal"
-                         HorizontalOptions="Center">
-                <Button x:Name="SaveButton"
-                        Text="Save"
-                        Padding="20"
-                        Clicked="SaveButton_Clicked"
-                        IsVisible="False" />
-            </StackLayout>
 
+            </Grid>
+            <!--Save Button (For Admin/Coach only)-->
+            <Button x:Name="SaveButton"
+                    Text="Save"
+                    WidthRequest="110"
+                    FontSize="Caption"
+                    ContentLayout="Top,5"
+                    Padding="2"
+                    HorizontalOptions="Center"
+                    Clicked="SaveButton_Clicked"
+                    IsVisible="False">
+                <Button.ImageSource>
+                    <FontImageSource Glyph="{x:Static fonts:IconFont.Save}"
+                                     FontFamily="FA-S"
+                                     Size="Medium" />
+                </Button.ImageSource>
+            </Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

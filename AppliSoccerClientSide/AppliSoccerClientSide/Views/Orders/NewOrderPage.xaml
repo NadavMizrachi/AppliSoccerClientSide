@@ -2,7 +2,9 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AppliSoccerClientSide.Views.Orders.NewOrderPage"
+             xmlns:fonts="clr-namespace:AppliSoccerClientSide.Helpers.Fonts"
              xmlns:xct="clr-namespace:Xamarin.CommunityToolkit.UI.Views;assembly=Xamarin.CommunityToolkit"
+             Shell.FlyoutBehavior="Disabled"
              Title="New Order">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -64,7 +66,7 @@
                                 </Label>
                                 <Label Text="Send To"
                                        FontAttributes="Bold"
-                                       FontSize="Large" />
+                                       FontSize="Medium" />
                             </StackLayout>
                         </xct:Expander.Header>
 
@@ -89,7 +91,7 @@
                                             </Label>
                                             <Label Text="Staff"
                                                    FontAttributes="Bold"
-                                                   FontSize="Medium" />
+                                                   FontSize="Small" />
                                         </StackLayout>
                                     </xct:Expander.Header>
                                     <StackLayout Margin="10,0,0,0">
@@ -102,6 +104,7 @@
                                                         <StackLayout Orientation="Horizontal">
                                                             <CheckBox IsChecked="{Binding IsShouldReceive}"/>
                                                             <Label Text="{Binding Fullname}"
+                                                                   FontSize="Caption"
                                                                    TextColor="Black" />
                                                         </StackLayout>
                                                     </ViewCell>
@@ -130,7 +133,7 @@
                                             </Label>
                                             <Label Text="Player Roles"
                                                    FontAttributes="Bold"
-                                                   FontSize="Medium" />
+                                                   FontSize="Small" />
                                         </StackLayout>
                                     </xct:Expander.Header>
                                     <StackLayout Margin="10,0,0,0">
@@ -142,7 +145,8 @@
                                                     <ViewCell>
                                                         <StackLayout Orientation="Horizontal">
                                                             <CheckBox IsChecked="{Binding IsShouldReceive}"/>
-                                                            <Label Text="{Binding RoleName}" />
+                                                            <Label Text="{Binding RoleName}"
+                                                                   FontSize="Caption" />
                                                         </StackLayout>
                                                     </ViewCell>
                                                 </DataTemplate>
@@ -170,7 +174,7 @@
                                             </Label>
                                             <Label Text="Individual Players"
                                                    FontAttributes="Bold"
-                                                   FontSize="Medium" />
+                                                   FontSize="Small" />
                                         </StackLayout>
                                     </xct:Expander.Header>
                                     <StackLayout Margin="10,0,0,0">
@@ -183,6 +187,7 @@
                                                         <StackLayout Orientation="Horizontal">
                                                             <CheckBox IsChecked="{Binding IsShouldReceive}"/>
                                                             <Label Text="{Binding Fullname}"
+                                                                   FontSize="Caption"
                                                                    TextColor="Black" />
                                                         </StackLayout>
                                                     </ViewCell>
@@ -196,9 +201,19 @@
                     </xct:Expander>
 
                     <!--Send Order-->
-                    <Button Text="Send Order"
-                            Margin="0,5,0,20" 
-                            Clicked="Button_Clicked"/>
+                    <Button Text="Send"
+                            HorizontalOptions="Center"
+                            FontSize="Caption"
+                            WidthRequest="110"
+                            Margin="0,5,0,20"
+                            ContentLayout="Top,5"
+                            Clicked="Button_Clicked">
+                        <Button.ImageSource>
+                            <FontImageSource Glyph="{x:Static fonts:IconFont.PaperPlane}"
+                                             FontFamily="FA-S"
+                                             Size="Medium"/>
+                        </Button.ImageSource>
+                    </Button>
                 </StackLayout>
             </ScrollView>
         </ContentView>

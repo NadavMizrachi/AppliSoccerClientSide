@@ -3,93 +3,157 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ec="clr-namespace:AppliSoccerClientSide.Extensions"
              xmlns:models="clr-namespace:AppliSoccerClientSide.Models"
-             x:Class="AppliSoccerClientSide.Views.NewStaffPage">
+             x:Class="AppliSoccerClientSide.Views.NewStaffPage"
+             Shell.FlyoutBehavior="Disabled"
+             Title="New Staff">
     <ContentPage.Resources>
         <ResourceDictionary>
             <ec:IntEnumConverter x:Key="IntEnum" />
+            <Style TargetType="Label">
+                <Setter Property="HorizontalOptions"
+                        Value="End" />
+                <Setter Property="Margin"
+                        Value="0,0,20,0" />
+            </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
     
     <ContentPage.Content>
-        <StackLayout Padding="20,0,20,0">
+        <StackLayout HorizontalOptions="Center">
+            <Label Text="{x:StaticResource UserTieIcon}"
+                   FontSize="Header"
+                   HorizontalOptions="Center"
+                   FontAttributes="{Binding FontAttribute}"
+                   TextColor="{StaticResource Primary}"
+                   FontFamily="FA-S"
+                   Margin="20" />
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition  Height="180" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <!--Username-->
+                <Label Grid.Row="0"
+                       Text="Username"
+                       FontAttributes="Bold" />
+                <Entry Grid.Row="0"
+                       Grid.Column="1"
+                    Text="{Binding NewUser.Username, Mode=TwoWay}"/>
 
-            <!--Username-->
-            <Entry Text="{Binding NewUser.Username, Mode=TwoWay}"
-                   Placeholder="Username" />
+                <!--Password-->
+                <Label Grid.Row="1"
+                       Text="Password"
+                       FontAttributes="Bold" />
+                <Entry Grid.Row="1"
+                       Grid.Column="1" 
+                    Text="{Binding NewUser.Password, Mode=TwoWay}"/>
 
-            <!--Password-->
-            <Entry Text="{Binding NewUser.Password, Mode=TwoWay}"
-                   Placeholder="Password" />
+                <!--FirstName-->
+                <Label Grid.Row="2"
+                       Text="First Name"
+                       FontAttributes="Bold" />
+                <Entry Grid.Row="2"
+                       Grid.Column="1" 
+                    Text="{Binding NewUser.TeamMember.FirstName, Mode=TwoWay}"/>
 
-            <!--FirstName-->
-            <Entry Text="{Binding NewUser.TeamMember.FirstName, Mode=TwoWay}"
-                   Placeholder="First Name" />
-
-            <!--LastName-->
-            <Entry Text="{Binding NewUser.TeamMember.LastName, Mode=TwoWay}"
-                   Placeholder="Last Name" />
-
-
-            <!--Is Coach-->
-            <StackLayout Orientation="Horizontal">
-                <CheckBox x:Name="IsCoachCheckBox"
-                          IsChecked="{Binding IsCoach, Mode=OneWayToSource}"/>
-                <Label Text="Is Coach" />
-            </StackLayout>
-            <!--Staff Managed Roles -->
-            <StackLayout Orientation="Vertical"
-                         IsVisible="{Binding ShowManagedRolePicker}">
-                <Label Text="Choose Managerd Roles"
-                       FontSize="Small"
-                       TextColor="Gray"
-                       VerticalOptions="Center" />
-                <ListView x:Name="MyListView"
-                          ItemTapped="MyListView_ItemTapped"
-                          ItemsSource="{x:Static models:Enums.RoleNames}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <StackLayout Orientation="Horizontal">
-                                    <CheckBox CheckedChanged="CheckBox_CheckedChanged"/>
-                                    <Label Text="{Binding .}" />
-                                </StackLayout>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </StackLayout>
-            
-            <!--Phone-->
-            <Entry x:Name="PhoneNumberEntry"
-                   Keyboard="Telephone"
-                   MaxLength="10"
-                   Placeholder="Phone Number"
-                   Text="{Binding NewUser.TeamMember.PhoneNumber, Mode=TwoWay}" />
+                <!--LastName-->
+                <Label Grid.Row="3"
+                       Text="Last Name"
+                       FontAttributes="Bold" />
+                <Entry Grid.Row="3"
+                       Grid.Column="1" 
+                    Text="{Binding NewUser.TeamMember.LastName, Mode=TwoWay}"/>
 
 
-            <!--Birth Date-->
-            <StackLayout Orientation="Horizontal">
-                <Label Text="Birth Date"
-                       FontSize="Small"
-                       TextColor="Gray"
-                       VerticalOptions="Center" />
+                <!--Phone-->
+                <Label Grid.Row="4"
+                       Text="Phone Number"
+                       FontAttributes="Bold" />
+                <Entry Grid.Row="4"
+                       Grid.Column="1"
+                    x:Name="PhoneNumberEntry"
+                       Keyboard="Telephone"
+                       MaxLength="10"
+                       Text="{Binding NewUser.TeamMember.PhoneNumber, Mode=TwoWay}" />
+
+
+                <!--Birth Date-->
+                <Label Grid.Row="5"
+                       Text="Birth Date"
+                       FontAttributes="Bold" />
                 <DatePicker x:Name="BirthdatePicker"
+                            Grid.Row="5"
+                            Grid.Column="1"
                             Date="{Binding NewUser.TeamMember.BirthDate, Mode=TwoWay}" />
-            </StackLayout>
 
-            
 
-            <!--Description-->
-            <Editor x:Name="DescriptionEditor"
-                    TextColor="Black"
-                    Placeholder="Type Staff Member Description"
-                    PlaceholderColor="{StaticResource SystemGray}"
-                    Text="{Binding NewUser.TeamMember.Description}" />
 
-            
+                <!--Description-->
+                <Label Grid.Row="6"
+                       Text="Description"
+                       FontAttributes="Bold" />
+                <Editor x:Name="DescriptionEditor"
+                        Grid.Row="6"
+                        Grid.Column="1"
+                        TextColor="Black"
+                        Text="{Binding NewUser.TeamMember.Description}" />
+                
+                <!--Role-->
+                <Label  Grid.Row="7"
+                        Text="Role"
+                        VerticalOptions="Start"
+                        FontAttributes="Bold" />
+                <StackLayout Grid.Row="7"
+                             Grid.Column="1">
+                    <!--Is Coach-->
+                    <StackLayout Orientation="Horizontal">
+                        <CheckBox x:Name="IsCoachCheckBox"
+                                  IsChecked="{Binding IsCoach, Mode=OneWayToSource}" />
+                        <Label Text="Is Coach"
+                               FontSize="Caption" />
+                    </StackLayout>
+                    <!--Staff Managed Roles -->
+                    <StackLayout Orientation="Vertical"
+                                 IsVisible="{Binding ShowManagedRolePicker}">
+                        <Label Text="Choose Managerd Roles"
+                               FontSize="Small"
+                               HorizontalOptions="Start"
+                               TextColor="Gray"
+                               VerticalOptions="Center" />
+                        <ListView x:Name="MyListView"
+                                  ItemTapped="MyListView_ItemTapped"
+                                  ItemsSource="{x:Static models:Enums.RoleNames}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <StackLayout Orientation="Horizontal">
+                                            <CheckBox CheckedChanged="CheckBox_CheckedChanged" />
+                                            <Label Text="{Binding .}"
+                                                   FontSize="Caption" />
+                                        </StackLayout>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackLayout>
+                </StackLayout>
+            </Grid>
+
             <!--Create Staff Button-->
-            <Button Text="Create Staff"
-                    Clicked="CreateButton_Clicked" />
+            <Button Text="Create"
+                    Clicked="CreateButton_Clicked" 
+                    HorizontalOptions="Center"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

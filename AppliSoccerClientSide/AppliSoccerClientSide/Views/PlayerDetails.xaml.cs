@@ -44,10 +44,10 @@ namespace AppliSoccerClientSide.Views
 
         private void AddAdminToolBarItems()
         {
-            var editToolBarItem = new ToolbarItem() { Text = "Edit" };
+            var editToolBarItem = new ToolbarItem() { IconImageSource = ImageSource.FromResource("AppliSoccerClientSide.Images.icons8-edit-96.png") };
             editToolBarItem.Clicked += this.EditButton_Clicked;
 
-            var removeToolBarItem = new ToolbarItem() { Text = "Remove" };
+            var removeToolBarItem = new ToolbarItem() { IconImageSource = ImageSource.FromResource("AppliSoccerClientSide.Images.icons8-waste-100.png") };
             removeToolBarItem.Clicked += this.RemoveButton_Clicked;
 
             ToolbarItems.Add(editToolBarItem);
@@ -87,7 +87,7 @@ namespace AppliSoccerClientSide.Views
         private async void RemoveButton_Clicked(object sender, EventArgs e)
         {
             bool yes = await DisplayAlert(
-                "Edit confiramtion",
+                "Remove confiramtion",
                 $"Do you want to remove {PlayerToShow.FirstName} {PlayerToShow.LastName}?", "Yes", "No");
             Debug.WriteLine("Answer: " + yes);
             if (!yes)
@@ -118,6 +118,7 @@ namespace AppliSoccerClientSide.Views
         private void EditButton_Clicked(object sender, EventArgs e)
         {
             EnableEditMode();
+            this.FirstNameEntry.Focus();
             SaveButton.IsVisible = true;
         }
 

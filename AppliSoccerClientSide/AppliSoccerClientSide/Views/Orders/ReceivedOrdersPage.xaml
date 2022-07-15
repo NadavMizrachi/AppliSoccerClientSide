@@ -45,8 +45,9 @@
                                             </Grid.ColumnDefinitions>
                                             <Label Grid.Column="0"
                                                    HorizontalOptions="Start"
-                                                   Text="{x:StaticResource DownloadIcon}"
-                                                   FontSize="Caption"
+                                                   Text="{x:StaticResource MailIcon}"
+                                                   FontSize="Small"
+                                                   FontAttributes="{Binding FontAttribute}"
                                                    TextColor="{StaticResource SystemGray}"
                                                    FontFamily="FA-S" />
                                             <Label Grid.Row="0"

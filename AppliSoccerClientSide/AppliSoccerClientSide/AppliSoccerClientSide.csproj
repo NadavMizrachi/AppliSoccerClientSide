@@ -8,12 +8,18 @@
   <ItemGroup>
     <None Remove="Images\add-task-5356007.png" />
     <None Remove="Images\add-task.png" />
+    <None Remove="Images\icons8-add-male-user-64.png" />
+    <None Remove="Images\icons8-add-user-male-90.png" />
     <None Remove="Images\icons8-available-updates-50.png" />
     <None Remove="Images\icons8-calendar-64.png" />
+    <None Remove="Images\icons8-edit-96.png" />
     <None Remove="Images\icons8-edit-calendar-100.png" />
+    <None Remove="Images\icons8-edit-message-100.png" />
+    <None Remove="Images\icons8-pencil-64.png" />
     <None Remove="Images\icons8-refresh-91.png" />
     <None Remove="Images\icons8-save-100.png" />
     <None Remove="Images\icons8-save-50.png" />
+    <None Remove="Images\icons8-waste-100.png" />
     <None Remove="Images\refresh.png" />
     <None Remove="Images\schedule-add.png" />
     <None Remove="Resources\Fonts\Font Awesome 5 Brands-Regular-400.otf" />
@@ -24,12 +30,18 @@
   <ItemGroup>
     <EmbeddedResource Include="Images\add-task-5356007.png" />
     <EmbeddedResource Include="Images\add-task.png" />
+    <EmbeddedResource Include="Images\icons8-add-male-user-64.png" />
+    <EmbeddedResource Include="Images\icons8-add-user-male-90.png" />
     <EmbeddedResource Include="Images\icons8-available-updates-50.png" />
     <EmbeddedResource Include="Images\icons8-calendar-64.png" />
+    <EmbeddedResource Include="Images\icons8-edit-96.png" />
     <EmbeddedResource Include="Images\icons8-edit-calendar-100.png" />
+    <EmbeddedResource Include="Images\icons8-edit-message-100.png" />
+    <EmbeddedResource Include="Images\icons8-pencil-64.png" />
     <EmbeddedResource Include="Images\icons8-refresh-91.png" />
     <EmbeddedResource Include="Images\icons8-save-100.png" />
     <EmbeddedResource Include="Images\icons8-save-50.png" />
+    <EmbeddedResource Include="Images\icons8-waste-100.png" />
     <EmbeddedResource Include="Images\refresh.png" />
     <EmbeddedResource Include="Images\schedule-add.png" />
     <EmbeddedResource Include="Resources\Fonts\Font Awesome 5 Brands-Regular-400.otf" />

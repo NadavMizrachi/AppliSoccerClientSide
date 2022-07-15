@@ -52,8 +52,7 @@
                                             <Label
                                                    Grid.Column="1"
                                                 Text="{Binding Title}"
-                                                   FontSize="Medium"
-                                                   FontAttributes="{Binding FontAttribute}" />
+                                                   FontSize="Medium"/>
                                             <Label Grid.Row="0"
                                                    Grid.Column="2"
                                                    VerticalOptions="Start"

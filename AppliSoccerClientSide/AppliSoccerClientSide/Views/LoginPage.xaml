@@ -16,9 +16,9 @@
                        FontSize="Title"
                        CharacterSpacing="3"/>
             </StackLayout>
-            <Entry x:Name="UsernameEntry" Text="maorme" Placeholder="Username"></Entry>
+            <Entry x:Name="UsernameEntry" Text="elyanivb" Placeholder="Username"></Entry>
             <Entry x:Name="PasswordEntry"
-                   Text="maorme" Placeholder="Password" IsPassword="True"></Entry>
+                   Text="elyanivb" Placeholder="Password" IsPassword="True"></Entry>
             <Button VerticalOptions="Center" Text="Login" Clicked="LoginButton_Clicked"/>
             <Button VerticalOptions="Center" Text="Register Your Team" Clicked="RegisterButton_Clicked"/>
         </StackLayout>

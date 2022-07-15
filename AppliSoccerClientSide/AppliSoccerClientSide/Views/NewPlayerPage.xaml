@@ -4,80 +4,137 @@
              xmlns:ec="clr-namespace:AppliSoccerClientSide.Extensions"
              xmlns:models="clr-namespace:AppliSoccerClientSide.Models"
              x:Class="AppliSoccerClientSide.Views.NewPlayerPage"
-             Title="Add New Player">
+             Shell.FlyoutBehavior="Disabled"
+             Title="New Player">
     <ContentPage.Resources>
         <ResourceDictionary>
             <ec:IntEnumConverter x:Key="IntEnum" />
+            <Style TargetType="Label">
+                <Setter Property="HorizontalOptions"
+                        Value="End" />
+                <Setter Property="Margin"
+                        Value="0,0,20,0" />
+            </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
     
     <ContentPage.Content>
-        <StackLayout>
-            <StackLayout Padding="50,20,50,0">
-
+        <StackLayout HorizontalOptions="Center">
+            <Label Text="{x:StaticResource RunningIcon}"
+                   FontSize="Header"
+                   HorizontalOptions="Center"
+                   FontAttributes="{Binding FontAttribute}"
+                   TextColor="{StaticResource Primary}"
+                   FontFamily="FA-S"
+                   Margin="20" />
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
                 <!--Username-->
-                <Entry Text="{Binding NewUser.Username, Mode=TwoWay}"
-                       Placeholder="Username" />
+                <Label Grid.Row="0"
+                       Text="Username"
+                       FontAttributes="Bold"/>
+                <Entry Grid.Row="0"
+                       Grid.Column="1"
+                        Text="{Binding NewUser.Username, Mode=TwoWay}" />
 
                 <!--Password-->
-                <Entry Text="{Binding NewUser.Password, Mode=TwoWay}"
-                       Placeholder="Password"/>
+                <Label Grid.Row="1"
+                       Text="Password"
+                       FontAttributes="Bold"/>
+                <Entry Grid.Row="1"
+                       Grid.Column="1"
+                        Text="{Binding NewUser.Password, Mode=TwoWay}"/>
 
                 <!--FirstName-->
-                <Entry Text="{Binding NewUser.TeamMember.FirstName, Mode=TwoWay}"
-                       Placeholder="First Name"/>
+                <Label Grid.Row="2"
+                       Text="First Name"
+                       FontAttributes="Bold" />
+                <Entry Grid.Row="2"
+                       Grid.Column="1"
+                        Text="{Binding NewUser.TeamMember.FirstName, Mode=TwoWay}" />
 
                 <!--LastName-->
-                <Entry Text="{Binding NewUser.TeamMember.LastName, Mode=TwoWay}" 
-                       Placeholder="Last Name"/>
+                <Label Grid.Row="3"
+                       Text="Last Name"
+                       FontAttributes="Bold" />
+                <Entry Grid.Row="3"
+                       Grid.Column="1" 
+                    Text="{Binding NewUser.TeamMember.LastName, Mode=TwoWay}"/>
 
                 <!--Phone-->
-                <Entry x:Name="PhoneNumberEntry"
+                <Label Grid.Row="4"
+                       Text="Phone Number"
+                       FontAttributes="Bold" />
+                <Entry Grid.Row="4"
+                       Grid.Column="1" 
+                    x:Name="PhoneNumberEntry"
                        Keyboard="Telephone"
                        MaxLength="10"
-                       Placeholder="Phone Number"
                        Text="{Binding NewUser.TeamMember.PhoneNumber, Mode=TwoWay}" />
 
 
                 <!--Birth Date-->
-                <StackLayout Orientation="Horizontal">
-                    <Label Text="Birth Date"
-                           FontSize="Small"
-                           TextColor="Gray"
-                           VerticalOptions="Center"/>
-                    <DatePicker x:Name="BirthdatePicker"
-                                Date="{Binding NewUser.TeamMember.BirthDate, Mode=TwoWay}" />
-                </StackLayout>
+                <Label Grid.Row="5"
+                       Text="Birth Date"
+                       FontAttributes="Bold" />
+                <DatePicker Grid.Row="5"
+                            Grid.Column="1"
+                            x:Name="BirthdatePicker"
+                            Date="{Binding NewUser.TeamMember.BirthDate, Mode=TwoWay}" />
+
 
                 <!--Player Number -->
-                <Entry x:Name="NumberEntry"
+                <Label Grid.Row="6"
+                       Text="Player Number"
+                       FontAttributes="Bold" />
+                <Entry Grid.Row="6"
+                       Grid.Column="1"
+                        x:Name="NumberEntry"
                        Keyboard="Numeric"
                        MaxLength="3"
                        Text="{Binding NewUser.TeamMember.AdditionalInfo.Number, Mode=TwoWay}" />
 
                 <!--Player Role-->
-                <StackLayout Orientation="Horizontal">
-                    <Label Text="Choose Player Role"
-                           FontSize="Small"
-                           TextColor="Gray"
-                           VerticalOptions="Center" />
-                    <Picker x:Name="RolePicker"
-                            MinimumWidthRequest="90"
-                            ItemsSource="{x:Static models:Enums.RoleNames}"
-                            SelectedIndex="{Binding NewUser.TeamMember.AdditionalInfo.Role, Mode=TwoWay, Converter={StaticResource IntEnum}}" />
-                </StackLayout>
+                <Label Grid.Row="7"
+                       Text="Player Role"
+                       FontAttributes="Bold" />
+                <Picker  Grid.Row="7"
+                         Grid.Column="1"
+                         x:Name="RolePicker"
+                        MinimumWidthRequest="90"
+                        ItemsSource="{x:Static models:Enums.RoleNames}"
+                        SelectedIndex="{Binding NewUser.TeamMember.AdditionalInfo.Role, Mode=TwoWay, Converter={StaticResource IntEnum}}" />
 
 
                 <!--Description-->
-                <Editor x:Name="DescriptionEditor"
+                <Label Grid.Row="8"
+                       Text="Description"
+                       FontAttributes="Bold" />
+                <Editor Grid.Row="8"
+                        Grid.Column="1"
+                        x:Name="DescriptionEditor"
                         TextColor="Black"
-                        Placeholder="Type Player Description"
-                        PlaceholderColor="{StaticResource SystemGray}"
                         Text="{Binding NewUser.TeamMember.Description}" />
 
-                <Button Text="Create Player"
-                        Clicked="Button_Clicked"/>
-            </StackLayout>
+            </Grid>
+            <Button Text="Create"
+                    HorizontalOptions="Center"
+                    Clicked="Button_Clicked" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

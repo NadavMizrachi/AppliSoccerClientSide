@@ -41,6 +41,10 @@ namespace AppliSoccerClientSide.Views
 
         private void UpdateManagedRoles(TeamMember staffToShow)
         {
+            if (MemberTypeRecognizer.IsCoachMember(staffToShow))
+            {
+                this.responsibleRolesLabel.IsVisible = false;
+            }
             var staffAdditionalInfo = (StaffAdditionalInfo)staffToShow.AdditionalInfo;
             ManagedRoles = new ObservableCollection<ManagedRoleView>();
             bool isNoManagedRoles = (staffToShow.AdditionalInfo == null ||
@@ -61,10 +65,10 @@ namespace AppliSoccerClientSide.Views
         }
         private void AddAdminToolBarItems()
         {
-            var editToolBarItem = new ToolbarItem() { Text = "Edit" };
+            var editToolBarItem = new ToolbarItem() { IconImageSource = ImageSource.FromResource("AppliSoccerClientSide.Images.icons8-edit-96.png") };
             editToolBarItem.Clicked += this.EditButton_Clicked;
 
-            var removeToolBarItem = new ToolbarItem() { Text = "Remove" };
+            var removeToolBarItem = new ToolbarItem() { IconImageSource = ImageSource.FromResource("AppliSoccerClientSide.Images.icons8-waste-100.png") };
             removeToolBarItem.Clicked += this.RemoveButton_Clicked;
 
             ToolbarItems.Add(editToolBarItem);
@@ -83,7 +87,8 @@ namespace AppliSoccerClientSide.Views
             BirthdateLabel.IsVisible = false;
 
             DescriptionEditor.IsReadOnly = false;
-           
+
+            FirstNameEntry.Focus();
             EnableRoleEditting();
 
         }
