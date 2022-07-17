@@ -8,17 +8,22 @@
              Shell.NavBarHasShadow="False">
     <ContentPage.Content>
         <StackLayout HorizontalOptions="Center"
-                     VerticalOptions="Center">
+                     VerticalOptions="Center"
+                     Spacing="25">
             <StackLayout Margin="0,0,0,80">
                 <Label Text="Choose Team"
                        FontSize="Medium"
                        LineBreakMode="WordWrap"
                        CharacterSpacing="5" />
             </StackLayout>
+            <Image  x:Name="TeamLogoImage"
+                    WidthRequest="80"
+                    HeightRequest="80" />
             <Picker x:Name="TeamPicker"
                     HorizontalOptions="Center"
                     HorizontalTextAlignment="Center"
                     WidthRequest="200"
+                    SelectedIndexChanged="TeamPicker_SelectedIndexChanged"
                     Margin="0,0,0,10" />
             <Button Text="Continue"
                     Clicked="ContinueButton_Clicked"

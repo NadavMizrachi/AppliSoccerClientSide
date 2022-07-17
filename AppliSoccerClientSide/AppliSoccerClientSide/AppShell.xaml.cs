@@ -83,7 +83,37 @@ namespace AppliSoccerClientSide
         public static readonly BindableProperty IsTablesPageAllowedProperty =
             BindableProperty.Create("IsTablesPageAllowed", typeof(bool), typeof(AppShell), false);
 
-        // TODO ask if logout or not
+
+        public string LogoUrl
+        {
+            get => (string)GetValue(LogoUrlProperty);
+            set => SetValue(LogoUrlProperty, value);
+        }
+
+        public static readonly BindableProperty LogoUrlProperty =
+            BindableProperty.Create("LogoUrl", typeof(string), typeof(AppShell), "");
+
+        public int LogoSize
+        {
+            get => (int)GetValue(LogoSizeProperty);
+            set => SetValue(LogoSizeProperty, value);
+        }
+
+        public static readonly BindableProperty LogoSizeProperty =
+            BindableProperty.Create("LogoSize", typeof(int), typeof(AppShell), 0);
+
+        public void UpdateTeamLogo(string logoUrl)
+        {
+            LogoUrl = logoUrl;
+            if(Device.RuntimePlatform == Device.UWP)
+            {
+                LogoSize = 85;
+            }
+            else
+            {
+                LogoSize = 70;
+            }
+        }
 
         private async void LogoutClicked(object sender, EventArgs e)
         {

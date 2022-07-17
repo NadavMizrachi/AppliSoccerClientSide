@@ -42,5 +42,18 @@ namespace AppliSoccerClientSide.Views.Registration
             var teamDetails = (TeamDetails)TeamPicker.SelectedItem;
             await Navigation.PushAsync(new TeamAdminRegistrationPage(teamDetails));
         }
+
+        private void TeamPicker_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var teamDetails = (TeamDetails)((Picker)sender).SelectedItem;
+            if (teamDetails == null)
+                return;
+            TeamLogoImage.Source = teamDetails.LogoURL;
+            if (Device.RuntimePlatform == Device.UWP)
+            {
+                TeamLogoImage.WidthRequest = 100;
+                TeamLogoImage.HeightRequest = 100;
+            }
+        }
     }
 }

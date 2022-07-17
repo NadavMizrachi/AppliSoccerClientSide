@@ -11,6 +11,9 @@
         <StackLayout  HorizontalOptions="Center"
                       VerticalOptions="Center">
             <StackLayout Margin="0,0,0,20">
+                <Image  x:Name="TeamLogoImage"
+                        WidthRequest="80"
+                        HeightRequest="80" />
                 <Label x:Name="TeamNameLabel"
                        FontSize="Title"
                        FontAttributes="Bold"

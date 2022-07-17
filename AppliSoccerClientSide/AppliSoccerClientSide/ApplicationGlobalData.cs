@@ -30,7 +30,7 @@ namespace AppliSoccerClientSide
 
         private async static Task InitMainLeague()
         {
-            TeamMember myMember = ApplicationGlobalData.GetMyTeamMember();
+            TeamMember myMember = GetMyTeamMember();
             GetMainLeagueActionResult actionResult =
                 await AppliSoccerServerService.AppServer.GetMainLeague(myMember.TeamId);
             if(actionResult == null)
@@ -50,9 +50,17 @@ namespace AppliSoccerClientSide
         private static List<LeagueTablePage> createLeaguePages(League mainLeague)
         {
             List<LeagueTablePage> pages = new List<LeagueTablePage>();
+            bool teamLogoWasFound = false;
             foreach (var subTable in mainLeague.Table.SubTables)
             {
                 LeagueTableViewModel tableViewModel = LeagueTableViewModel.ConvertToViewModel(subTable);
+                if(!teamLogoWasFound)
+                {
+                    var myTeamLogoUrl = tableViewModel.Rows.Find(row => row.IsMyTeam).TeamLogoUrl;
+                    // Update flyout header
+                    (Shell.Current as AppShell).UpdateTeamLogo(myTeamLogoUrl);
+                    teamLogoWasFound = true;
+                }
                 pages.Add(new LeagueTablePage(tableViewModel));
             }
             return pages;

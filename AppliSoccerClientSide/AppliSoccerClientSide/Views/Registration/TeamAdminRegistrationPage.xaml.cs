@@ -19,13 +19,26 @@ namespace AppliSoccerClientSide.Views.Registration
     {
         private TeamDetails _teamDetails;
         private ViewsPermissionManager _permissionManager;
+        private string _teamLogoUrl;
 
         public TeamAdminRegistrationPage(TeamDetails teamDetails)
         {
             InitializeComponent();
             _teamDetails = teamDetails;
+            _teamLogoUrl = teamDetails.LogoURL;
             TeamNameLabel.Text = teamDetails.Name;
             _permissionManager = ViewsPermissionManager.CreateManager();
+            SetTeamLogoImage();
+        }
+
+        private void SetTeamLogoImage()
+        {
+            TeamLogoImage.Source = _teamLogoUrl;
+            if (Device.RuntimePlatform == Device.UWP)
+            {
+                TeamLogoImage.WidthRequest = 100;
+                TeamLogoImage.HeightRequest = 100;
+            }
         }
 
         private async void RegisterButton_Clicked(object sender, EventArgs e)

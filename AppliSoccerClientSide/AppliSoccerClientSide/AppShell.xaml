@@ -210,6 +210,22 @@
 
 
 
+
+    <Shell.FlyoutHeaderTemplate>
+        <DataTemplate>
+            <StackLayout Orientation="Vertical"
+                         VerticalOptions="Center"
+                         HorizontalOptions="Center"
+                         Margin="10">
+                <Image Source="{Binding LogoUrl}"
+                       WidthRequest="{Binding LogoSize}"
+                       HeightRequest="{Binding LogoSize}"
+                       Margin="5"/>
+                
+            </StackLayout>
+        </DataTemplate>
+    </Shell.FlyoutHeaderTemplate>
+
     <Shell.FlyoutFooterTemplate>
         <DataTemplate>
             <StackLayout Orientation="Vertical"
